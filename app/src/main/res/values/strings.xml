@@ -1,4 +1,37 @@
 <resources>
     <string name="app_name">Delivery4Driver</string>
-    <string name="title_activity_maps">Map</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
+    <string name="login">LOGIN</string>
+    <string name="welcome">Welcome</string>
+    <string name="customer_phone">Customers Phone Number</string>
+    <string name="customer_address">Customers Address</string>
+    <string name="customer_apt">Customers Apartment Number</string>
+    <string name="customer_finished_time">FinishedTime</string>
+    <string name="door_bell">door bell not working</string>
+    <string name="customer_remark">请输入其它备注信息</string>
+    <string name="action_send_order">Send Order</string>
+    <string name="change_old_pwd">请输入旧密码</string>
+    <string name="change_new_pwd">请输入新密码</string>
+    <string name="action_change_pwd">修改密码</string>
+    <string name="starting_point">Starting Point：</string>
+    <string name="distination">Distination：</string>
+    <string name="customer_phone_short">Cust.Phone：</string>
+    <string name="notes">Notes：</string>
+    <string name="others">Others：</string>
+    <string name="action_submit_order">submit</string>
+    <string name="order_submit_success">Operation Successfully Completed</string>
+    <string name="order_submit_success_sub">Order has been sent, wait for being accepted</string>
+    <string name="welcome_driver">Welcome,Driver</string>
+
 </resources>
