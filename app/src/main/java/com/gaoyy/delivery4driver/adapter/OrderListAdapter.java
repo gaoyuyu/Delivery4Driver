@@ -2,6 +2,7 @@ package com.gaoyy.delivery4driver.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,81 +63,54 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     {
         OrderListViewHolder vh = (OrderListViewHolder) holder;
         OrderListInfo.BodyBean.PageBean.ListBean order = data.get(position);
+        //设置Tag
+        vh.itemOrderCardView.setTag(order);
         int orderStatus = order.getStatus();
         List<DriverInfo.BodyBean.DictStatusBean> dictStatus = MainActivity.dictStatus;
-        vh.itemOrderAddress.setText(order.getId()+"===="+order.getCustomerAddr());
-        vh.itemOrderDriverName.setText(order.getCourierName());
+
+        vh.itemOrderStartingPoint.setText(order.getHotelAddr());
+        vh.itemOrderDestination.setText(order.getCustomerAddr());
         vh.itemOrderCustomerPhone.setText(order.getCustomerTel());
+        vh.itemOrderRestaurantPhone.setText(order.getHotelTel());
         vh.itemOrderNo.setText(order.getOrderNo());
-        vh.itemOrderNotes.setText(order.getRemarks());
-        vh.itemOrderOthers.setText(order.getRemark());
         vh.itemOrderFinishedTime.setText(order.getFinishedTime());
 
-        Log.d(Constant.TAG,position+"==status=="+order.getStatus());
+        Log.d(Constant.TAG, position + "==status==" + order.getStatus());
 
         for (int i = 0; i < dictStatus.size(); i++)
         {
             int value = Integer.valueOf(dictStatus.get(i).getValue());
-            //Wait
-            if ((orderStatus == value) && (value == 0))
-            {
-                Log.d(Constant.TAG, "adapter order status is Wait");
-                vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
-                vh.itemOrderStatus.setText("Wait");
-                vh.itemOrderStatusDate.setText(order.getCreateDate());
-                //隐藏司机名字
-                vh.itemOrderDriverNameLayout.setVisibility(View.GONE);
-
-                //显示按钮组
-                vh.itemOrderOperationLayout.setVisibility(View.VISIBLE);
-                //显示Cancle按钮和resubmit按钮
-                vh.itemOrderCancleBtn.setVisibility(View.VISIBLE);
-                if(order.getIsTimeout() == 1)
-                {
-                    vh.itemOrderResubmitBtn.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    vh.itemOrderResubmitBtn.setVisibility(View.GONE);
-                }
-                vh.itemOrderDeliveryBtn.setVisibility(View.GONE);
-                vh.itemOrderCancleAfterDeliveryBtn.setVisibility(View.GONE);
-
-            }
+            //司机段订单列表不显示Wait状态下的订单
             //Accept
-            else if ((orderStatus == value) && (value == 1))
+            if ((orderStatus == value) && (value == 1))
             {
-                Log.d(Constant.TAG,"adapter order status is Accept");
+                Log.d(Constant.TAG, "adapter order status is Accept");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.holo_orange_dark));
                 vh.itemOrderStatus.setText("Accept");
                 vh.itemOrderStatusDate.setText(order.getAcceptDate());
 
                 //显示按钮组
                 vh.itemOrderOperationLayout.setVisibility(View.VISIBLE);
-                //显示Cancle按钮和Delivery按钮
-                vh.itemOrderCancleBtn.setVisibility(View.VISIBLE);
-                vh.itemOrderResubmitBtn.setVisibility(View.GONE);
-                vh.itemOrderDeliveryBtn.setVisibility(View.VISIBLE);
-                vh.itemOrderCancleAfterDeliveryBtn.setVisibility(View.GONE);
+                //显示PickUp按钮隐藏Finish按钮
+                vh.itemOrderPickUpBtn.setVisibility(View.VISIBLE);
+                vh.itemOrderFinishBtn.setVisibility(View.GONE);
 
             }
             //Delivery
             else if ((orderStatus == value) && (value == 2))
             {
-                Log.d(Constant.TAG,"adapter order status is Delivery");
+                Log.d(Constant.TAG, "adapter order status is Delivery");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
                 vh.itemOrderStatus.setText("Delivery");
                 vh.itemOrderStatusDate.setText(order.getDeliveryDate());
                 //显示按钮组
                 vh.itemOrderOperationLayout.setVisibility(View.VISIBLE);
-                //显示CancleAfterDelivery按钮
-                vh.itemOrderCancleBtn.setVisibility(View.GONE);
-                vh.itemOrderResubmitBtn.setVisibility(View.GONE);
-                vh.itemOrderDeliveryBtn.setVisibility(View.GONE);
-                vh.itemOrderCancleAfterDeliveryBtn.setVisibility(View.VISIBLE);
+                //隐藏PickUp按钮显示Finish按钮
+                vh.itemOrderPickUpBtn.setVisibility(View.GONE);
+                vh.itemOrderFinishBtn.setVisibility(View.VISIBLE);
             }
             //Finish
-            else if((orderStatus == value) && (value == 3))
+            else if ((orderStatus == value) && (value == 3))
             {
 //                Log.d(Constant.TAG,"adapter order status is Finish");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
@@ -152,7 +126,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //                Log.d(Constant.TAG,"adapter order status is Cancel");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
                 vh.itemOrderStatus.setText("Cancel");
-                vh.itemOrderStatusDate.setText((String) order.getCancelDate());
+                vh.itemOrderStatusDate.setText(order.getCancelDate());
 
                 //不显示按钮
                 vh.itemOrderOperationLayout.setVisibility(View.GONE);
@@ -172,12 +146,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
         //设置btn的点击监听器
-        if(onItemClickListener != null)
+        if (onItemClickListener != null)
         {
-            vh.itemOrderCancleBtn.setOnClickListener(new BasicOnClickListener(vh,order));
-            vh.itemOrderResubmitBtn.setOnClickListener(new BasicOnClickListener(vh,order));
-            vh.itemOrderDeliveryBtn.setOnClickListener(new BasicOnClickListener(vh,order));
-            vh.itemOrderCancleAfterDeliveryBtn.setOnClickListener(new BasicOnClickListener(vh,order));
+            vh.itemOrderPickUpBtn.setOnClickListener(new BasicOnClickListener(vh, order));
+            vh.itemOrderFinishBtn.setOnClickListener(new BasicOnClickListener(vh, order));
+            vh.itemOrderCardView.setOnClickListener(new BasicOnClickListener(vh, order));
         }
     }
 
@@ -190,50 +163,47 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public static class OrderListViewHolder extends RecyclerView.ViewHolder
     {
+        private CardView itemOrderCardView;
         private TextView itemOrderStatus;
         private TextView itemOrderStatusDate;
-        private TextView itemOrderAddress;
-        private LinearLayout itemOrderDriverNameLayout;
-        private TextView itemOrderDriverName;
+        private LinearLayout itemOrderDriverStartingPointLayout;
+        private TextView itemOrderStartingPoint;
+        private LinearLayout itemOrderDriverDestinationLayout;
+        private TextView itemOrderDestination;
         private LinearLayout itemOrderCustomerPhoneLayout;
         private TextView itemOrderCustomerPhone;
-        private LinearLayout itemOrderOrdernoLayout;
-        private TextView itemOrderNo;
-        private LinearLayout itemOrderNotesLayout;
-        private TextView itemOrderNotes;
-        private LinearLayout itemOrderOthersLayout;
-        private TextView itemOrderOthers;
+        private LinearLayout itemOrderRestaurantPhoneLayout;
+        private TextView itemOrderRestaurantPhone;
         private LinearLayout itemOrderFinishedTimeLayout;
         private TextView itemOrderFinishedTime;
+        private LinearLayout itemOrderOrdernoLayout;
+        private TextView itemOrderNo;
         private LinearLayout itemOrderOperationLayout;
-        private AppCompatButton itemOrderCancleBtn;
-        private AppCompatButton itemOrderResubmitBtn;
-        private AppCompatButton itemOrderDeliveryBtn;
-        private AppCompatButton itemOrderCancleAfterDeliveryBtn;
+        private AppCompatButton itemOrderPickUpBtn;
+        private AppCompatButton itemOrderFinishBtn;
 
         private void assignViews(View itemView)
         {
+            itemOrderCardView = (CardView)itemView.findViewById(R.id.item_order_card_view);
             itemOrderStatus = (TextView) itemView.findViewById(R.id.item_order_status);
             itemOrderStatusDate = (TextView) itemView.findViewById(R.id.item_order_status_date);
-            itemOrderAddress = (TextView) itemView.findViewById(R.id.item_order_address);
-            itemOrderDriverNameLayout = (LinearLayout) itemView.findViewById(R.id.item_order_driver_name_layout);
-            itemOrderDriverName = (TextView) itemView.findViewById(R.id.item_order_driver_name);
+            itemOrderDriverStartingPointLayout = (LinearLayout) itemView.findViewById(R.id.item_order_driver_starting_point_layout);
+            itemOrderStartingPoint = (TextView) itemView.findViewById(R.id.item_order_starting_point);
+            itemOrderDriverDestinationLayout = (LinearLayout) itemView.findViewById(R.id.item_order_driver_destination_layout);
+            itemOrderDestination = (TextView) itemView.findViewById(R.id.item_order_destination);
             itemOrderCustomerPhoneLayout = (LinearLayout) itemView.findViewById(R.id.item_order_customer_phone_layout);
             itemOrderCustomerPhone = (TextView) itemView.findViewById(R.id.item_order_customer_phone);
-            itemOrderOrdernoLayout = (LinearLayout) itemView.findViewById(R.id.item_order_orderno_layout);
-            itemOrderNo = (TextView) itemView.findViewById(R.id.item_order_no);
-            itemOrderNotesLayout = (LinearLayout) itemView.findViewById(R.id.item_order_notes_layout);
-            itemOrderNotes = (TextView) itemView.findViewById(R.id.item_order_notes);
-            itemOrderOthersLayout = (LinearLayout) itemView.findViewById(R.id.item_order_others_layout);
-            itemOrderOthers = (TextView) itemView.findViewById(R.id.item_order_others);
+            itemOrderRestaurantPhoneLayout = (LinearLayout) itemView.findViewById(R.id.item_order_restaurant_phone_layout);
+            itemOrderRestaurantPhone = (TextView) itemView.findViewById(R.id.item_order_restaurant_phone);
             itemOrderFinishedTimeLayout = (LinearLayout) itemView.findViewById(R.id.item_order_finished_time_layout);
             itemOrderFinishedTime = (TextView) itemView.findViewById(R.id.item_order_finished_time);
+            itemOrderOrdernoLayout = (LinearLayout) itemView.findViewById(R.id.item_order_orderno_layout);
+            itemOrderNo = (TextView) itemView.findViewById(R.id.item_order_no);
             itemOrderOperationLayout = (LinearLayout) itemView.findViewById(R.id.item_order_operation_layout);
-            itemOrderCancleBtn = (AppCompatButton) itemView.findViewById(R.id.item_order_cancle_btn);
-            itemOrderResubmitBtn = (AppCompatButton) itemView.findViewById(R.id.item_order_resubmit_btn);
-            itemOrderDeliveryBtn = (AppCompatButton) itemView.findViewById(R.id.item_order_delivery_btn);
-            itemOrderCancleAfterDeliveryBtn = (AppCompatButton) itemView.findViewById(R.id.item_order_cancle_after_delivery_btn);
+            itemOrderPickUpBtn = (AppCompatButton) itemView.findViewById(R.id.item_order_pick_up_btn);
+            itemOrderFinishBtn = (AppCompatButton) itemView.findViewById(R.id.item_order_finish_btn);
         }
+
 
         public OrderListViewHolder(View itemView)
         {
@@ -275,7 +245,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void singleItemUpdate(int position, OrderListInfo.BodyBean.PageBean.ListBean order)
     {
         data.remove(position);
-        data.add(position,order);
+        data.add(position, order);
         notifyItemChanged(position);
     }
 
@@ -295,17 +265,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         {
             switch (v.getId())
             {
-                case R.id.item_order_cancle_btn:
-                    onItemClickListener.onItemClick(vh.itemOrderCancleBtn, vh.getLayoutPosition(),order);
+                case R.id.item_order_pick_up_btn:
+                    onItemClickListener.onItemClick(vh.itemOrderPickUpBtn, vh.getLayoutPosition(), order);
                     break;
-                case R.id.item_order_resubmit_btn:
-                    onItemClickListener.onItemClick(vh.itemOrderResubmitBtn, vh.getLayoutPosition(),order);
+                case R.id.item_order_finish_btn:
+                    onItemClickListener.onItemClick(vh.itemOrderFinishBtn, vh.getLayoutPosition(), order);
                     break;
-                case R.id.item_order_delivery_btn:
-                    onItemClickListener.onItemClick(vh.itemOrderDeliveryBtn, vh.getLayoutPosition(),order);
-                    break;
-                case R.id.item_order_cancle_after_delivery_btn:
-                    onItemClickListener.onItemClick(vh.itemOrderCancleAfterDeliveryBtn, vh.getLayoutPosition(),order);
+                case R.id.item_order_card_view:
+                    onItemClickListener.onItemClick(vh.itemOrderCardView, vh.getLayoutPosition(), order);
                     break;
             }
         }

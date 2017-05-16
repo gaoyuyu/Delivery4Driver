@@ -2,13 +2,15 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_order_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
-    android:layout_marginTop="2dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="4dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp"
+    android:foreground="?attr/selectableItemBackground"
     >
 
     <LinearLayout
@@ -47,18 +49,8 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/item_order_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="APT20,1552a rue Baxter"
-            android:textColor="@android:color/darker_gray"
-            />
-
         <LinearLayout
-            android:id="@+id/item_order_driver_name_layout"
+            android:id="@+id/item_order_driver_starting_point_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -69,20 +61,50 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Driver's Name："
-                android:textColor="@android:color/darker_gray"
+                android:text="@string/starting_point"
+                android:textColor="@color/text_basic_color"
                 />
 
             <TextView
-                android:id="@+id/item_order_driver_name"
+                android:id="@+id/item_order_starting_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:padding="5dp"
-                android:text="Sam"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
+                android:text="hotel"
+                android:textColor="@color/text_basic_color"
+                />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item_order_driver_destination_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/destination"
+                android:textColor="@color/text_basic_color"
+                />
+
+            <TextView
+                android:id="@+id/item_order_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="车牌路"
+                android:textColor="@color/text_basic_color"
+                />
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/item_order_customer_phone_layout"
@@ -106,6 +128,61 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="13820124526"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item_order_restaurant_phone_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/restaurant_phone_short"
+                android:textColor="@android:color/darker_gray"
+                />
+
+            <TextView
+                android:id="@+id/item_order_restaurant_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="525252525252"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/item_order_finished_time_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Finished Time："
+                android:textColor="@android:color/darker_gray"
+                />
+
+            <TextView
+                android:id="@+id/item_order_finished_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="15mins"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15sp"/>
 
@@ -138,86 +215,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/item_order_notes_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="Note："
-                android:textColor="@android:color/darker_gray"
-                />
-
-            <TextView
-                android:id="@+id/item_order_notes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="啊实打实大"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_order_others_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="Otrhers："
-                android:textColor="@android:color/darker_gray"
-                />
-
-            <TextView
-                android:id="@+id/item_order_others"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="555555555555555555555"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_order_finished_time_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="Finished Time："
-                android:textColor="@android:color/darker_gray"
-                />
-
-            <TextView
-                android:id="@+id/item_order_finished_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="15mins"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/item_order_operation_layout"
@@ -226,36 +223,21 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/item_order_cancle_btn"
+                android:id="@+id/item_order_pick_up_btn"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancle"
+                android:text="Pick Up"
                 />
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/item_order_resubmit_btn"
+                android:id="@+id/item_order_finish_btn"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="rebsubmit"
+                android:text="finish"
                 />
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/item_order_delivery_btn"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delivery"
-                />
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/item_order_cancle_after_delivery_btn"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CancleAD"
-                />
         </LinearLayout>
 
     </LinearLayout>

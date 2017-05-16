@@ -25,7 +25,7 @@
     <string name="change_new_pwd">请输入新密码</string>
     <string name="action_change_pwd">修改密码</string>
     <string name="starting_point">Starting Point：</string>
-    <string name="distination">Distination：</string>
+    <string name="destination">Destination：</string>
     <string name="customer_phone_short">Cust.Phone：</string>
     <string name="notes">Notes：</string>
     <string name="others">Others：</string>
@@ -33,5 +33,6 @@
     <string name="order_submit_success">Operation Successfully Completed</string>
     <string name="order_submit_success_sub">Order has been sent, wait for being accepted</string>
     <string name="welcome_driver">Welcome,Driver</string>
+    <string name="restaurant_phone_short">Restaurant Phone：</string>
 
 </resources>

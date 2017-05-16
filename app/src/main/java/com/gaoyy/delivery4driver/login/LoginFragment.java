@@ -18,13 +18,19 @@ import com.gaoyy.delivery4driver.api.bean.DriverInfo;
 import com.gaoyy.delivery4driver.base.BaseFragment;
 import com.gaoyy.delivery4driver.base.CustomDialogFragment;
 import com.gaoyy.delivery4driver.main.MainActivity;
+import com.gaoyy.delivery4driver.service.PollingService;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.DialogUtils;
+import com.gaoyy.delivery4driver.util.PollingUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 public class LoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener
 {
@@ -213,6 +219,25 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         intent.putExtra("dictStatus",(Serializable) dictStatus);
         intent.setClass(activity, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void uploadLocation()
+    {
+
+        PollingUtils.startPollingService(activity,5, PollingService.class,PollingService.ACTION);
+
+        //设置JPush别名
+        //建议添加tag标签，发送消息的之后就可以指定tag标签来发送了
+        JPushInterface.setAlias(activity, CommonUtils.getLoginName(activity), new TagAliasCallback()
+        {
+            @Override
+            public void gotResult(int i, String s, Set<String> set)
+            {
+                Log.d(Constant.TAG,"[JPUSH TagAliasCallback]--i->"+i);
+                Log.d(Constant.TAG,"[JPUSH TagAliasCallback]--s->"+s);
+            }
+        });
     }
 
 

@@ -34,6 +34,11 @@ public class LoginContract
          * 跳转到MainActivity
          */
         void redirectToMain(List<DriverInfo.BodyBean.DictStatusBean> dictStatus);
+
+        /**
+         * 登录完成开启上传位置
+         */
+        void uploadLocation();
     }
 
     interface Presenter extends BasePresenter

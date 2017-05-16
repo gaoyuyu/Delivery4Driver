@@ -227,59 +227,16 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
         int id = view.getId();
         switch (id)
         {
-            case R.id.item_order_cancle_btn:
-                orderCancle(position,order);
+            case R.id.item_order_card_view:
+                CommonUtils.showToast(activity,"card");
                 break;
-            case R.id.item_order_resubmit_btn:
-                orderResubmit(position,order);
-                break;
-            case R.id.item_order_delivery_btn:
+            case R.id.item_order_pick_up_btn:
                 orderSend(position,order);
                 break;
-            case R.id.item_order_cancle_after_delivery_btn:
-                cancleAfterDelivery(position,order);
+            case R.id.item_order_finish_btn:
+                orderFinish(position,order);
                 break;
         }
-    }
-
-    /**
-     * 饭店订单退单，用于cancle after deliver按钮
-     * @param position
-     * @param order
-     */
-    private void cancleAfterDelivery(final int position, final OrderListInfo.BodyBean.PageBean.ListBean order)
-    {
-        final CustomDialogFragment cancleADLoading = DialogUtils.showLoadingDialog(activity);
-        Call<OrderOperationStatusInfo> cancleADCall = RetrofitService.sApiService.orderBack(CommonUtils.getLoginName(activity), CommonUtils.getRandomCode(activity), order.getId());
-        cancleADCall.enqueue(new Callback<OrderOperationStatusInfo>()
-        {
-            @Override
-            public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
-            {
-                cancleADLoading.dismiss();
-                if (response.isSuccessful() && response.body() != null)
-                {
-                    OrderOperationStatusInfo oosi = response.body();
-                    CommonUtils.showSnackBar(commonRv, oosi.getMsg());
-                    if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
-                    {
-                        int status = oosi.getBody().getStatus();
-                        //设置订单状态
-                        order.setStatus(status);
-                        //设置cancle时间
-                        order.setCancelDate(CommonUtils.getCurrentTime());
-                        //更新数据
-                        orderListAdapter.singleItemUpdate(position,order);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
-            {
-                cancleADLoading.dismiss();
-            }
-        });
     }
 
     /**
@@ -323,58 +280,20 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     }
 
     /**
-     * 餐厅resubmit，用于resubmit按钮
+     * 完成订单
      * @param position
      * @param order
      */
-    private void orderResubmit(final int position,final OrderListInfo.BodyBean.PageBean.ListBean order)
+    private void orderFinish(final int position,final OrderListInfo.BodyBean.PageBean.ListBean order)
     {
-        final CustomDialogFragment resubmitLoading = DialogUtils.showLoadingDialog(activity);
-        Call<OrderOperationStatusInfo> resubmitCall = RetrofitService.sApiService.orderResubmit(CommonUtils.getLoginName(activity), CommonUtils.getRandomCode(activity), order.getId());
-        resubmitCall.enqueue(new Callback<OrderOperationStatusInfo>()
+        final CustomDialogFragment finishLoading = DialogUtils.showLoadingDialog(activity);
+        Call<OrderOperationStatusInfo> finishCall = RetrofitService.sApiService.orderFinish(CommonUtils.getLoginName(activity), CommonUtils.getRandomCode(activity), order.getId());
+        finishCall.enqueue(new Callback<OrderOperationStatusInfo>()
         {
             @Override
             public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
             {
-                resubmitLoading.dismiss();
-                if (response.isSuccessful() && response.body() != null)
-                {
-                    OrderOperationStatusInfo oosi = response.body();
-                    CommonUtils.showSnackBar(commonRv, oosi.getMsg());
-                    if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
-                    {
-                        int status = oosi.getBody().getStatus();
-                        //设置订单状态
-                        order.setStatus(status);
-
-                        //更新数据
-                        orderListAdapter.singleItemUpdate(position,order);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
-            {
-                resubmitLoading.dismiss();
-            }
-        });
-    }
-    /**
-     * 饭店订单取消，用于cancle按钮
-     * @param position
-     * @param order
-     */
-    private void orderCancle(final int position,final OrderListInfo.BodyBean.PageBean.ListBean order)
-    {
-        final CustomDialogFragment cancleLoading = DialogUtils.showLoadingDialog(activity);
-        Call<OrderOperationStatusInfo> cancleCall = RetrofitService.sApiService.orderCancle(CommonUtils.getLoginName(activity), CommonUtils.getRandomCode(activity), order.getId());
-        cancleCall.enqueue(new Callback<OrderOperationStatusInfo>()
-        {
-            @Override
-            public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
-            {
-                cancleLoading.dismiss();
+                finishLoading.dismiss();
                 if (response.isSuccessful() && response.body() != null)
                 {
                     OrderOperationStatusInfo oosi = response.body();
@@ -385,7 +304,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         //设置订单状态
                         order.setStatus(status);
                         //设置取消时间
-                        order.setCancelDate(CommonUtils.getCurrentTime());
+                        order.setFinishDate(CommonUtils.getCurrentTime());
                         //更新数据
                         orderListAdapter.singleItemUpdate(position,order);
                     }
@@ -395,7 +314,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             @Override
             public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
             {
-                cancleLoading.dismiss();
+                finishLoading.dismiss();
             }
         });
     }

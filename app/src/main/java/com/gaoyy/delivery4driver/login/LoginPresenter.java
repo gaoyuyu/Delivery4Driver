@@ -62,6 +62,21 @@ public class LoginPresenter implements LoginContract.Presenter
 
                         List<DriverInfo.BodyBean.DictStatusBean> dictStatus = driverInfo.getBody().getDictStatus();
                         mLoginView.redirectToMain(dictStatus);
+
+                        Log.i(Constant.TAG,"driver lng-->"+driverInfo.getBody().getCourier().getLongitude());
+                        Log.i(Constant.TAG,"driver lat-->"+driverInfo.getBody().getCourier().getLatitude());
+                        Log.i(Constant.TAG,"isOnline-->"+driverInfo.getBody().getCourier().getIsOnline());
+
+
+                        Log.i(Constant.TAG,"loginName-->"+driverInfo.getBody().getUser().getLoginName());
+                        Log.i(Constant.TAG,"RandomCode-->"+driverInfo.getBody().getUser().getRandomCode());
+
+                        mLoginView.uploadLocation();
+
+
+
+
+
                     }
                     else if(errorCode.equals("-2"))
                     {

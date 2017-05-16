@@ -9,6 +9,7 @@ import com.gaoyy.delivery4driver.api.bean.OrderSaveInfo;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -119,6 +120,48 @@ public interface Api
     @FormUrlEncoded
     @POST("a/order/order/mobile/orderback")
     Call<OrderOperationStatusInfo> orderBack(@Field("loginName") String loginName, @Field("randomCode") String randomCode, @Field("id") String id);
+
+    /**
+     * 司机完成订单
+     *
+     * @param loginName
+     * @param randomCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/order/order/mobile/orderfinish")
+    Call<OrderOperationStatusInfo> orderFinish(@Field("loginName") String loginName, @Field("randomCode") String randomCode, @Field("id") String id);
+
+
+    /**
+     * 司机上线
+     *
+     * @param loginName
+     * @param randomCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/sys/user/mobile/online")
+    Call<ResponseBody> driverOnline(@Field("loginName") String loginName, @Field("randomCode") String randomCode);
+
+    /**
+     * 司机上传位置
+     *
+     * @param loginName
+     * @param randomCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/sys/user/mobile/online")
+    Call<ResponseBody> upLoadDriverLocation(@Field("loginName") String loginName, @Field("randomCode") String randomCode,
+                                            @Field("latitude") String latitude, @Field("longitude") String longitude,@Field("course") String course);
+
+
+
+
+
+
+
 
 
 }

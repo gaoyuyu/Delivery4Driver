@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/distination"
+                android:text="@string/destination"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"/>
 

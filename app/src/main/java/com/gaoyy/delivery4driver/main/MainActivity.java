@@ -19,8 +19,8 @@ import com.gaoyy.delivery4driver.base.BaseActivity;
 import com.gaoyy.delivery4driver.base.CustomDialogFragment;
 import com.gaoyy.delivery4driver.changepwd.ChangePwdActivity;
 import com.gaoyy.delivery4driver.login.LoginActivity;
-import com.gaoyy.delivery4driver.main.driver.DriverFragment;
-import com.gaoyy.delivery4driver.orderlist.OrderListActivity;
+import com.gaoyy.delivery4driver.orderlist.OrderListFragment;
+import com.gaoyy.delivery4driver.orderlist.OrderListPresenter;
 import com.gaoyy.delivery4driver.util.ActivityUtils;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.DialogUtils;
@@ -85,8 +85,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         dictStatus = (List<DriverInfo.BodyBean.DictStatusBean>) getIntent().getSerializableExtra("dictStatus");
 
-        DriverFragment driverFragment = DriverFragment.newInstance();
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),driverFragment,R.id.main_content);
+        OrderListFragment orderListFragment = OrderListFragment.newInstance();
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),orderListFragment,R.id.main_content);
+        new OrderListPresenter(orderListFragment);
 
     }
 
@@ -113,11 +114,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id)
         {
-            case R.id.nav_order_list:
-                Intent orderList = new Intent();
-                orderList.setClass(MainActivity.this, OrderListActivity.class);
-                startActivity(orderList);
-                break;
             case R.id.nav_change_pwd:
                 Intent changePwd = new Intent();
                 changePwd.setClass(MainActivity.this, ChangePwdActivity.class);
