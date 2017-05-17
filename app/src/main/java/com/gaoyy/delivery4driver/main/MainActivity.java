@@ -1,14 +1,18 @@
 package com.gaoyy.delivery4driver.main;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.gaoyy.delivery4driver.R;
@@ -75,20 +79,133 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mainDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        View header = mainNavView.getHeaderView(0);
-        TextView tv = (TextView) header.findViewById(R.id.header_username);
-        tv.setText("Welcome," + CommonUtils.getName(this));
+        configHeader();
+
 
         mainNavView.setNavigationItemSelectedListener(this);
-
-
 
         dictStatus = (List<DriverInfo.BodyBean.DictStatusBean>) getIntent().getSerializableExtra("dictStatus");
 
         OrderListFragment orderListFragment = OrderListFragment.newInstance();
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),orderListFragment,R.id.main_content);
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), orderListFragment, R.id.main_content);
         new OrderListPresenter(orderListFragment);
 
+    }
+
+    /**
+     * 设置header数据
+     */
+    private void configHeader()
+    {
+        View header = mainNavView.getHeaderView(0);
+        TextView tv = (TextView) header.findViewById(R.id.header_username);
+        tv.setText("Welcome," + CommonUtils.getName(this));
+        //设置在线离线按钮
+        SwitchCompat switchCompat = (SwitchCompat) header.findViewById(R.id.header_switch);
+        SharedPreferences courierInfo = getSharedPreferences("courier", Activity.MODE_PRIVATE);
+        String isOnline = courierInfo.getString("isOnline", "");
+        if (isOnline.equals("1"))
+        {
+            switchCompat.setChecked(true);
+        }
+        else
+        {
+            switchCompat.setChecked(false);
+        }
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
+            {
+                if (isChecked)
+                {
+                    //司机上线
+                    driverOnline(compoundButton);
+                }
+                else
+                {
+                    //司机离线
+                    driverOffline(compoundButton);
+                }
+
+            }
+        });
+    }
+
+    /**
+     * 司机离线
+     */
+    private void driverOffline(final CompoundButton compoundButton)
+    {
+        final CustomDialogFragment offlineLoading = DialogUtils.showLoadingDialog(MainActivity.this);
+        Call<CommonInfo> offlineCall = RetrofitService.sApiService.driverOnline(CommonUtils.getLoginName(MainActivity.this), CommonUtils.getRandomCode(MainActivity.this));
+        offlineCall.enqueue(new Callback<CommonInfo>()
+        {
+            @Override
+            public void onResponse(Call<CommonInfo> call, Response<CommonInfo> response)
+            {
+                offlineLoading.dismiss();
+                if (response.isSuccessful() && response.body() != null)
+                {
+                    CommonInfo commonInfo = response.body();
+                    if (commonInfo.isSuccess())
+                    {
+                        CommonUtils.showToast(MainActivity.this, "Offline " + commonInfo.getMsg());
+                    }
+                    else
+                    {
+                        //离线失败，设置回true
+                        CommonUtils.showToast(MainActivity.this, "Offline " + commonInfo.getMsg());
+                        compoundButton.setChecked(true);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonInfo> call, Throwable t)
+            {
+                offlineLoading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 司机上线
+     */
+    private void driverOnline(final CompoundButton compoundButton)
+    {
+        final CustomDialogFragment onlineLoading = DialogUtils.showLoadingDialog(MainActivity.this);
+        Call<CommonInfo> onlineCall = RetrofitService.sApiService.driverOnline(CommonUtils.getLoginName(MainActivity.this), CommonUtils.getRandomCode(MainActivity.this));
+        onlineCall.enqueue(new Callback<CommonInfo>()
+        {
+            @Override
+            public void onResponse(Call<CommonInfo> call, Response<CommonInfo> response)
+            {
+                onlineLoading.dismiss();
+                if (response.isSuccessful() && response.body() != null)
+                {
+                    CommonInfo commonInfo = response.body();
+                    if (commonInfo.isSuccess())
+                    {
+                        CommonUtils.showToast(MainActivity.this, "Online " + commonInfo.getMsg());
+                    }
+                    else
+                    {
+                        //上线失败，设置回true
+                        CommonUtils.showToast(MainActivity.this, "Online " + commonInfo.getMsg());
+                        compoundButton.setChecked(false);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonInfo> call, Throwable t)
+            {
+                onlineLoading.dismiss();
+            }
+        });
     }
 
     @Override
@@ -118,6 +235,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 Intent changePwd = new Intent();
                 changePwd.setClass(MainActivity.this, ChangePwdActivity.class);
                 startActivity(changePwd);
+                break;
+            case R.id.nav_person_detail:
+                Intent personDetail = new Intent();
+                personDetail.setClass(MainActivity.this,PersonalDetailActivity.class);
+                startActivity(personDetail);
                 break;
             case R.id.nav_exit:
                 String loginName = CommonUtils.getLoginName(this);

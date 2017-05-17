@@ -8,6 +8,11 @@
             android:title="Change Password"/>
 
         <item
+            android:id="@+id/nav_person_detail"
+            android:icon="@drawable/ic_person_detail"
+            android:title="Personal Detail"/>
+
+        <item
             android:id="@+id/nav_exit"
             android:icon="@drawable/ic_logout"
             android:title="Sign Out"/>

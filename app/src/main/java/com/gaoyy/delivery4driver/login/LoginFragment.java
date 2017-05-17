@@ -196,6 +196,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         editor.putString("remarks", courier.getRemarks());
         editor.putString("name", courier.getName());
         editor.putString("sex", courier.getSex());
+        editor.putString("userName", courier.getUserName());
         editor.putString("age",courier.getAge()+"");
         editor.putString("orderCount",courier.getOrderCount()+"");
         editor.putString("tel",courier.getTel());
@@ -225,7 +226,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     public void uploadLocation()
     {
 
-        PollingUtils.startPollingService(activity,5, PollingService.class,PollingService.ACTION);
+        PollingUtils.startPollingService(activity,1000, PollingService.class,PollingService.ACTION);
 
         //设置JPush别名
         //建议添加tag标签，发送消息的之后就可以指定tag标签来发送了

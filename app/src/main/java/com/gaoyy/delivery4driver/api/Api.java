@@ -142,7 +142,18 @@ public interface Api
      */
     @FormUrlEncoded
     @POST("a/sys/user/mobile/online")
-    Call<ResponseBody> driverOnline(@Field("loginName") String loginName, @Field("randomCode") String randomCode);
+    Call<CommonInfo> driverOnline(@Field("loginName") String loginName, @Field("randomCode") String randomCode);
+
+    /**
+     * 司机离线
+     *
+     * @param loginName
+     * @param randomCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/sys/user/mobile/offline")
+    Call<CommonInfo> driverOffline(@Field("loginName") String loginName, @Field("randomCode") String randomCode);
 
     /**
      * 司机上传位置

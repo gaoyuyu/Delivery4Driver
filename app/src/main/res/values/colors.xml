@@ -8,6 +8,7 @@
     <color name="black">#000000</color>
 
     <color name="gray600">#999999</color>
+    <color name="gray">#939292</color>
     <color name="gray_divider">#EEEEEE</color>
     <color name="gray_light">#e3e3e3</color>
     <color name="text_basic_color">#333333</color>

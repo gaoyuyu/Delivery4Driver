@@ -73,10 +73,6 @@ public class LoginPresenter implements LoginContract.Presenter
 
                         mLoginView.uploadLocation();
 
-
-
-
-
                     }
                     else if(errorCode.equals("-2"))
                     {
