@@ -1,5 +1,6 @@
 package com.gaoyy.delivery4driver.api.bean;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -175,7 +176,7 @@ public class OrderListInfo
                 this.list = list;
             }
 
-            public static class ListBean
+            public static class ListBean implements Serializable
             {
                 /**
                  * id : 904a826bf88141b9b7f2ca91ddc85a7f

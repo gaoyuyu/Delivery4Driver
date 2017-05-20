@@ -1,6 +1,7 @@
 package com.gaoyy.delivery4driver.orderlist;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +18,7 @@ import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderOperationStatusInfo;
 import com.gaoyy.delivery4driver.base.BaseFragment;
 import com.gaoyy.delivery4driver.base.CustomDialogFragment;
+import com.gaoyy.delivery4driver.main.OrderDetailActivity;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.DialogUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -228,7 +230,9 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
         switch (id)
         {
             case R.id.item_order_card_view:
-                CommonUtils.showToast(activity,"card");
+                Intent intent = new Intent(activity, OrderDetailActivity.class);
+                intent.putExtra("order", order);
+                startActivity(intent);
                 break;
             case R.id.item_order_pick_up_btn:
                 orderSend(position,order);

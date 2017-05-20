@@ -137,6 +137,7 @@
                     android:hint="@string/customer_remark"
                     android:maxLines="5"
                     android:inputType="textMultiLine"
+                    android:gravity="start"
                     android:textColor="@color/text_basic_color"/>
 
             </android.support.design.widget.TextInputLayout>
