@@ -29,7 +29,7 @@ public class ChangePwdActivity extends BaseActivity
     @Override
     protected void initToolbar()
     {
-        super.initToolbar(changePwdToolbar, "修改密码", true, -1);
+        super.initToolbar(changePwdToolbar, R.string.toolbar_title_changepwd, true, -1);
     }
 
     @Override

@@ -89,6 +89,19 @@ public class CommonUtils
         return loginName;
     }
 
+    /**
+     * 获取接单倒计时
+     *
+     * @param context
+     * @return
+     */
+    public static int getOrderTime(Context context)
+    {
+        SharedPreferences account = context.getSharedPreferences("orderTime", Activity.MODE_PRIVATE);
+        int orderTime = account.getInt("orderTime", 0);
+        return orderTime;
+    }
+
 
     /**
      * 获取角色标识
@@ -211,6 +224,26 @@ public class CommonUtils
         layout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, context.getResources()
                         .getDisplayMetrics()));
+    }
+
+    /**
+     * 【DEBUG】用于输出http请求信息
+     *
+     * @param msg
+     */
+    public static void httpDebugLogger(String msg)
+    {
+        Log.d(Constant.TAG, "[-HTTP LOG-]" + "==========" + msg + "==========");
+    }
+
+    /**
+     * 【ERROR】用于输出http请求错误信息
+     *
+     * @param msg
+     */
+    public static void httpErrorLogger(String msg)
+    {
+        Log.e(Constant.TAG, "[-HTTP LOG-]" + "==========" + msg + "==========");
     }
 
 

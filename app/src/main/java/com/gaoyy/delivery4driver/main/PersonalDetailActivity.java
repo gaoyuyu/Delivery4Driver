@@ -59,7 +59,7 @@ public class PersonalDetailActivity extends BaseActivity
     @Override
     protected void initToolbar()
     {
-        super.initToolbar(personalDetailToolbar,"个人详情",true,-1);
+        super.initToolbar(personalDetailToolbar,R.string.toolbar_title_personal_detail,true,-1);
     }
 
     @Override

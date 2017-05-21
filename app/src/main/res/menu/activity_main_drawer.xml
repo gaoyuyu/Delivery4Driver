@@ -5,17 +5,17 @@
         <item
             android:id="@+id/nav_change_pwd"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Change Password"/>
+            android:title="@string/menu_change_pwd"/>
 
         <item
             android:id="@+id/nav_person_detail"
             android:icon="@drawable/ic_person_detail"
-            android:title="Personal Detail"/>
+            android:title="@string/menu_personal_detail"/>
 
         <item
             android:id="@+id/nav_exit"
             android:icon="@drawable/ic_logout"
-            android:title="Sign Out"/>
+            android:title="@string/menu_sign_out"/>
     </group>
 
 

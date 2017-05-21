@@ -5,6 +5,7 @@ import android.util.Log;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
+import com.gaoyy.delivery4driver.util.CommonUtils;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -36,6 +37,7 @@ public class OrderListPresenter implements OrderListContract.Presenter
     @Override
     public void orderList(Map<String, String> params, final int refreshTag)
     {
+        CommonUtils.httpDebugLogger("获取订单列表");
         Call<OrderListInfo> call = RetrofitService.sApiService.orderList(params);
 
         mOrderListView.refreshing();
@@ -56,6 +58,9 @@ public class OrderListPresenter implements OrderListContract.Presenter
                 if (response.isSuccessful() && response.body() != null)
                 {
                     OrderListInfo orderListInfo = response.body();
+                    String msg = orderListInfo.getMsg();
+                    String errorCode = orderListInfo.getErrorCode();
+                    CommonUtils.httpDebugLogger("[isSuccess="+orderListInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
                     if (orderListInfo.isSuccess())
                     {
                         LinkedList<OrderListInfo.BodyBean.PageBean.ListBean> orderList = orderListInfo.getBody().getPage().getList();
@@ -85,6 +90,7 @@ public class OrderListPresenter implements OrderListContract.Presenter
                 }
                 //停止刷新
                 mOrderListView.finishRefesh();
+                CommonUtils.httpErrorLogger(t.toString());
             }
         });
     }

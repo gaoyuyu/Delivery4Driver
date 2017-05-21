@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.gaoyy.delivery4driver.main.NoticeActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,12 +54,17 @@ public class MyReceiver extends BroadcastReceiver
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             Log.d(TAG, "[MyReceiver] 打印Bundle: " + printBundle(bundle));
-
         }
         else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction()))
         {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-//
+
+            Intent notice = new Intent();
+            notice.putExtra("notice",bundle);
+            notice.setClass(context, NoticeActivity.class);
+            notice.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            context.startActivity(notice);
+
 //        	//打开自定义的Activity
 //        	Intent i = new Intent(context, TestActivity.class);
 //        	i.putExtras(bundle);

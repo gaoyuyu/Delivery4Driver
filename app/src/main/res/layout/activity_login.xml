@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.gaoyy.delivery4res.login.LoginActivity">
+    tools:context="com.gaoyy.delivery4driver.login.LoginActivity">
 
     <FrameLayout
         android:id="@+id/login_content"

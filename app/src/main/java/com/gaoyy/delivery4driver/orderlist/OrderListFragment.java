@@ -218,7 +218,8 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     @Override
     public void onRefresh()
     {
-        Map<String, String> params = getOrderListParams(1, pageSize);
+        pageNo = 1;
+        Map<String, String> params = getOrderListParams(pageNo, pageSize);
         Log.d(Constant.TAG, "下拉刷新，传递参数-->" + params.toString());
         mOrderListPresenter.orderList(params, PULL_TO_REFRESH);
     }
@@ -250,6 +251,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
      */
     private void orderSend(final int position,final OrderListInfo.BodyBean.PageBean.ListBean order)
     {
+        CommonUtils.httpDebugLogger("司机订单派送请求");
         final CustomDialogFragment deliveryLoading = DialogUtils.showLoadingDialog(activity);
         Call<OrderOperationStatusInfo> deliveryCall = RetrofitService.sApiService.orderSend(CommonUtils.getLoginName(activity), CommonUtils.getRandomCode(activity), order.getId());
         deliveryCall.enqueue(new Callback<OrderOperationStatusInfo>()
@@ -261,6 +263,9 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                 if (response.isSuccessful() && response.body() != null)
                 {
                     OrderOperationStatusInfo oosi = response.body();
+                    String errorCode = oosi.getErrorCode();
+                    String msg = oosi.getMsg();
+                    CommonUtils.httpDebugLogger("[isSuccess="+oosi.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
                     CommonUtils.showSnackBar(commonRv, oosi.getMsg());
                     if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
                     {
@@ -279,6 +284,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
             {
                 deliveryLoading.dismiss();
+                CommonUtils.httpErrorLogger(t.toString());
             }
         });
     }
@@ -290,6 +296,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
      */
     private void orderFinish(final int position,final OrderListInfo.BodyBean.PageBean.ListBean order)
     {
+        CommonUtils.httpDebugLogger("司机完成订单请求");
         final CustomDialogFragment finishLoading = DialogUtils.showLoadingDialog(activity);
         Call<OrderOperationStatusInfo> finishCall = RetrofitService.sApiService.orderFinish(CommonUtils.getLoginName(activity), CommonUtils.getRandomCode(activity), order.getId());
         finishCall.enqueue(new Callback<OrderOperationStatusInfo>()
@@ -301,6 +308,9 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                 if (response.isSuccessful() && response.body() != null)
                 {
                     OrderOperationStatusInfo oosi = response.body();
+                    String errorCode = oosi.getErrorCode();
+                    String msg = oosi.getMsg();
+                    CommonUtils.httpDebugLogger("[isSuccess="+oosi.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
                     CommonUtils.showSnackBar(commonRv, oosi.getMsg());
                     if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
                     {
@@ -319,6 +329,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
             {
                 finishLoading.dismiss();
+                CommonUtils.httpErrorLogger(t.toString());
             }
         });
     }

@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.gaoyy.delivery4driver.api.RetrofitService;
 
-import java.io.IOException;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -47,7 +46,7 @@ public class PollingService extends Service
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId)
     {
-        Log.e(LOG_TAG, "onStartCommand() executed");
+        Log.e(LOG_TAG, LOG_TAG+"===onStartCommand() executed");
 
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -86,9 +85,8 @@ public class PollingService extends Service
 
             if (location != null)
             {
-                // TODO: 2017/5/16 0016 上传位置信息
-                Log.e(LOG_TAG, "Latitude-->" + location.getLatitude());
-                Log.e(LOG_TAG, "Longitude-->" + location.getLongitude());
+                Log.e(LOG_TAG, LOG_TAG+"===Latitude-->" + location.getLatitude());
+                Log.e(LOG_TAG, LOG_TAG+"===Longitude-->" + location.getLongitude());
 
                 uploadLocation(intent, location);
 
@@ -143,8 +141,12 @@ public class PollingService extends Service
         String randomCode = intent.getStringExtra("randomCode");
         String lat = String.valueOf(location.getLatitude());
         String lng = String.valueOf(location.getLongitude());
+        Log.e(LOG_TAG,LOG_TAG+"--loginName-->"+loginName);
+        Log.e(LOG_TAG,LOG_TAG+"--randomCode-->"+randomCode);
+        Log.e(LOG_TAG,LOG_TAG+"--lat-->"+lat);
+        Log.e(LOG_TAG,LOG_TAG+"--lng-->"+lng);
         Call<ResponseBody> call = RetrofitService.sApiService.upLoadDriverLocation(loginName, randomCode, lat, lng, "36");
-        Log.e(LOG_TAG, "=====开始上传位置信息======");
+        Log.e(LOG_TAG, LOG_TAG+"========开始上传位置信息======");
         call.enqueue(new Callback<ResponseBody>()
         {
             @Override
@@ -152,12 +154,12 @@ public class PollingService extends Service
             {
                 if (response.isSuccessful() && response.body() != null)
                 {
-                    Log.e(LOG_TAG, "=====上传结束======");
+                    Log.e(LOG_TAG, LOG_TAG+"========上传结束======");
                     try
                     {
-                        Log.e(LOG_TAG, "Upload responese-->" + response.body().string());
+                        Log.e(LOG_TAG, LOG_TAG+"===Upload responese-->" + response.body().string());
                     }
-                    catch (IOException e)
+                    catch (Exception e)
                     {
                         e.printStackTrace();
                     }
@@ -167,7 +169,7 @@ public class PollingService extends Service
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t)
             {
-                Log.e(LOG_TAG, "=====上传失败======" + t.toString());
+                Log.e(LOG_TAG, LOG_TAG+"========上传失败======" + t.toString());
             }
         });
     }
@@ -177,6 +179,6 @@ public class PollingService extends Service
     public void onDestroy()
     {
         super.onDestroy();
-        System.out.println("Service:onDestroy");
+        Log.e(LOG_TAG, LOG_TAG+"=onDestroy==");
     }
 }

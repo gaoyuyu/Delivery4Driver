@@ -36,7 +36,7 @@ public class OrderListActivity extends BaseActivity
     @Override
     protected void initToolbar()
     {
-        super.initToolbar(orderListToolbar,"订单列表",true,-1);
+        super.initToolbar(orderListToolbar,R.string.toolbar_title_order_list,true,-1);
     }
 
 

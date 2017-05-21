@@ -3,12 +3,16 @@ package com.gaoyy.delivery4driver.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 
 import com.gaoyy.delivery4driver.R;
+import com.gaoyy.delivery4driver.application.ExitApplication;
+import com.gaoyy.delivery4driver.util.CommonUtils;
 
 
 public abstract class BaseActivity extends AppCompatActivity
 {
+    private long firstTime = 0;
     private int toolbarColor = R.color.colorPrimary;
 
     @Override
@@ -86,6 +90,28 @@ public abstract class BaseActivity extends AppCompatActivity
         //设置toolbar返回键是否可用
         getSupportActionBar().setHomeButtonEnabled(enabled);
         getSupportActionBar().setDisplayHomeAsUpEnabled(enabled);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            if ((System.currentTimeMillis() - firstTime) > 2000)
+            {
+                // 如果两次按键时间间隔大于2000毫秒，则不退出
+                CommonUtils.showToast(this,getResources().getString(R.string.exit_after_press_again));
+                firstTime = System.currentTimeMillis();// 更新mExitTime
+            } else
+            {
+                ExitApplication.getInstanse().exit();
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

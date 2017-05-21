@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,20 +8,22 @@
     >
 
     <include
-        android:id="@+id/order_detail_toolbar"
+        android:id="@+id/notice_toolbar"
         layout="@layout/widget_toolbar"
         />
 
     <LinearLayout
+        android:id="@+id/notice_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notice_toolbar"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="5dp"
-        tools:context="com.gaoyy.delivery4res.main.OrderDetailActivity">
+        android:layout_above="@+id/notice_btn_layout">
 
         <TextView
-            android:id="@+id/order_detail_date"
+            android:id="@+id/notice_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -29,26 +31,6 @@
             android:textColor="@color/text_basic_color"
             android:textSize="20sp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="@string/order_no"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/order_detail_order_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_basic_color"
-                android:textSize="16sp"/>
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,7 +46,7 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/order_detail_start_point"
+                android:id="@+id/notice_start_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_basic_color"
@@ -85,7 +67,7 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/order_detail_distination"
+                android:id="@+id/notice_distination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_basic_color"
@@ -106,7 +88,27 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/order_detail_phone"
+                android:id="@+id/notice_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_basic_color"
+                android:textSize="16sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Price："
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/notice_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_basic_color"
@@ -127,28 +129,7 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/order_detail_notes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_basic_color"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="@string/finished_time"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/order_detail_finish_time"
+                android:id="@+id/notice_notes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_basic_color"
@@ -169,21 +150,75 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/order_detail_other"
+                android:id="@+id/notice_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_basic_color"
                 android:textSize="16sp"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/customer_finished_time"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/notice_finish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_basic_color"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:map="http://schemas.android.com/apk/res-auto"
                   xmlns:tools="http://schemas.android.com/tools"
-                  android:id="@+id/order_detail_map"
+                  android:id="@+id/notice_map"
                   android:name="com.google.android.gms.maps.SupportMapFragment"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2"
                   map:cameraZoom="10"
             />
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notice_btn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/notice_cancle_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="取消订单(30)"
+            android:theme="@style/Error.Button.Theme"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/notice_accept_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:theme="@style/Success.Button.Theme"
+            android:text="Accept"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.gaoyy.delivery4driver.changepwd;
 
 
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.base.BaseFragment;
 import com.gaoyy.delivery4driver.base.CustomDialogFragment;
+import com.gaoyy.delivery4driver.login.LoginActivity;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.DialogUtils;
 
@@ -129,6 +131,13 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
     public void showToast(String msg)
     {
         CommonUtils.showToast(activity, msg);
+    }
+
+    @Override
+    public void redirectToLogin()
+    {
+        Intent login = new Intent(activity, LoginActivity.class);
+        startActivity(login);
     }
 
     @Override

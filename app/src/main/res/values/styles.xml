@@ -28,5 +28,9 @@
         <item name="colorButtonNormal">@color/success_color</item><!--正常状态下的颜色  -->
         <item name="colorControlHighlight">@color/btn_highlight_color</item><!--覆盖色，按下的颜色  -->
     </style>
+    <style name="Error.Button.Theme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@android:color/holo_red_light</item><!--正常状态下的颜色  -->
+        <item name="colorControlHighlight">@color/btn_highlight_color</item><!--覆盖色，按下的颜色  -->
+    </style>
 
 </resources>

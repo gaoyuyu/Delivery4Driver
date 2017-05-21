@@ -167,12 +167,16 @@ public interface Api
     Call<ResponseBody> upLoadDriverLocation(@Field("loginName") String loginName, @Field("randomCode") String randomCode,
                                             @Field("latitude") String latitude, @Field("longitude") String longitude,@Field("course") String course);
 
-
-
-
-
-
-
+    /**
+     * 司机接受订单
+     * @param logName
+     * @param randomCode
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/order/order/mobile/orderaccept")
+    Call<OrderOperationStatusInfo> driverOrderAccept(@Field("loginName") String logName, @Field("randomCode") String randomCode, @Field("id") String id);
 
 
 }

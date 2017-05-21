@@ -36,6 +36,12 @@ public class LoginContract
         void redirectToMain(List<DriverInfo.BodyBean.DictStatusBean> dictStatus);
 
         /**
+         * 保存orderTime
+         * @param orderTime
+         */
+        void saveOrderTime(int orderTime);
+
+        /**
          * 登录完成开启上传位置
          */
         void uploadLocation();

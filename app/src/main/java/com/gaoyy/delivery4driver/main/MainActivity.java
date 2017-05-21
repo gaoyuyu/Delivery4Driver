@@ -24,9 +24,11 @@ import com.gaoyy.delivery4driver.changepwd.ChangePwdActivity;
 import com.gaoyy.delivery4driver.login.LoginActivity;
 import com.gaoyy.delivery4driver.orderlist.OrderListFragment;
 import com.gaoyy.delivery4driver.orderlist.OrderListPresenter;
+import com.gaoyy.delivery4driver.service.PollingService;
 import com.gaoyy.delivery4driver.util.ActivityUtils;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.DialogUtils;
+import com.gaoyy.delivery4driver.util.PollingUtils;
 
 import java.util.List;
 
@@ -134,6 +136,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void driverOffline(final CompoundButton compoundButton)
     {
+        CommonUtils.httpDebugLogger("司机离线请求");
         final CustomDialogFragment offlineLoading = DialogUtils.showLoadingDialog(MainActivity.this);
         Call<CommonInfo> offlineCall = RetrofitService.sApiService.driverOnline(CommonUtils.getLoginName(MainActivity.this), CommonUtils.getRandomCode(MainActivity.this));
         offlineCall.enqueue(new Callback<CommonInfo>()
@@ -145,6 +148,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (response.isSuccessful() && response.body() != null)
                 {
                     CommonInfo commonInfo = response.body();
+                    String errorCode = commonInfo.getErrorCode();
+                    String msg = commonInfo.getMsg();
+                    CommonUtils.httpDebugLogger("[isSuccess="+commonInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
                     if (commonInfo.isSuccess())
                     {
                         CommonUtils.showToast(MainActivity.this, "Offline " + commonInfo.getMsg());
@@ -163,6 +169,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onFailure(Call<CommonInfo> call, Throwable t)
             {
                 offlineLoading.dismiss();
+                CommonUtils.httpErrorLogger(t.toString());
             }
         });
     }
@@ -172,6 +179,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void driverOnline(final CompoundButton compoundButton)
     {
+        CommonUtils.httpDebugLogger("司机上线请求");
         final CustomDialogFragment onlineLoading = DialogUtils.showLoadingDialog(MainActivity.this);
         Call<CommonInfo> onlineCall = RetrofitService.sApiService.driverOnline(CommonUtils.getLoginName(MainActivity.this), CommonUtils.getRandomCode(MainActivity.this));
         onlineCall.enqueue(new Callback<CommonInfo>()
@@ -183,6 +191,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (response.isSuccessful() && response.body() != null)
                 {
                     CommonInfo commonInfo = response.body();
+                    String errorCode = commonInfo.getErrorCode();
+                    String msg = commonInfo.getMsg();
+                    CommonUtils.httpDebugLogger("[isSuccess="+commonInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
                     if (commonInfo.isSuccess())
                     {
                         CommonUtils.showToast(MainActivity.this, "Online " + commonInfo.getMsg());
@@ -257,6 +268,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void logout(String loginName, String randomCode)
     {
+        CommonUtils.httpDebugLogger("退出请求");
         Call<CommonInfo> call = RetrofitService.sApiService.logout(loginName, randomCode);
         final CustomDialogFragment loading = DialogUtils.showLoadingDialog(this);
         call.enqueue(new Callback<CommonInfo>()
@@ -270,6 +282,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     CommonInfo logoutInfo = response.body();
                     String msg = logoutInfo.getMsg();
                     String errorCode = logoutInfo.getErrorCode();
+                    CommonUtils.httpDebugLogger("[isSuccess="+logoutInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
                     if (errorCode.equals("-1"))
                     {
                         Intent intent = new Intent();
@@ -277,6 +290,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         startActivity(intent);
                         finish();
                         CommonUtils.showToast(MainActivity.this, msg);
+                       //停止上传位置
+                        PollingUtils.stopPollingService(MainActivity.this, PollingService.class,PollingService.ACTION);
                     }
                     else if (errorCode.equals("-2"))
                     {
@@ -289,6 +304,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onFailure(Call<CommonInfo> call, Throwable t)
             {
                 loading.dismiss();
+                CommonUtils.httpErrorLogger(t.toString());
             }
         });
     }

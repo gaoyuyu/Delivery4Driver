@@ -5,10 +5,10 @@
     android:id="@+id/item_order_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:layout_marginTop="5dp"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
     android:foreground="?attr/selectableItemBackground"
     >
@@ -146,7 +146,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="@string/restaurant_phone_short"
+                android:text="@string/restaurant_phone"
                 android:textColor="@android:color/darker_gray"
                 />
 
@@ -174,7 +174,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Finished Time："
+                android:text="@string/finished_time"
                 android:textColor="@android:color/darker_gray"
                 />
 
@@ -201,7 +201,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="orderNo："
+                android:text="@string/order_no"
                 android:textColor="@android:color/darker_gray"
                 />
 
@@ -228,7 +228,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pick Up"
+                android:text="@string/pick_up"
                 />
 
             <android.support.v7.widget.AppCompatButton
@@ -236,7 +236,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="finish"
+                android:text="@string/status_finish"
                 />
 
         </LinearLayout>

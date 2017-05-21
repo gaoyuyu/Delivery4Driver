@@ -5,6 +5,7 @@ import android.util.Log;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.DriverInfo;
+import com.gaoyy.delivery4driver.util.CommonUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class LoginPresenter implements LoginContract.Presenter
     @Override
     public void login(Map<String, String> params)
     {
+        CommonUtils.httpDebugLogger("登录请求");
         Call<DriverInfo> call = RetrofitService.sApiService.login(params);
         mLoginView.showLoading();
         call.enqueue(new Callback<DriverInfo>()
@@ -50,6 +52,7 @@ public class LoginPresenter implements LoginContract.Presenter
                     String msg = driverInfo.getMsg();
                     String errorCode = driverInfo.getErrorCode();
                     mLoginView.showToast(msg);
+                    CommonUtils.httpDebugLogger("[isSuccess="+driverInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
 
                     if(errorCode.equals("-1"))
                     {
@@ -58,6 +61,9 @@ public class LoginPresenter implements LoginContract.Presenter
 
                         //保存司机信息
                         mLoginView.saveCourierInfo(driverInfo.getBody().getCourier());
+
+                        //保存orderTime
+                        mLoginView.saveOrderTime(driverInfo.getBody().getOrderTime());
 
 
                         List<DriverInfo.BodyBean.DictStatusBean> dictStatus = driverInfo.getBody().getDictStatus();
@@ -74,10 +80,6 @@ public class LoginPresenter implements LoginContract.Presenter
                         mLoginView.uploadLocation();
 
                     }
-                    else if(errorCode.equals("-2"))
-                    {
-                        //登录失败
-                    }
                 }
             }
 
@@ -89,6 +91,7 @@ public class LoginPresenter implements LoginContract.Presenter
                     return;
                 }
                 mLoginView.hideLoading();
+                CommonUtils.httpErrorLogger(t.toString());
             }
         });
     }

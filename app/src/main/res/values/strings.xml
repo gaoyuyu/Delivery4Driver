@@ -14,16 +14,17 @@
     <string name="password_hint">password</string>
     <string name="login">LOGIN</string>
     <string name="welcome">Welcome</string>
+    <string name="welcome_driver">Welcome,Driver</string>
     <string name="customer_phone">Customers Phone Number</string>
     <string name="customer_address">Customers Address</string>
     <string name="customer_apt">Customers Apartment Number</string>
     <string name="customer_finished_time">FinishedTime</string>
     <string name="door_bell">door bell not working</string>
-    <string name="customer_remark">请输入其它备注信息</string>
+    <string name="customer_remark">other remarks</string>
     <string name="action_send_order">Send Order</string>
-    <string name="change_old_pwd">请输入旧密码</string>
-    <string name="change_new_pwd">请输入新密码</string>
-    <string name="action_change_pwd">修改密码</string>
+    <string name="change_old_pwd">old password</string>
+    <string name="change_new_pwd">new password</string>
+    <string name="action_change_pwd">reset</string>
     <string name="starting_point">Starting Point：</string>
     <string name="destination">Destination：</string>
     <string name="customer_phone_short">Cust.Phone：</string>
@@ -32,7 +33,36 @@
     <string name="action_submit_order">submit</string>
     <string name="order_submit_success">Operation Successfully Completed</string>
     <string name="order_submit_success_sub">Order has been sent, wait for being accepted</string>
-    <string name="welcome_driver">Welcome,Driver</string>
-    <string name="restaurant_phone_short">Restaurant Phone：</string>
+    <string name="menu_order_list">Order List</string>
+    <string name="menu_change_pwd">Change Password</string>
+    <string name="menu_personal_detail">Personal Detail</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="dialog_order_list">Order Lists</string>
+    <string name="dialog_continue_to_send_order">Continue To Send Orders</string>
+    <string name="toolbar_title_changepwd">Change Password</string>
+    <string name="toolbar_title_order_detail">Order Detail</string>
+    <string name="toolbar_title_order_list">Order List</string>
+    <string name="toolbar_title_personal_detail">Personal Detail</string>
+    <string name="toolbar_title_new_order">New Order</string>
+
+    <string name="status_wait">Wait</string>
+    <string name="status_accept">Accept</string>
+    <string name="status_delivery">Delivery</string>
+    <string name="status_finish">Finish</string>
+    <string name="status_cancle">Cancle</string>
+    <string name="status_back">Back</string>
+
+    <string name="status_cancle_btn">Cancle</string>
+    <string name="status_delivery_btn">Delivery</string>
+    <string name="status_resubmit_btn">Resubmit</string>
+
+    <string name="driver_name">Driver Name：</string>
+    <string name="order_no">Order No：</string>
+    <string name="finished_time">Finished Time：</string>
+
+
+    <string name="exit_after_press_again">Exit After Press Again</string>
+    <string name="restaurant_phone">Restaurant Phone：</string>
+    <string name="pick_up">Pick Up</string>
 
 </resources>

@@ -61,7 +61,7 @@ public class OrderDetailActivity extends BaseActivity implements OnMapReadyCallb
     @Override
     protected void initToolbar()
     {
-        super.initToolbar(orderDetailToolbar, "订单详情", true, -1);
+        super.initToolbar(orderDetailToolbar, R.string.toolbar_title_order_detail, true, -1);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class OrderDetailActivity extends BaseActivity implements OnMapReadyCallb
         orderDetailPhone.setText(order.getCustomerTel());
         orderDetailNotes.setText(order.getRemark());
         orderDetailFinishTime.setText(order.getFinishedTime());
-        orderDetailOther.setText(order.getRemark().trim());
+        orderDetailOther.setText(order.getRemarks().trim());
 
     }
 
