@@ -168,7 +168,7 @@ public class DriverInfo
             private String latitude;
             private String isOnline;
             private String course;
-            private long locationTime;
+            private String locationTime;
             private String carNumber;
             private String driverNumber;
             private String driverDate;
@@ -360,12 +360,12 @@ public class DriverInfo
                 this.course = course;
             }
 
-            public long getLocationTime()
+            public String getLocationTime()
             {
                 return locationTime;
             }
 
-            public void setLocationTime(long locationTime)
+            public void setLocationTime(String locationTime)
             {
                 this.locationTime = locationTime;
             }

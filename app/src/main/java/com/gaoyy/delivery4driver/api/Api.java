@@ -163,7 +163,7 @@ public interface Api
      * @return
      */
     @FormUrlEncoded
-    @POST("a/sys/user/mobile/online")
+    @POST("a/courier/courier/mobile/location")
     Call<ResponseBody> upLoadDriverLocation(@Field("loginName") String loginName, @Field("randomCode") String randomCode,
                                             @Field("latitude") String latitude, @Field("longitude") String longitude,@Field("course") String course);
 

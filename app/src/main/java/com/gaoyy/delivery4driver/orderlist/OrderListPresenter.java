@@ -38,6 +38,34 @@ public class OrderListPresenter implements OrderListContract.Presenter
     public void orderList(Map<String, String> params, final int refreshTag)
     {
         CommonUtils.httpDebugLogger("获取订单列表");
+//        Call<ResponseBody> call = RetrofitService.sApiService.orderList(params);
+//
+//        call.enqueue(new Callback<ResponseBody>()
+//        {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+//            {
+//                if(response.isSuccessful()&&response.body()!=null)
+//                {
+//                    try
+//                    {
+//                        Log.d(Constant.TAG,"===list respnse==>"+response.body().string());
+//                    }
+//                    catch (IOException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t)
+//            {
+//
+//            }
+//        });
+
+
         Call<OrderListInfo> call = RetrofitService.sApiService.orderList(params);
 
         mOrderListView.refreshing();
