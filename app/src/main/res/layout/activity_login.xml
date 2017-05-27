@@ -9,6 +9,11 @@
     android:fitsSystemWindows="true"
     tools:context="com.gaoyy.delivery4driver.login.LoginActivity">
 
+    <include
+        android:id="@+id/login_toolbar"
+        layout="@layout/widget_toolbar"
+        />
+
     <FrameLayout
         android:id="@+id/login_content"
         android:layout_width="match_parent"

@@ -52,7 +52,6 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
     private TextView noticeStartPoint;
     private TextView noticeDistination;
     private TextView noticePhone;
-    private TextView noticePrice;
     private TextView noticeNotes;
     private TextView noticeOther;
     private TextView noticeFinishTime;
@@ -88,7 +87,6 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
         noticeStartPoint = (TextView) findViewById(R.id.notice_start_point);
         noticeDistination = (TextView) findViewById(R.id.notice_distination);
         noticePhone = (TextView) findViewById(R.id.notice_phone);
-        noticePrice = (TextView) findViewById(R.id.notice_price);
         noticeNotes = (TextView) findViewById(R.id.notice_notes);
         noticeOther = (TextView) findViewById(R.id.notice_other);
         noticeFinishTime = (TextView) findViewById(R.id.notice_finish_time);
@@ -132,7 +130,7 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
             public void onAnimationEnd(Animator animation)
             {
                 super.onAnimationEnd(animation);
-//                finish();
+                finish();
             }
         });
         valueAnimator.setDuration(30000);
@@ -158,7 +156,6 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
                 setTextData(key,value,"remarks",noticeNotes);
                 setTextData(key,value,"remark",noticeOther);
                 setTextData(key,value,"createDate",noticeDate);
-                setTextData(key,value,"orderPrice",noticePrice);
                 if(key.equals("id"))
                 {
                     orderId = value;
@@ -169,8 +166,6 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
         {
             Log.e(Constant.TAG, "Get message extra JSON error!");
         }
-
-
 
         noticeCancleBtn.setOnClickListener(this);
         noticeAcceptBtn.setOnClickListener(this);

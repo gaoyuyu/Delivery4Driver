@@ -26,13 +26,15 @@
 
         <TextView
             android:id="@+id/header_username"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:text="Android Studio"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_toLeftOf="@+id/header_switch"
+            android:layout_toStartOf="@+id/header_switch"/>
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/header_switch"

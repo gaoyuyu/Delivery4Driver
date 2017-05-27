@@ -1,5 +1,6 @@
 package com.gaoyy.delivery4driver.login;
 
+import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -11,7 +12,9 @@ import com.gaoyy.delivery4driver.util.ActivityUtils;
 public class LoginActivity extends BaseActivity
 {
     private LinearLayout activityLogin;
+    private Toolbar loginToolbar;
     private FrameLayout loginContent;
+
 
     @Override
     protected void initContentView()
@@ -24,7 +27,14 @@ public class LoginActivity extends BaseActivity
     {
         super.assignViews();
         activityLogin = (LinearLayout) findViewById(R.id.activity_login);
+        loginToolbar = (Toolbar) findViewById(R.id.login_toolbar);
         loginContent = (FrameLayout) findViewById(R.id.login_content);
+    }
+
+    @Override
+    protected void initToolbar()
+    {
+        super.initToolbar(loginToolbar,R.string.login,false,-1);
     }
 
     @Override

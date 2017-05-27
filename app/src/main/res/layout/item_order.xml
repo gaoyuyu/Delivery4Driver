@@ -13,215 +13,225 @@
     android:foreground="?attr/selectableItemBackground"
     >
 
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="5dp">
 
-            <TextView
-                android:id="@+id/item_order_status"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="Finish"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:id="@+id/item_order_status_date"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="2017-05-15 20:88"
-                android:textColor="@color/text_basic_color"
-                android:textSize="20sp"/>
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_order_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/darker_gray"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Finish"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/item_order_status_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="2017-05-15 20:88"
+                    android:textColor="@color/text_basic_color"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_order_driver_starting_point_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/starting_point"
+                    android:textColor="@color/text_basic_color"
+                    />
+
+                <TextView
+                    android:id="@+id/item_order_starting_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="hotel"
+                    android:gravity="start"
+                    android:textColor="@color/text_basic_color"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_order_driver_destination_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/destination"
+                    android:textColor="@color/text_basic_color"
+                    />
+
+                <TextView
+                    android:id="@+id/item_order_destination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:text="车牌路"
+
+                    android:textColor="@color/text_basic_color"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/item_order_customer_phone_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/customer_phone_short"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/item_order_customer_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="13820124526"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_order_restaurant_phone_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/restaurant_phone"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/item_order_restaurant_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="525252525252"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/item_order_finished_time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/finished_time"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/item_order_finished_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="15mins"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_order_orderno_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/order_no"
+                    android:textColor="@android:color/darker_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/item_order_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="20170002133333"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_order_driver_starting_point_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/starting_point"
-                android:textColor="@color/text_basic_color"
-                />
-
-            <TextView
-                android:id="@+id/item_order_starting_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="hotel"
-                android:gravity="start"
-                android:textColor="@color/text_basic_color"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_order_driver_destination_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/destination"
-                android:textColor="@color/text_basic_color"
-                />
-
-            <TextView
-                android:id="@+id/item_order_destination"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:padding="5dp"
-                android:text="车牌路"
-
-                android:textColor="@color/text_basic_color"
-                />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/item_order_customer_phone_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/customer_phone_short"
-                android:textColor="@android:color/darker_gray"
-                />
-
-            <TextView
-                android:id="@+id/item_order_customer_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="13820124526"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_order_restaurant_phone_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/restaurant_phone"
-                android:textColor="@android:color/darker_gray"
-                />
-
-            <TextView
-                android:id="@+id/item_order_restaurant_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="525252525252"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/item_order_finished_time_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/finished_time"
-                android:textColor="@android:color/darker_gray"
-                />
-
-            <TextView
-                android:id="@+id/item_order_finished_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="15mins"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_order_orderno_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/order_no"
-                android:textColor="@android:color/darker_gray"
-                />
-
-            <TextView
-                android:id="@+id/item_order_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="20170002133333"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"/>
-
-        </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/item_order_operation_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/item_order_pick_up_btn"
@@ -240,6 +250,6 @@
                 />
 
         </LinearLayout>
-
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

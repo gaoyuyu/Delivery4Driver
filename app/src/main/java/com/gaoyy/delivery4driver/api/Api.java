@@ -6,6 +6,7 @@ import com.gaoyy.delivery4driver.api.bean.DriverInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderOperationStatusInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderSaveInfo;
+import com.gaoyy.delivery4driver.api.bean.UpdateInfo;
 
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -22,6 +24,9 @@ import retrofit2.http.POST;
 
 public interface Api
 {
+    @GET("a/sys/user/mobile/version")
+    Call<UpdateInfo> getAppCurrentVersion();
+
     /**
      * 登录
      *

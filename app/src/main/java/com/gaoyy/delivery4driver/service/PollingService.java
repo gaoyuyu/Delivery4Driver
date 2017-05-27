@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.gaoyy.delivery4driver.api.RetrofitService;
 
@@ -22,6 +21,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 public class PollingService extends Service
 {
@@ -64,7 +65,7 @@ public class PollingService extends Service
         }
         else
         {
-            Toast.makeText(this, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, LOG_TAG+"===没有可用的位置提供器");
         }
 
         //获取Location
@@ -94,7 +95,7 @@ public class PollingService extends Service
             }
             else
             {
-                Toast.makeText(this, "location为空", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, LOG_TAG+"===location为空");
             }
             //监视地理位置变化
             locationManager.requestLocationUpdates(locationProvider, 3000, 1, new LocationListener()

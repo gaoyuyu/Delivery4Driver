@@ -3,17 +3,28 @@ package com.gaoyy.delivery4driver.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.gaoyy.delivery4driver.R;
+import com.gaoyy.delivery4driver.api.Constant;
+import com.gaoyy.delivery4driver.api.RetrofitService;
+import com.gaoyy.delivery4driver.api.bean.UpdateInfo;
 import com.gaoyy.delivery4driver.application.ExitApplication;
 import com.gaoyy.delivery4driver.util.CommonUtils;
+import com.gaoyy.delivery4driver.util.UpdateManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public abstract class BaseActivity extends AppCompatActivity
 {
     private long firstTime = 0;
     private int toolbarColor = R.color.colorPrimary;
+    public static boolean isForeground = false;
+    private UpdateManager updateManager = new UpdateManager(BaseActivity.this, Constant.DOWNLOAD_DRIVER_APK_URL,Constant.DRIVER_APK_NAME);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,6 +39,40 @@ public abstract class BaseActivity extends AppCompatActivity
         initToolbar();
         //配置views
         configViews();
+
+
+        CommonUtils.httpDebugLogger("app更新请求");
+        Call<UpdateInfo> call = RetrofitService.sApiService.getAppCurrentVersion();
+        call.enqueue(new Callback<UpdateInfo>()
+        {
+            @Override
+            public void onResponse(Call<UpdateInfo> call, Response<UpdateInfo> response)
+            {
+                if(response.isSuccessful()&&response.body()!=null)
+                {
+                    UpdateInfo updateInfo = response.body();
+                    String msg = updateInfo.getMsg();
+                    String errorCode = updateInfo.getErrorCode();
+                    CommonUtils.httpDebugLogger("[isSuccess="+updateInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
+                    if(errorCode.equals("-1"))
+                    {
+                        int code = Integer.valueOf(updateInfo.getBody().getAndroidIsUpdate());
+                        code =0;
+                        if(code == 1)
+                        {
+                            updateManager.showNoticeDialog();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateInfo> call, Throwable t)
+            {
+
+            }
+        });
     }
 
 
@@ -112,6 +157,24 @@ public abstract class BaseActivity extends AppCompatActivity
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        isForeground = true;
+        Log.d(Constant.TAG,"onResume driver foreground-->"+isForeground);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        isForeground = false;
+        Log.d(Constant.TAG,"onPause driver foreground-->"+isForeground);
+        //停止下载线程
+        updateManager.stopApkThread();
     }
 
 }

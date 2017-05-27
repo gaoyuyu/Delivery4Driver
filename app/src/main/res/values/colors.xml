@@ -13,7 +13,10 @@
     <color name="gray_light">#e3e3e3</color>
     <color name="text_basic_color">#333333</color>
     <color name="btn_highlight_color">#22000000</color>
-    <color name="success_color">#36d60a</color>
+    <color name="success_color">#05bd03</color>
+    <color name="login_top_text">#797979</color>
+    <color name="login_bg_color">#f6f6f6</color>
+
 
 
 </resources>

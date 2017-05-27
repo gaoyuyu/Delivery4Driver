@@ -220,6 +220,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         intent.putExtra("dictStatus",(Serializable) dictStatus);
         intent.setClass(activity, MainActivity.class);
         startActivity(intent);
+        activity.finish();
     }
 
     @Override

@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     {
         CommonUtils.httpDebugLogger("司机离线请求");
         final CustomDialogFragment offlineLoading = DialogUtils.showLoadingDialog(MainActivity.this);
-        Call<CommonInfo> offlineCall = RetrofitService.sApiService.driverOnline(CommonUtils.getLoginName(MainActivity.this), CommonUtils.getRandomCode(MainActivity.this));
+        Call<CommonInfo> offlineCall = RetrofitService.sApiService.driverOffline(CommonUtils.getLoginName(MainActivity.this), CommonUtils.getRandomCode(MainActivity.this));
         offlineCall.enqueue(new Callback<CommonInfo>()
         {
             @Override
