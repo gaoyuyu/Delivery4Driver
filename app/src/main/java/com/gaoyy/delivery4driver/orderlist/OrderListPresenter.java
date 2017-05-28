@@ -119,6 +119,7 @@ public class OrderListPresenter implements OrderListContract.Presenter
                 //停止刷新
                 mOrderListView.finishRefesh();
                 CommonUtils.httpErrorLogger(t.toString());
+                mOrderListView.showToast("Network Error");
             }
         });
     }

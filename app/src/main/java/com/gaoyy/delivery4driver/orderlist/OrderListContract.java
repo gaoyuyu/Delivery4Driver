@@ -34,6 +34,8 @@ public class OrderListContract
         void refreshing();
 
         void finishRefesh();
+
+        void showToast(String msg);
     }
 
     interface Presenter extends BasePresenter

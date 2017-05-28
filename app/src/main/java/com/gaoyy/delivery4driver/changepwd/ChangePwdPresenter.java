@@ -72,6 +72,7 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter
                 }
                 mChangePwdView.hideLoading();
                 CommonUtils.httpErrorLogger(t.toString());
+                mChangePwdView.showToast("NetWork Error");
             }
         });
     }

@@ -206,6 +206,12 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     }
 
     @Override
+    public void showToast(String msg)
+    {
+        CommonUtils.showToast(activity,msg);
+    }
+
+    @Override
     public void setPresenter(OrderListContract.Presenter presenter)
     {
         Log.i(Constant.TAG, LOG_TAG + "  setPresenter");
@@ -285,6 +291,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             {
                 deliveryLoading.dismiss();
                 CommonUtils.httpErrorLogger(t.toString());
+                CommonUtils.showToast(activity,getResources().getString(R.string.network_error));
             }
         });
     }
@@ -330,6 +337,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             {
                 finishLoading.dismiss();
                 CommonUtils.httpErrorLogger(t.toString());
+                CommonUtils.showToast(activity,getResources().getString(R.string.network_error));
             }
         });
     }

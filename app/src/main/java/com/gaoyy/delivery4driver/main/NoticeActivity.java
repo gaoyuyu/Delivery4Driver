@@ -347,6 +347,8 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
                 {
                     deliveryLoading.dismiss();
                     CommonUtils.httpErrorLogger(t.toString());
+                    CommonUtils.showToast(NoticeActivity.this,getResources().getString(R.string.network_error));
+
                 }
             });
     }
