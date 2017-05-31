@@ -11,7 +11,9 @@ import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.UpdateInfo;
 import com.gaoyy.delivery4driver.application.ExitApplication;
+import com.gaoyy.delivery4driver.service.PollingService;
 import com.gaoyy.delivery4driver.util.CommonUtils;
+import com.gaoyy.delivery4driver.util.PollingUtils;
 import com.gaoyy.delivery4driver.util.UpdateManager;
 
 import retrofit2.Call;
@@ -150,13 +152,16 @@ public abstract class BaseActivity extends AppCompatActivity
                 firstTime = System.currentTimeMillis();// 更新mExitTime
             } else
             {
+                //要在退出前，停止上传位置
+                PollingUtils.stopPollingService(this, PollingService.class,PollingService.ACTION);
                 ExitApplication.getInstanse().exit();
                 android.os.Process.killProcess(android.os.Process.myPid());
+
             }
 
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+    return super.onKeyDown(keyCode, event);
     }
 
     @Override
