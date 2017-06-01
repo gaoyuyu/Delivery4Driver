@@ -49,7 +49,7 @@ public class PollingService extends Service
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId)
     {
-        Log.e(LOG_TAG, LOG_TAG+"===onStartCommand() executed");
+        Log.e(LOG_TAG, LOG_TAG + "===onStartCommand() executed");
 
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -67,24 +67,24 @@ public class PollingService extends Service
         }
         else
         {
-            Log.e(TAG, LOG_TAG+"===没有可用的位置提供器");
+            Log.e(TAG, LOG_TAG + "===没有可用的位置提供器");
         }
 
         //获取Location
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-            Log.e(Constant.TAG,LOG_TAG+"=======权限申请失败=========");
+            Log.e(Constant.TAG, LOG_TAG + "=======权限申请失败=========");
         }
         else
         {
-            Log.e(Constant.TAG,LOG_TAG+"=======权限申请成功=========");
+            Log.e(Constant.TAG, LOG_TAG + "=======权限申请成功=========");
             final Location location = locationManager.getLastKnownLocation(locationProvider);
 
             if (location != null)
             {
-                Log.e(LOG_TAG, LOG_TAG+"===Latitude-->" + location.getLatitude());
-                Log.e(LOG_TAG, LOG_TAG+"===Longitude-->" + location.getLongitude());
+                Log.e(LOG_TAG, LOG_TAG + "===Latitude-->" + location.getLatitude());
+                Log.e(LOG_TAG, LOG_TAG + "===Longitude-->" + location.getLongitude());
 
                 uploadLocation(intent, location);
 
@@ -92,7 +92,7 @@ public class PollingService extends Service
             }
             else
             {
-                Log.e(TAG, LOG_TAG+"===location为空");
+                Log.e(TAG, LOG_TAG + "===location为空");
             }
             //监视地理位置变化
             locationManager.requestLocationUpdates(locationProvider, 3000, 1, new LocationListener()
@@ -135,41 +135,45 @@ public class PollingService extends Service
      */
     private void uploadLocation(Intent intent, Location location)
     {
+        if(intent == null) return;
         String loginName = intent.getStringExtra("loginName");
         String randomCode = intent.getStringExtra("randomCode");
-        String lat = String.valueOf(location.getLatitude());
-        String lng = String.valueOf(location.getLongitude());
-        Log.e(LOG_TAG,LOG_TAG+"--loginName-->"+loginName);
-        Log.e(LOG_TAG,LOG_TAG+"--randomCode-->"+randomCode);
-        Log.e(LOG_TAG,LOG_TAG+"--lat-->"+lat);
-        Log.e(LOG_TAG,LOG_TAG+"--lng-->"+lng);
-        Call<ResponseBody> call = RetrofitService.sApiService.upLoadDriverLocation(loginName, randomCode, lat, lng, "36");
-        Log.e(LOG_TAG, LOG_TAG+"========开始上传位置信息======");
-        call.enqueue(new Callback<ResponseBody>()
+        if ((loginName != null) && (randomCode != null))
         {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            String lat = String.valueOf(location.getLatitude());
+            String lng = String.valueOf(location.getLongitude());
+            Log.e(LOG_TAG, LOG_TAG + "--loginName-->" + loginName);
+            Log.e(LOG_TAG, LOG_TAG + "--randomCode-->" + randomCode);
+            Log.e(LOG_TAG, LOG_TAG + "--lat-->" + lat);
+            Log.e(LOG_TAG, LOG_TAG + "--lng-->" + lng);
+            Call<ResponseBody> call = RetrofitService.sApiService.upLoadDriverLocation(loginName, randomCode, lat, lng, "36");
+            Log.e(LOG_TAG, LOG_TAG + "========开始上传位置信息======");
+            call.enqueue(new Callback<ResponseBody>()
             {
-                if (response.isSuccessful() && response.body() != null)
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
                 {
-                    Log.e(LOG_TAG, LOG_TAG+"========上传结束======");
-                    try
+                    if (response.isSuccessful() && response.body() != null)
                     {
-                        Log.e(LOG_TAG, LOG_TAG+"===Upload responese-->" + response.body().string());
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
+                        Log.e(LOG_TAG, LOG_TAG + "========上传结束======");
+                        try
+                        {
+                            Log.e(LOG_TAG, LOG_TAG + "===Upload responese-->" + response.body().string());
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t)
-            {
-                Log.e(LOG_TAG, LOG_TAG+"========上传失败======" + t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t)
+                {
+                    Log.e(LOG_TAG, LOG_TAG + "========上传失败======" + t.toString());
+                }
+            });
+        }
     }
 
 
@@ -177,6 +181,6 @@ public class PollingService extends Service
     public void onDestroy()
     {
         super.onDestroy();
-        Log.e(LOG_TAG, LOG_TAG+"=onDestroy==");
+        Log.e(LOG_TAG, LOG_TAG + "=onDestroy==");
     }
 }

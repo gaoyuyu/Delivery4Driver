@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Delivery4Driver</string>
+    <string name="app_name">Sam\'s Delivery 4D</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -68,5 +68,15 @@
     <string name="dialog_update_message">A new version was detected,Need Update Right Now</string>
     <string name="dialog_update">Update</string>
     <string name="dialog_updateing">Updating</string>
+    <string name="dialog_permission_title">Apply for permission</string>
+    <string name="dialog_permission_message">Missing location permission</string>
+    <string name="dialog_permission_grant">Allow</string>
+    <string name="dialog_permission_deny">Deny</string>
+
+
+
     <string name="network_error">NetWork Error</string>
+
+    <string name="permission_grant">The location service has been authorized</string>
+    <string name="permission_already_deny">You has refused to locate permissions can be opened in the settings screen</string>
 </resources>

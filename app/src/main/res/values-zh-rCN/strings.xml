@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Delivery4Driver</string>
+    <string name="app_name">Sam\'s Delivery 4D</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -65,7 +65,18 @@
     <string name="dialog_update_message">检测到新版本，需要立即更新</string>
     <string name="dialog_update">更新</string>
     <string name="dialog_updateing">正在更新</string>
+
+
+    <string name="dialog_permission_title">申请定位权限</string>
+    <string name="dialog_permission_message">应用缺失定位权限</string>
+    <string name="dialog_permission_grant">同意</string>
+    <string name="dialog_permission_deny">拒绝</string>
+
+
     <string name="network_error">NetWork Error</string>
+
+    <string name="permission_grant">定位服务已授权</string>
+    <string name="permission_already_deny">已拒绝定位权限的申请，可在设置界面中打开</string>
 
 
 

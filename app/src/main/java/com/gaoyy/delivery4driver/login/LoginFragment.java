@@ -235,11 +235,10 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     @Override
     public void uploadLocation()
     {
-
-        PollingUtils.startPollingService(activity,1, PollingService.class,PollingService.ACTION);
+        //5秒执行一次
+        PollingUtils.startPollingService(activity,5, PollingService.class,PollingService.ACTION);
 
         //设置JPush别名
-        //建议添加tag标签，发送消息的之后就可以指定tag标签来发送了
         JPushInterface.setAlias(activity, CommonUtils.getLoginName(activity), new TagAliasCallback()
         {
             @Override

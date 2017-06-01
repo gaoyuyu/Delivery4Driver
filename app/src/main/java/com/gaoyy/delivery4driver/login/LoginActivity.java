@@ -53,20 +53,16 @@ public class LoginActivity extends BaseActivity
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-            Log.e(Constant.TAG, "====申请权限=====");
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
+            Log.e(Constant.TAG, "==Login==申请权限=====");
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
             {
-                CommonUtils.showToast(this, "ACCESS_FINE_LOCATION again");
-                // TODO: 2017/6/1 0001 弹出对话框再次申请权限
+                Log.e(Constant.TAG, "==Login==ACCESS_FINE_LOCATION again=====");
                 showRequestPermissionDialog();
             }
             else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
             {
-                CommonUtils.showToast(this, "ACCESS_COARSE_LOCATION again");
-                // TODO: 2017/6/1 0001 弹出对话框再次申请权限
+                Log.e(Constant.TAG, "==Login==ACCESS_COARSE_LOCATION again=====");
                 showRequestPermissionDialog();
             }
             else
@@ -77,7 +73,7 @@ public class LoginActivity extends BaseActivity
         }
         else
         {
-            CommonUtils.showToast(this, "定位服务已授权");
+            CommonUtils.showToast(this, getResources().getString(R.string.permission_grant));
         }
 
 
@@ -97,11 +93,11 @@ public class LoginActivity extends BaseActivity
         {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
-                Log.d(Constant.TAG, "====PERMISSION_GRANTED===");
+                Log.e(Constant.TAG, "==Login==PERMISSION_GRANTED=====");
             }
             else
             {
-                CommonUtils.showToast(this,"已拒绝定位权限的申请，可在设置界面中打开");
+                CommonUtils.showToast(this,getResources().getString(R.string.permission_already_deny));
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -114,9 +110,9 @@ public class LoginActivity extends BaseActivity
     private void showRequestPermissionDialog()
     {
         new AlertDialog.Builder(this)
-                .setTitle("申请定位权限")
-                .setMessage("应用缺失定位权限")
-                .setPositiveButton("同意", new DialogInterface.OnClickListener()
+                .setTitle(R.string.dialog_permission_title)
+                .setMessage(R.string.dialog_permission_message)
+                .setPositiveButton(R.string.dialog_permission_grant, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
@@ -125,7 +121,7 @@ public class LoginActivity extends BaseActivity
                                 Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
                     }
                 })
-                .setNegativeButton("拒绝", new DialogInterface.OnClickListener()
+                .setNegativeButton(R.string.dialog_permission_deny, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)

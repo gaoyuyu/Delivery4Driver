@@ -150,7 +150,7 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
                 Log.d(Constant.TAG,"Notice---key-->"+key);
                 Log.d(Constant.TAG,"Notice---value-->"+json.optString(key));
 
-                setTextData(key, value,"name",noticeStartPoint);
+                setTextData(key, value,"hotelAddr",noticeStartPoint);
                 setTextData(key, value,"customerAddr",noticeDistination);
                 setTextData(key,value,"customerTel",noticePhone);
                 setTextData(key,value,"remarks",noticeNotes);

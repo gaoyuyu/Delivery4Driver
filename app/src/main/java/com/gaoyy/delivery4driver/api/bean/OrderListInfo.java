@@ -178,6 +178,55 @@ public class OrderListInfo
 
             public static class ListBean implements Serializable
             {
+
+                @Override
+                public String toString()
+                {
+                    return "ListBean{" +
+                            "id='" + id + '\'' +
+                            ", isNewRecord=" + isNewRecord +
+                            ", remarks='" + remarks + '\'' +
+                            ", createDate='" + createDate + '\'' +
+                            ", updateDate='" + updateDate + '\'' +
+                            ", orderNo='" + orderNo + '\'' +
+                            ", customerName=" + customerName +
+                            ", customerTel='" + customerTel + '\'' +
+                            ", customerAddr='" + customerAddr + '\'' +
+                            ", apt='" + apt + '\'' +
+                            ", orderPrice=" + orderPrice +
+                            ", createName='" + createName + '\'' +
+                            ", hotelUser='" + hotelUser + '\'' +
+                            ", courierName='" + courierName + '\'' +
+                            ", actionName='" + actionName + '\'' +
+                            ", courierLogin='" + courierLogin + '\'' +
+                            ", courierTel='" + courierTel + '\'' +
+                            ", acceptDate='" + acceptDate + '\'' +
+                            ", deliveryDate='" + deliveryDate + '\'' +
+                            ", finishDate='" + finishDate + '\'' +
+                            ", cancelDate='" + cancelDate + '\'' +
+                            ", pushDate='" + pushDate + '\'' +
+                            ", status=" + status +
+                            ", isTimeout=" + isTimeout +
+                            ", pushCount=" + pushCount +
+                            ", finishedTime='" + finishedTime + '\'' +
+                            ", remark='" + remark + '\'' +
+                            ", dispatch='" + dispatch + '\'' +
+                            ", customerLongitude='" + customerLongitude + '\'' +
+                            ", customerLatitude='" + customerLatitude + '\'' +
+                            ", hotelLongitude='" + hotelLongitude + '\'' +
+                            ", hotelLatitude='" + hotelLatitude + '\'' +
+                            ", hotelAddr='" + hotelAddr + '\'' +
+                            ", isHasCourierLogin=" + isHasCourierLogin +
+                            ", validTime=" + validTime +
+                            ", hotelTel='" + hotelTel + '\'' +
+                            ", date=" + date +
+                            ", count=" + count +
+                            ", remarkList=" + remarkList +
+                            ", pushFrequency=" + pushFrequency +
+                            ", price='" + price + '\'' +
+                            '}';
+                }
+
                 /**
                  * id : 904a826bf88141b9b7f2ca91ddc85a7f
                  * isNewRecord : false
