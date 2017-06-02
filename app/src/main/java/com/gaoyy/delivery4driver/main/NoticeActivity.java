@@ -153,8 +153,8 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
                 setTextData(key, value,"hotelAddr",noticeStartPoint);
                 setTextData(key, value,"customerAddr",noticeDistination);
                 setTextData(key,value,"customerTel",noticePhone);
-                setTextData(key,value,"remarks",noticeNotes);
-                setTextData(key,value,"remark",noticeOther);
+                setTextData(key,value,"remark",noticeNotes);
+                setTextData(key,value,"remarks",noticeOther);
                 setTextData(key,value,"createDate",noticeDate);
                 if(key.equals("id"))
                 {
