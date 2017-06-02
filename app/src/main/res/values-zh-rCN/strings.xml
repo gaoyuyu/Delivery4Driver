@@ -73,11 +73,13 @@
     <string name="dialog_permission_deny">拒绝</string>
 
 
-    <string name="network_error">NetWork Error</string>
+    <string name="network_error">网络错误</string>
 
     <string name="permission_grant">定位服务已授权</string>
-    <string name="permission_already_deny">已拒绝定位权限的申请，可在设置界面中打开</string>
-
+    <string name="permission_already_deny">已拒绝定位权限的申请，可在手机的设置界面中打开</string>
+    <string name="dialog_reminder">温馨提示</string>
+    <string name="dialog_reminder_message">你没有开启定位权限，请到手机设置界面开启本应用的定位权限再登录</string>
+    <string name="dialog_setting">去设置</string>
 
 
 </resources>

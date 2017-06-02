@@ -2,6 +2,7 @@ package com.gaoyy.delivery4driver.orderlist;
 
 import android.util.Log;
 
+import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
@@ -119,7 +120,7 @@ public class OrderListPresenter implements OrderListContract.Presenter
                 //停止刷新
                 mOrderListView.finishRefesh();
                 CommonUtils.httpErrorLogger(t.toString());
-                mOrderListView.showToast("Network Error");
+                mOrderListView.showToast(R.string.network_error);
             }
         });
     }

@@ -156,7 +156,6 @@ public abstract class BaseActivity extends AppCompatActivity
                 PollingUtils.stopPollingService(this, PollingService.class,PollingService.ACTION);
                 ExitApplication.getInstanse().exit();
                 android.os.Process.killProcess(android.os.Process.myPid());
-
             }
 
             return true;

@@ -40,6 +40,7 @@ public class CommonUtils
     /**
      * showToast
      *
+     * @param context
      * @param msg
      */
     public static void showToast(Context context, String msg)
@@ -48,6 +49,17 @@ public class CommonUtils
         {
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * showToast
+     *
+     * @param context
+     * @param msgId
+     */
+    public static void showToast(Context context, int msgId)
+    {
+        Toast.makeText(context, msgId, Toast.LENGTH_SHORT).show();
     }
 
     /**

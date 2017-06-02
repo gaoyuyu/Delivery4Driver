@@ -79,4 +79,7 @@
 
     <string name="permission_grant">The location service has been authorized</string>
     <string name="permission_already_deny">You has refused to locate permissions can be opened in the settings screen</string>
+    <string name="dialog_reminder">Reminder</string>
+    <string name="dialog_reminder_message">You do not open the location permissions, please go to the phone settings interface, open the application positioning rights, and then login</string>
+    <string name="dialog_setting">Setting</string>
 </resources>

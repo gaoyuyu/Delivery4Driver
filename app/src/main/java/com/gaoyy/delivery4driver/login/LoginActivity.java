@@ -14,8 +14,10 @@ import android.widget.LinearLayout;
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.base.BaseActivity;
+import com.gaoyy.delivery4driver.base.CustomDialogFragment;
 import com.gaoyy.delivery4driver.util.ActivityUtils;
 import com.gaoyy.delivery4driver.util.CommonUtils;
+import com.gaoyy.delivery4driver.util.DialogUtils;
 
 
 public class LoginActivity extends BaseActivity
@@ -109,27 +111,53 @@ public class LoginActivity extends BaseActivity
      */
     private void showRequestPermissionDialog()
     {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_permission_title)
-                .setMessage(R.string.dialog_permission_message)
-                .setPositiveButton(R.string.dialog_permission_grant, new DialogInterface.OnClickListener()
+//        new AlertDialog.Builder(this)
+//                .setTitle(R.string.dialog_permission_title)
+//                .setMessage(R.string.dialog_permission_message)
+//                .setCancelable(false)
+//                .setPositiveButton(R.string.dialog_permission_grant, new DialogInterface.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i)
+//                    {
+//                        ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+//                                Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
+//                    }
+//                })
+//                .setNegativeButton(R.string.dialog_permission_deny, new DialogInterface.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i)
+//                    {
+//                        //拒绝授权
+//                        dialogInterface.dismiss();
+//                    }
+//                })
+//                .show();
+
+        CustomDialogFragment dialog = DialogUtils.showAlertDialog(this, getResources().getString(R.string.dialog_permission_title),
+                getResources().getString(R.string.dialog_permission_message),
+                getResources().getString(R.string.dialog_permission_deny), getResources().getString(R.string.dialog_permission_grant));
+        dialog.setOnAlertDialogClickListener(new CustomDialogFragment.OnAlertDialogClickListener()
+        {
+            @Override
+            public void onButtonClick(DialogInterface dialog, int which)
+            {
+                switch (which)
                 {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
+                    case AlertDialog.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                    case AlertDialog.BUTTON_POSITIVE:
+                        dialog.dismiss();
                         ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
-                    }
-                })
-                .setNegativeButton(R.string.dialog_permission_deny, new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-                        //拒绝授权
-                        dialogInterface.dismiss();
-                    }
-                })
-                .show();
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        });
     }
 }

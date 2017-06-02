@@ -1,6 +1,7 @@
 package com.gaoyy.delivery4driver.changepwd;
 
 
+import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.CommonInfo;
 import com.gaoyy.delivery4driver.util.CommonUtils;
@@ -72,7 +73,7 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter
                 }
                 mChangePwdView.hideLoading();
                 CommonUtils.httpErrorLogger(t.toString());
-                mChangePwdView.showToast("NetWork Error");
+                mChangePwdView.showToast(R.string.network_error);
             }
         });
     }

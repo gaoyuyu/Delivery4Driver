@@ -75,6 +75,7 @@ public class PollingService extends Service
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             Log.e(Constant.TAG, LOG_TAG + "=======权限申请失败=========");
+//            CommonUtils.showToast(this, R.string.dialog_reminder_message);
         }
         else
         {

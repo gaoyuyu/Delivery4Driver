@@ -54,6 +54,16 @@ public class OrderListActivity extends BaseActivity
         new OrderListPresenter(orderListFragment);
     }
 
+
+    @Override
+    protected void resumePresenter()
+    {
+//        OrderListFragment orderListFragment = (OrderListFragment) getSupportFragmentManager().findFragmentById(R.id.order_list_content);
+//        new OrderListPresenter(orderListFragment);
+        super.resumePresenter();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {

@@ -166,10 +166,10 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     public void onResume()
     {
         super.onResume();
+        if(mOrderListPresenter == null) return;
         mOrderListPresenter.start();
-
         //在onResume中加载数据
-        pageNo=1;
+        pageNo = 1;
         Map<String, String> params = getOrderListParams(pageNo, pageSize);
         Log.d(Constant.TAG, params.toString());
         mOrderListPresenter.orderList(params, PULL_TO_REFRESH);
@@ -211,7 +211,13 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     @Override
     public void showToast(String msg)
     {
-        CommonUtils.showToast(activity,msg);
+        CommonUtils.showToast(activity, msg);
+    }
+
+    @Override
+    public void showToast(int msgId)
+    {
+        CommonUtils.showToast(activity, msgId);
     }
 
     @Override
@@ -245,20 +251,21 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                 startActivity(intent);
                 break;
             case R.id.item_order_pick_up_btn:
-                orderSend(position,order);
+                orderSend(position, order);
                 break;
             case R.id.item_order_finish_btn:
-                orderFinish(position,order);
+                orderFinish(position, order);
                 break;
         }
     }
 
     /**
      * 饭店及司机订单派送，用于Delivery按钮
+     *
      * @param position
      * @param order
      */
-    private void orderSend(final int position,final OrderListInfo.BodyBean.PageBean.ListBean order)
+    private void orderSend(final int position, final OrderListInfo.BodyBean.PageBean.ListBean order)
     {
         CommonUtils.httpDebugLogger("司机订单派送请求");
         final CustomDialogFragment deliveryLoading = DialogUtils.showLoadingDialog(activity);
@@ -274,7 +281,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                     OrderOperationStatusInfo oosi = response.body();
                     String errorCode = oosi.getErrorCode();
                     String msg = oosi.getMsg();
-                    CommonUtils.httpDebugLogger("[isSuccess="+oosi.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
+                    CommonUtils.httpDebugLogger("[isSuccess=" + oosi.isSuccess() + "][errorCode=" + errorCode + "][msg=" + msg + "]");
                     CommonUtils.showSnackBar(commonRv, oosi.getMsg());
                     if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
                     {
@@ -284,7 +291,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         //设置delivery时间
                         order.setDeliveryDate(CommonUtils.getCurrentTime());
                         //更新数据
-                        orderListAdapter.singleItemUpdate(position,order);
+                        orderListAdapter.singleItemUpdate(position, order);
                     }
                 }
             }
@@ -294,17 +301,18 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             {
                 deliveryLoading.dismiss();
                 CommonUtils.httpErrorLogger(t.toString());
-                CommonUtils.showToast(activity,getResources().getString(R.string.network_error));
+                CommonUtils.showToast(activity, getResources().getString(R.string.network_error));
             }
         });
     }
 
     /**
      * 完成订单
+     *
      * @param position
      * @param order
      */
-    private void orderFinish(final int position,final OrderListInfo.BodyBean.PageBean.ListBean order)
+    private void orderFinish(final int position, final OrderListInfo.BodyBean.PageBean.ListBean order)
     {
         CommonUtils.httpDebugLogger("司机完成订单请求");
         final CustomDialogFragment finishLoading = DialogUtils.showLoadingDialog(activity);
@@ -320,7 +328,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                     OrderOperationStatusInfo oosi = response.body();
                     String errorCode = oosi.getErrorCode();
                     String msg = oosi.getMsg();
-                    CommonUtils.httpDebugLogger("[isSuccess="+oosi.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
+                    CommonUtils.httpDebugLogger("[isSuccess=" + oosi.isSuccess() + "][errorCode=" + errorCode + "][msg=" + msg + "]");
                     CommonUtils.showSnackBar(commonRv, oosi.getMsg());
                     if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
                     {
@@ -330,7 +338,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         //设置取消时间
                         order.setFinishDate(CommonUtils.getCurrentTime());
                         //更新数据
-                        orderListAdapter.singleItemUpdate(position,order);
+                        orderListAdapter.singleItemUpdate(position, order);
                     }
                 }
             }
@@ -340,7 +348,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             {
                 finishLoading.dismiss();
                 CommonUtils.httpErrorLogger(t.toString());
-                CommonUtils.showToast(activity,getResources().getString(R.string.network_error));
+                CommonUtils.showToast(activity, getResources().getString(R.string.network_error));
             }
         });
     }
