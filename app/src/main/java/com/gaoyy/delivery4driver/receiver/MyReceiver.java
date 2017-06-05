@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.base.BaseActivity;
 import com.gaoyy.delivery4driver.main.NoticeActivity;
+import com.gaoyy.delivery4driver.util.CommonUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ import cn.jpush.android.api.JPushInterface;
 public class MyReceiver extends BroadcastReceiver
 {
     private static final String TAG = "JPush MyReceiver";
+    private int messageType;
 
     @Override
     public void onReceive(Context context, Intent intent)
@@ -36,6 +39,7 @@ public class MyReceiver extends BroadcastReceiver
         Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
         String rid = JPushInterface.getRegistrationID(context.getApplicationContext());
         Log.d(TAG, "[MyReceiver] 接收Registration Id : " + rid);
+
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction()))
         {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
@@ -55,25 +59,45 @@ public class MyReceiver extends BroadcastReceiver
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             Log.d(TAG, "[MyReceiver] 打印Bundle: " + printBundle(bundle));
-            //判断应用是否在前台，在前台直接打开推送界面
-            if (BaseActivity.isForeground)
+            messageType = getMessageType(bundle);
+            Log.d(TAG, "[MyReceiver] Message Type : " + messageType);
+            if (messageType == 1)
             {
+                //判断应用是否在前台，在前台直接打开推送界面
+                if (BaseActivity.isForeground)
+                {
+                    Intent notice = new Intent();
+                    notice.putExtra("notice", bundle);
+                    notice.setClass(context, NoticeActivity.class);
+                    notice.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(notice);
+                }
+            }
+            else
+            {
+                CommonUtils.showToast(context,getAlertMessage(bundle));
+            }
+
+
+        }
+        else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction()))
+        {
+            Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+            messageType = getMessageType(bundle);
+            Log.d(TAG, "[MyReceiver] Message Type : " + messageType);
+            if(messageType == 1)
+            {
+                //打开通知跳转到推送页面，无论是否在前台
                 Intent notice = new Intent();
                 notice.putExtra("notice", bundle);
                 notice.setClass(context, NoticeActivity.class);
                 notice.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(notice);
             }
-        }
-        else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction()))
-        {
-            Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-            //打开通知跳转到推送页面，无论是否在前台
-            Intent notice = new Intent();
-            notice.putExtra("notice", bundle);
-            notice.setClass(context, NoticeActivity.class);
-            notice.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            context.startActivity(notice);
+            else
+            {
+                CommonUtils.showToast(context,getAlertMessage(bundle));
+            }
         }
         else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction()))
         {
@@ -168,4 +192,60 @@ public class MyReceiver extends BroadcastReceiver
 //			context.sendBroadcast(msgIntent);
 //		}
     }
+
+    /**
+     * 获取推送的消息类型
+     *
+     * @param bundle
+     * @return
+     */
+    private int getMessageType(Bundle bundle)
+    {
+        int type = -1;
+        try
+        {
+            JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
+            Iterator<String> it = json.keys();
+
+            while (it.hasNext())
+            {
+                String key = it.next().toString();
+                String value = json.optString(key);
+
+                Log.d(Constant.TAG, "[MyReceiver]---key-->" + key);
+                Log.d(Constant.TAG, "[MyReceiver]---value-->" + json.optString(key));
+
+                if (key.equals("type"))
+                {
+                    type = Integer.valueOf(value);
+                }
+            }
+        }
+        catch (JSONException e)
+        {
+            Log.e(Constant.TAG, "Get message extra JSON error!");
+        }
+        return type;
+    }
+
+    /**
+     * 获取alert内容
+     *
+     * @param bundle
+     * @return
+     */
+    private String getAlertMessage(Bundle bundle)
+    {
+        String alertMessage = "";
+        for (String key : bundle.keySet())
+        {
+            if (key.equals(JPushInterface.EXTRA_ALERT))
+            {
+                alertMessage = bundle.getString(key);
+                Log.d(Constant.TAG, "EXTRA_ALERT--->" + alertMessage);
+            }
+        }
+        return alertMessage;
+    }
+
 }

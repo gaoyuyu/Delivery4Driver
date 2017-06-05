@@ -180,6 +180,12 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     }
 
     @Override
+    public void showToast(int msgId)
+    {
+        CommonUtils.showToast(activity, msgId);
+    }
+
+    @Override
     public void saveUserInfo(DriverInfo.BodyBean.UserBean user)
     {
         SharedPreferences account = activity.getSharedPreferences("account", Activity.MODE_PRIVATE);

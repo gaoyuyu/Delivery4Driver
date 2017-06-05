@@ -2,6 +2,7 @@ package com.gaoyy.delivery4driver.login;
 
 import android.util.Log;
 
+import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.DriverInfo;
@@ -92,7 +93,7 @@ public class LoginPresenter implements LoginContract.Presenter
                 }
                 mLoginView.hideLoading();
                 CommonUtils.httpErrorLogger(t.toString());
-                mLoginView.showToast("网络错误");
+                mLoginView.showToast(R.string.network_error);
             }
         });
     }

@@ -17,6 +17,7 @@ public class LoginContract
         void showLoading();
         void hideLoading();
         void showToast(String msg);
+        void showToast(int msgId);
 
         /**
          * 保存用户信息
