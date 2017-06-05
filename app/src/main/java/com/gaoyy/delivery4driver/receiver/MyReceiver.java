@@ -76,9 +76,10 @@ public class MyReceiver extends BroadcastReceiver
             else
             {
                 CommonUtils.showToast(context,getAlertMessage(bundle));
+                Intent update = new Intent();
+                update.setAction("android.intent.action.UpdateListAfterCancleReceiver");
+                context.sendBroadcast(update);
             }
-
-
         }
         else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction()))
         {
@@ -97,6 +98,10 @@ public class MyReceiver extends BroadcastReceiver
             else
             {
                 CommonUtils.showToast(context,getAlertMessage(bundle));
+                Intent update = new Intent();
+                update.setAction("android.intent.action.UpdateListAfterCancleReceiver");
+                context.sendBroadcast(update);
+
             }
         }
         else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction()))
