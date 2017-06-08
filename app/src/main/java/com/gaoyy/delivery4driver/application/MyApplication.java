@@ -2,10 +2,9 @@ package com.gaoyy.delivery4driver.application;
 
 import android.app.Application;
 
+import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.RetrofitService;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -27,6 +26,8 @@ public class MyApplication extends Application
 
         initJPush();
 
+        CrashReport.initCrashReport(getApplicationContext(), Constant.BUGLY_APP_ID, true);
+
 
     }
 
@@ -38,10 +39,9 @@ public class MyApplication extends Application
         //初始化sdk
         JPushInterface.setDebugMode(true);//正式版的时候设置false，关闭调试
         JPushInterface.init(this);
-
-        Set<String> set = new HashSet<>();
-        set.add("demo");//名字任意，可多添加几个
-        JPushInterface.setTags(this, set, null);//设置标签
+//        Set<String> set = new HashSet<>();
+//        set.add("demo");//名字任意，可多添加几个
+//        JPushInterface.setTags(this, set, null);//设置标签
     }
 
 

@@ -17,4 +17,7 @@ public class Constant
 
     public static final int REQUEST_ACCESS_FINE_COARSE_LOCATION = 1000;
 
+
+    public static final String BUGLY_APP_ID = "ff44d227c2";
+
 }

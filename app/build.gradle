@@ -52,5 +52,8 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.5'  // 此处以JPush 3.0.5 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.2'  // 此处以JCore 1.1.2 版本为例。
 
+
+    compile 'com.tencent.bugly:crashreport:latest.release'
+
     testCompile 'junit:junit:4.12'
 }

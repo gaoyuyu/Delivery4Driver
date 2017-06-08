@@ -29,6 +29,7 @@ import com.gaoyy.delivery4driver.service.PollingService;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.DialogUtils;
 import com.gaoyy.delivery4driver.util.PollingUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -281,6 +282,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         switch (view.getId())
         {
             case R.id.login_btn:
+                CrashReport.testJavaCrash();
 
                 //再做一次判断用户是否打开定位权限
                 if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
