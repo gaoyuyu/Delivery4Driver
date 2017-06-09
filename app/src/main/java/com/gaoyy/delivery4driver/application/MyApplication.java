@@ -29,6 +29,8 @@ public class MyApplication extends Application
 
         initJPush();
 
+        upgradeSetting();
+
         Bugly.init(getApplicationContext(), Constant.BUGLY_APP_ID, true);
 
 
@@ -47,10 +49,11 @@ public class MyApplication extends Application
 //        JPushInterface.setTags(this, set, null);//设置标签
     }
 
-
+    /**
+     * Beta高级设置
+     */
     private void upgradeSetting()
     {
-        /**** Beta高级设置*****/
         /**
          * true表示app启动自动初始化升级模块；
          * false不好自动初始化
