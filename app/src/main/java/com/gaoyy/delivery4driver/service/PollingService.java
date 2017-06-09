@@ -13,8 +13,11 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.RetrofitService;
+import com.gaoyy.delivery4driver.base.BaseActivity;
+import com.gaoyy.delivery4driver.util.CommonUtils;
 
 import java.util.List;
 
@@ -75,7 +78,14 @@ public class PollingService extends Service
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             Log.e(Constant.TAG, LOG_TAG + "=======权限申请失败=========");
-//            CommonUtils.showToast(this, R.string.dialog_reminder_message);
+            if(BaseActivity.isForeground)
+            {
+                CommonUtils.showToast(this, R.string.dialog_reminder_message);
+            }
+            else
+            {
+                Log.e(Constant.TAG, LOG_TAG + "===="+getResources().getString(R.string.dialog_reminder_message));
+            }
         }
         else
         {
@@ -86,14 +96,19 @@ public class PollingService extends Service
             {
                 Log.e(LOG_TAG, LOG_TAG + "===Latitude-->" + location.getLatitude());
                 Log.e(LOG_TAG, LOG_TAG + "===Longitude-->" + location.getLongitude());
-
                 uploadLocation(intent, location);
-
-
             }
             else
             {
                 Log.e(TAG, LOG_TAG + "===location为空");
+                if(BaseActivity.isForeground)
+                {
+                    CommonUtils.showToast(this, R.string.dialog_reminder_message);
+                }
+                else
+                {
+                    Log.e(Constant.TAG, LOG_TAG + "===="+getResources().getString(R.string.dialog_reminder_message));
+                }
             }
             //监视地理位置变化
             locationManager.requestLocationUpdates(locationProvider, 3000, 1, new LocationListener()

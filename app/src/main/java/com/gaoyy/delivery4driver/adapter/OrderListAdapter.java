@@ -87,7 +87,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Log.d(Constant.TAG, "adapter order status is Accept");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.holo_orange_dark));
                 vh.itemOrderStatus.setText(R.string.status_accept);
-                vh.itemOrderStatusDate.setText(order.getAcceptDate());
+                vh.itemOrderStatusDate.setText(order.getCreateDate());
 
                 //显示按钮组
                 vh.itemOrderOperationLayout.setVisibility(View.VISIBLE);
@@ -102,7 +102,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Log.d(Constant.TAG, "adapter order status is Delivery");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
                 vh.itemOrderStatus.setText(R.string.status_delivery);
-                vh.itemOrderStatusDate.setText(order.getDeliveryDate());
+                vh.itemOrderStatusDate.setText(order.getCreateDate());
                 //显示按钮组
                 vh.itemOrderOperationLayout.setVisibility(View.VISIBLE);
                 //隐藏PickUp按钮显示Finish按钮
@@ -115,7 +115,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //                Log.d(Constant.TAG,"adapter order status is Finish");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
                 vh.itemOrderStatus.setText(R.string.status_finish);
-                vh.itemOrderStatusDate.setText(order.getFinishDate());
+                vh.itemOrderStatusDate.setText(order.getCreateDate());
 
                 //不显示按钮
                 vh.itemOrderOperationLayout.setVisibility(View.GONE);
@@ -126,7 +126,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //                Log.d(Constant.TAG,"adapter order status is Cancel");
                 vh.itemOrderStatus.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
                 vh.itemOrderStatus.setText(R.string.status_cancle);
-                vh.itemOrderStatusDate.setText(order.getCancelDate());
+                vh.itemOrderStatusDate.setText(order.getCreateDate());
 
                 //不显示按钮
                 vh.itemOrderOperationLayout.setVisibility(View.GONE);

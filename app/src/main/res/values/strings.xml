@@ -49,10 +49,10 @@
     <string name="status_accept">Accept</string>
     <string name="status_delivery">Delivery</string>
     <string name="status_finish">Finish</string>
-    <string name="status_cancle">Cancle</string>
+    <string name="status_cancle">Cancel</string>
     <string name="status_back">Back</string>
 
-    <string name="status_cancle_btn">Cancle</string>
+    <string name="status_cancle_btn">Cancel</string>
     <string name="status_delivery_btn">Delivery</string>
     <string name="status_resubmit_btn">Resubmit</string>
 

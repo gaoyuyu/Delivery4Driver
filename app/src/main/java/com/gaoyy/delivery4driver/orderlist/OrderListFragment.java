@@ -321,7 +321,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         //设置订单状态
                         order.setStatus(status);
                         //设置delivery时间
-                        order.setDeliveryDate(CommonUtils.getCurrentTime());
+//                        order.setDeliveryDate(CommonUtils.getCurrentTime());
                         //更新数据
                         orderListAdapter.singleItemUpdate(position, order);
                     }
@@ -368,7 +368,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         //设置订单状态
                         order.setStatus(status);
                         //设置取消时间
-                        order.setFinishDate(CommonUtils.getCurrentTime());
+//                        order.setFinishDate(CommonUtils.getCurrentTime());
                         //更新数据
                         orderListAdapter.singleItemUpdate(position, order);
                     }
