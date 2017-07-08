@@ -49,8 +49,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:9.8.0'
 
 
-    compile 'cn.jiguang.sdk:jpush:3.0.5'  // 此处以JPush 3.0.5 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.2'  // 此处以JCore 1.1.2 版本为例。
+    compile 'cn.jiguang.sdk:jpush:3.0.5'
+    compile 'cn.jiguang.sdk:jcore:1.1.2'
 
 
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
