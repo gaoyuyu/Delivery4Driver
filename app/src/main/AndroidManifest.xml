@@ -110,7 +110,7 @@
 
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
-            android:value="Bugly"/>
+            android:value="Google Play"/>
     </application>
 
 </manifest>
