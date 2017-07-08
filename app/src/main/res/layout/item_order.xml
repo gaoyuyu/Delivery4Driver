@@ -238,7 +238,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pick_up"
+                android:text="@string/status_pick_up_btn"
                 />
 
             <android.support.v7.widget.AppCompatButton
