@@ -121,7 +121,7 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
             public void onAnimationUpdate(ValueAnimator valueAnimator)
             {
                 int currentOrderTime = (int) valueAnimator.getAnimatedValue();
-                noticeCancleBtn.setText("取消订单（"+currentOrderTime+"）");
+                noticeCancleBtn.setText(getResources().getString(R.string.status_cancle)+"（"+currentOrderTime+"）");
             }
         });
         valueAnimator.addListener(new AnimatorListenerAdapter()

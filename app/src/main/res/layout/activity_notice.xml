@@ -208,7 +208,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="取消订单(30)"
+            android:text="@string/status_cancle"
             android:theme="@style/Error.Button.Theme"
             android:textColor="@color/white"/>
 

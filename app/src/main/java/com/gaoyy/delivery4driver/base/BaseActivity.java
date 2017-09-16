@@ -8,17 +8,11 @@ import android.view.KeyEvent;
 
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
-import com.gaoyy.delivery4driver.api.RetrofitService;
-import com.gaoyy.delivery4driver.api.bean.UpdateInfo;
 import com.gaoyy.delivery4driver.application.ExitApplication;
 import com.gaoyy.delivery4driver.service.PollingService;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.PollingUtils;
 import com.gaoyy.delivery4driver.util.UpdateManager;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public abstract class BaseActivity extends AppCompatActivity
@@ -43,38 +37,6 @@ public abstract class BaseActivity extends AppCompatActivity
         configViews();
 
 
-        CommonUtils.httpDebugLogger("app更新请求");
-        Call<UpdateInfo> call = RetrofitService.sApiService.getAppCurrentVersion();
-        call.enqueue(new Callback<UpdateInfo>()
-        {
-            @Override
-            public void onResponse(Call<UpdateInfo> call, Response<UpdateInfo> response)
-            {
-                if(response.isSuccessful()&&response.body()!=null)
-                {
-                    UpdateInfo updateInfo = response.body();
-                    String msg = updateInfo.getMsg();
-                    String errorCode = updateInfo.getErrorCode();
-                    CommonUtils.httpDebugLogger("[isSuccess="+updateInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
-                    if(errorCode.equals("-1"))
-                    {
-                        int code = Integer.valueOf(updateInfo.getBody().getAndroidIsUpdate());
-                        code =0;
-                        if(code == 1)
-                        {
-                            updateManager.showNoticeDialog();
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateInfo> call, Throwable t)
-            {
-
-            }
-        });
     }
 
 

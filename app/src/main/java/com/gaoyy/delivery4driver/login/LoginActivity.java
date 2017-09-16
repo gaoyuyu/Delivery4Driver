@@ -3,6 +3,7 @@ package com.gaoyy.delivery4driver.login;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -52,32 +53,34 @@ public class LoginActivity extends BaseActivity
     {
         super.configViews();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
-            Log.e(Constant.TAG, "==Login==申请权限=====");
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            {
+                Log.e(Constant.TAG, "==Login==申请权限=====");
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
-            {
-                Log.e(Constant.TAG, "==Login==ACCESS_FINE_LOCATION again=====");
-                showRequestPermissionDialog();
-            }
-            else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
-            {
-                Log.e(Constant.TAG, "==Login==ACCESS_COARSE_LOCATION again=====");
-                showRequestPermissionDialog();
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+                {
+                    Log.e(Constant.TAG, "==Login==ACCESS_FINE_LOCATION again=====");
+                    showRequestPermissionDialog();
+                }
+                else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
+                {
+                    Log.e(Constant.TAG, "==Login==ACCESS_COARSE_LOCATION again=====");
+                    showRequestPermissionDialog();
+                }
+                else
+                {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
+                }
             }
             else
             {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
+                CommonUtils.showToast(this, getResources().getString(R.string.permission_grant));
             }
         }
-        else
-        {
-            CommonUtils.showToast(this, getResources().getString(R.string.permission_grant));
-        }
-
 
         LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.login_content);
         if (loginFragment == null)
@@ -106,9 +109,6 @@ public class LoginActivity extends BaseActivity
     }
 
 
-    /**
-     * 申请打电话的权限得的对话框,之前被勾选不再提醒申请权限
-     */
     private void showRequestPermissionDialog()
     {
 //        new AlertDialog.Builder(this)
