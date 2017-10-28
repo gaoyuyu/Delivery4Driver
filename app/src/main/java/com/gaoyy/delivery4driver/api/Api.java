@@ -4,8 +4,10 @@ package com.gaoyy.delivery4driver.api;
 import com.gaoyy.delivery4driver.api.bean.CommonInfo;
 import com.gaoyy.delivery4driver.api.bean.DriverInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
+import com.gaoyy.delivery4driver.api.bean.OrderNewInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderOperationStatusInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderSaveInfo;
+import com.gaoyy.delivery4driver.api.bean.ScoreInfo;
 import com.gaoyy.delivery4driver.api.bean.UpdateInfo;
 
 import java.util.Map;
@@ -183,5 +185,47 @@ public interface Api
     @POST("a/order/order/mobile/orderaccept")
     Call<OrderOperationStatusInfo> driverOrderAccept(@Field("loginName") String logName, @Field("randomCode") String randomCode, @Field("id") String id);
 
+
+    /**
+     * 订单详情（最新订单）
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/sys/user/pc/orderDetails")
+    Call<OrderNewInfo> newOrderDetail(@FieldMap Map<String, String> params);
+
+    /**
+     * 接单
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/sys/user/pc/orderAccept")
+    Call<CommonInfo> orderAccept(@FieldMap Map<String, String> params);
+
+    /**
+     * 拒绝接单
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/sys/user/pc/orderCancel")
+    Call<CommonInfo> orderRefuse(@FieldMap Map<String, String> params);
+
+
+
+    /**
+     * 评分页面
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("a/order/order/mobile/courierPointList")
+    Call<ScoreInfo> score(@FieldMap Map<String, String> params);
 
 }

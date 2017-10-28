@@ -111,30 +111,6 @@ public class LoginActivity extends BaseActivity
 
     private void showRequestPermissionDialog()
     {
-//        new AlertDialog.Builder(this)
-//                .setTitle(R.string.dialog_permission_title)
-//                .setMessage(R.string.dialog_permission_message)
-//                .setCancelable(false)
-//                .setPositiveButton(R.string.dialog_permission_grant, new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i)
-//                    {
-//                        ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-//                                Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
-//                    }
-//                })
-//                .setNegativeButton(R.string.dialog_permission_deny, new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i)
-//                    {
-//                        //拒绝授权
-//                        dialogInterface.dismiss();
-//                    }
-//                })
-//                .show();
-
         CustomDialogFragment dialog = DialogUtils.showAlertDialog(this, getResources().getString(R.string.dialog_permission_title),
                 getResources().getString(R.string.dialog_permission_message),
                 getResources().getString(R.string.dialog_permission_deny), getResources().getString(R.string.dialog_permission_grant));

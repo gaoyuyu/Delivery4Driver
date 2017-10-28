@@ -21,4 +21,10 @@ public class Constant
 
     public static final String BUGLY_APP_ID = "ff44d227c2";
 
+    public static final int MSG_TO_ACT_ORDER_LIST = 101;
+    public static final int MSG_TO_ACT_NEW_ORDER = 102;
+    public static final int REQUEST_ACCESS_COARSE_LOCATION = 103;
+    public static final int REQUEST_BLUETOOTH_ON = 104;
+    public static final int REQUEST_PRINT = 110;
+
 }

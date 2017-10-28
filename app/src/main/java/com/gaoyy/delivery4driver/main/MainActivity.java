@@ -252,6 +252,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 personDetail.setClass(MainActivity.this,PersonalDetailActivity.class);
                 startActivity(personDetail);
                 break;
+            case R.id.nav_score:
+                Intent score = new Intent();
+                score.setClass(MainActivity.this,ScoreActivity.class);
+                startActivity(score);
+                break;
             case R.id.nav_exit:
                 String loginName = CommonUtils.getLoginName(this);
                 String randomCode = CommonUtils.getRandomCode(this);

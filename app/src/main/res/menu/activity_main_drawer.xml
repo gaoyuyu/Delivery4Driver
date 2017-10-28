@@ -11,6 +11,10 @@
             android:id="@+id/nav_person_detail"
             android:icon="@drawable/ic_person_detail"
             android:title="@string/menu_personal_detail"/>
+        <item
+            android:id="@+id/nav_score"
+            android:icon="@drawable/ic_score"
+            android:title="@string/menu_score"/>
 
         <item
             android:id="@+id/nav_exit"

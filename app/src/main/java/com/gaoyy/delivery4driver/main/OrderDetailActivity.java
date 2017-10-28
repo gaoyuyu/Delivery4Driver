@@ -5,11 +5,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.gaoyy.delivery4driver.R;
+import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
 import com.gaoyy.delivery4driver.base.BaseActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -73,6 +75,15 @@ public class OrderDetailActivity extends BaseActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
 
         order= (OrderListInfo.BodyBean.PageBean.ListBean) getIntent().getSerializableExtra("order");
+
+        if (order.getOrderType() == 1)
+        {
+            Log.d(Constant.TAG,"==>ordernew");
+        }
+        else
+        {
+            Log.d(Constant.TAG,"==>NewOrderDetailActivity");
+        }
         orderDetailDate.setText(order.getCreateDate());
         orderDetailOrderNo.setText(order.getOrderNo());
         orderDetailStartPoint.setText(order.getHotelAddr());
@@ -80,7 +91,7 @@ public class OrderDetailActivity extends BaseActivity implements OnMapReadyCallb
         orderDetailPhone.setText(order.getCustomerTel());
         orderDetailNotes.setText(order.getRemark());
         orderDetailFinishTime.setText(order.getFinishedTime());
-        orderDetailOther.setText(order.getRemarks().trim());
+//        orderDetailOther.setText(order.getRemarks().trim());
 
     }
 
