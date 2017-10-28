@@ -99,6 +99,7 @@
     <string name="tip_price">小费</string>
     <string name="ship_price">配送费</string>
     <string name="taxation">税1</string>
+    <string name="taxation_tvq">税2</string>
     <string name="income_price">收益</string>
     <string name="coupon_price">代金券</string>
     <string name="activity_price">商家满减</string>

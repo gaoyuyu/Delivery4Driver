@@ -114,5 +114,6 @@
     <string name="toolbar_title_my_reply">My Reply</string>
     <string name="accept_order_btn_text">Accept Order</string>
     <string name="menu_score">Score</string>
+    <string name="refuse_order_btn_text">Refuse Order</string>
 
 </resources>
