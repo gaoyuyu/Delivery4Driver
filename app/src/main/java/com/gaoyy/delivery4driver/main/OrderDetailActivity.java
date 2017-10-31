@@ -91,7 +91,7 @@ public class OrderDetailActivity extends BaseActivity implements OnMapReadyCallb
         orderDetailPhone.setText(order.getCustomerTel());
         orderDetailNotes.setText(order.getRemark());
         orderDetailFinishTime.setText(order.getFinishedTime());
-//        orderDetailOther.setText(order.getRemarks().trim());
+        orderDetailOther.setText(order.getRemarks());
 
     }
 

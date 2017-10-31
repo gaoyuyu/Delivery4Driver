@@ -18,7 +18,7 @@
     <string name="customer_phone">Customers Phone Number</string>
     <string name="customer_address">Customers Address</string>
     <string name="customer_apt">Customers Apartment Number</string>
-    <string name="customer_finished_time">FinishedTime</string>
+    <string name="customer_prepare_time">Prepare Time</string>
     <string name="door_bell">door bell not working</string>
     <string name="customer_remark">other remarks</string>
     <string name="action_send_order">Send Order</string>
@@ -58,7 +58,7 @@
 
     <string name="driver_name">Driver Name：</string>
     <string name="order_no">Order No：</string>
-    <string name="finished_time">Finished Time：</string>
+    <string name="prepare_time">Prepare Time：</string>
 
 
     <string name="exit_after_press_again">Exit After Press Again</string>

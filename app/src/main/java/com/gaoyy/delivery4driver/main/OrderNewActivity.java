@@ -274,7 +274,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
                     //备注
                     orderNewRemark.setText(data.getMsg() + "");
                     //期望送达时间
-                    orderNewEaTime.setText("" + data.getAppointment_time());
+                    orderNewEaTime.setText("" + CommonUtils.deci2(data.getAppointment_time()));
 
                     expectTimeList.add("");
                     expectTimeList.add("now");
@@ -332,7 +332,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            orderNewTip.setText("$" + data.getTipPrice());
+            orderNewTip.setText("$" + CommonUtils.deci2(data.getTipPrice()));
         }
 
         //配送费
@@ -342,7 +342,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            orderNewShip.setText("$" + data.getShip_price());
+            orderNewShip.setText("$" +  CommonUtils.deci2(data.getShip_price()));
         }
 
         //税1
@@ -352,7 +352,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            orderNewTax.setText("$" + data.getTaxation());
+            orderNewTax.setText("$" +  CommonUtils.deci2(data.getTaxation()));
         }
 
         //税2
@@ -362,7 +362,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            orderNewTaxTvq.setText("$" + data.getTaxation_tvq());
+            orderNewTaxTvq.setText("$" +  CommonUtils.deci2(data.getTaxation_tvq()));
         }
 
         //收益
@@ -372,7 +372,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            orderNewIncome.setText("-$" + data.getUseIncomePrice());
+            orderNewIncome.setText("-$" +  CommonUtils.deci2(data.getUseIncomePrice()));
         }
 
         //代金券
@@ -382,7 +382,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            orderNewCoupon.setText("-$" + data.getCouponPrice());
+            orderNewCoupon.setText("-$" +  CommonUtils.deci2(data.getCouponPrice()));
         }
 
         //商家满减
@@ -392,7 +392,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            orderNewAcivity.setText("-$" + data.getActivityPrice());
+            orderNewAcivity.setText("-$" +  CommonUtils.deci2(data.getActivityPrice()));
         }
     }
 

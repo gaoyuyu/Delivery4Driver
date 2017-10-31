@@ -181,7 +181,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@string/finished_time"
+                    android:text="@string/prepare_time"
                     android:textColor="@android:color/darker_gray"
                     />
 
