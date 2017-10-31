@@ -342,31 +342,31 @@ public class PrintActivity extends BaseActivity implements AdapterView.OnItemCli
         {
             //小费
             if (data.getTipPrice() != null && (Double) (data.getTipPrice()) != 0.0)
-                PrintUtils.printText(PrintUtils.printTwoData("小费", "$"+data.getTipPrice() + "\n"));
+                PrintUtils.printText(PrintUtils.printTwoData("小费", "$"+CommonUtils.deci2(data.getTipPrice()) + "\n"));
         }
         //配送费
         if (data.getShip_price() != null && (Double) (data.getShip_price()) != 0.0)
-            PrintUtils.printText(PrintUtils.printTwoData("配送费", "$"+data.getShip_price() + "\n"));
+            PrintUtils.printText(PrintUtils.printTwoData("配送费", "$"+CommonUtils.deci2(data.getShip_price()) + "\n"));
         //税1
         if (data.getTaxation() != null && (Double) (data.getTaxation()) != 0.0)
-            PrintUtils.printText(PrintUtils.printTwoData("税1", "$"+data.getTaxation() + "\n"));
+            PrintUtils.printText(PrintUtils.printTwoData("税1", "$"+CommonUtils.deci2(data.getTaxation()) + "\n"));
         //税2
         if (data.getTaxation_tvq() != null  && (Double) (data.getTaxation_tvq()) != 0.0)
-            PrintUtils.printText(PrintUtils.printTwoData("税2", "$"+data.getTaxation_tvq() + "\n"));
+            PrintUtils.printText(PrintUtils.printTwoData("税2", "$"+CommonUtils.deci2(data.getTaxation_tvq()) + "\n"));
         //收益
         if (data.getUseIncomePrice() != null  && (Double) (data.getUseIncomePrice()) != 0.0)
-            PrintUtils.printText(PrintUtils.printTwoData("收益", "-$" + data.getUseIncomePrice() + "\n"));
+            PrintUtils.printText(PrintUtils.printTwoData("收益", "-$" + CommonUtils.deci2(data.getUseIncomePrice()) + "\n"));
         //代金券
         if (data.getCouponPrice() != null  && (Double) (data.getCouponPrice()) != 0.0)
-            PrintUtils.printText(PrintUtils.printTwoData("代金券", "-$" + data.getCouponPrice() + "\n"));
+            PrintUtils.printText(PrintUtils.printTwoData("代金券", "-$" + CommonUtils.deci2(data.getCouponPrice()) + "\n"));
         //商家满减
         if (data.getActivityPrice() != null  && (Double) (data.getActivityPrice()) != 0.0)
-            PrintUtils.printText(PrintUtils.printTwoData("商家满减", "-$" + data.getActivityPrice() + "\n"));
+            PrintUtils.printText(PrintUtils.printTwoData("商家满减", "-$" + CommonUtils.deci2(data.getActivityPrice()) + "\n"));
 
         PrintUtils.printText("--------------------------------\n");
         PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
-        PrintUtils.printText("合计：" + "$"+orderNewInfo.getBody().getObj().getTotalPrice() + "\n");
+        PrintUtils.printText("合计：" + "$"+CommonUtils.deci2(orderNewInfo.getBody().getObj().getTotalPrice()) + "\n");
         PrintUtils.selectCommand(PrintUtils.NORMAL);
         PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
         PrintUtils.printText("--------------------------------\n");
