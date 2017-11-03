@@ -32,6 +32,7 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
 
     private ChangePwdContract.Presenter mChangePwdPresenter;
     private CustomDialogFragment loading;
+
     public ChangePwdFragment()
     {
         // Required empty public constructor
@@ -42,6 +43,7 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
         ChangePwdFragment fragment = new ChangePwdFragment();
         return fragment;
     }
+
     @Override
     protected int getFragmentLayoutId()
     {
@@ -64,8 +66,8 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
      */
     public void validate()
     {
-        CommonUtils.textInputLayoutSetting(changeOldpwd,changeOldpwdTextinputlayout,"Can't be empty");
-        CommonUtils.textInputLayoutSetting(changeNewpwd,changeNewpwdTextinputlayout,"Can't be empty");
+        CommonUtils.textInputLayoutSetting(changeOldpwd, changeOldpwdTextinputlayout, "Can't be empty");
+        CommonUtils.textInputLayoutSetting(changeNewpwd, changeNewpwdTextinputlayout, "Can't be empty");
     }
 
     @Override
@@ -84,11 +86,11 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
         {
             case R.id.action_change_pwd:
                 validate();
-                Map<String,String> params = new HashMap<>();
-                params.put("loginName",CommonUtils.getLoginName(activity));
-                params.put("randomCode",CommonUtils.getRandomCode(activity));
-                params.put("password",changeOldpwd.getText().toString());
-                params.put("newPassword",changeNewpwd.getText().toString());
+                Map<String, String> params = new HashMap<>();
+                params.put("loginName", CommonUtils.getLoginName(activity));
+                params.put("randomCode", CommonUtils.getRandomCode(activity));
+                params.put("password", changeOldpwd.getText().toString());
+                params.put("newPassword", changeNewpwd.getText().toString());
                 mChangePwdPresenter.changePwd(params);
                 break;
         }
@@ -98,12 +100,11 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
     }
 
 
-
     @Override
     public void onResume()
     {
         super.onResume();
-        if(mChangePwdPresenter == null) return;
+        if (mChangePwdPresenter == null) return;
         mChangePwdPresenter.start();
     }
 
@@ -143,6 +144,7 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
     @Override
     public void redirectToLogin()
     {
+        CommonUtils.setUpAutoLogin(activity, false);
         Intent login = new Intent(activity, LoginActivity.class);
         startActivity(login);
     }

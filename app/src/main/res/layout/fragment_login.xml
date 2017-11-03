@@ -1,6 +1,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/login_bg_color"
@@ -63,6 +64,14 @@
             android:text="@string/login"
             android:textColor="@color/white"
             android:theme="@style/Success.Button.Theme"/>
+
+        <CheckBox
+            android:id="@+id/login_auto_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/auto_login"/>
 
     </LinearLayout>
 

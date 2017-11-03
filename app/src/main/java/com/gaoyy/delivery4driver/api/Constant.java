@@ -27,4 +27,8 @@ public class Constant
     public static final int REQUEST_BLUETOOTH_ON = 104;
     public static final int REQUEST_PRINT = 110;
 
+
+    public static final int AUTO_LOGIN = 111;
+    public static final int NOT_AUTO_LOGIN = 112;
+
 }

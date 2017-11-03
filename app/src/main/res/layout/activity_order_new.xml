@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gaoyy.delivery4res.main.OrderNewActivity">
+    tools:context="com.gaoyy.delivery4driver.main.OrderNewActivity">
 
     <include
         android:id="@+id/order_new_toolbar"
@@ -14,20 +14,20 @@
         />
 
     <ProgressBar
-        android:visibility="visible"
+        android:id="@+id/order_new_progressbar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/order_new_progressbar"/>
+        android:layout_centerVertical="true"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:id="@+id/order_new_main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/order_new_toolbar"
-        android:layout_above="@+id/order_new_operation_layout">
+        android:layout_above="@+id/order_new_operation_layout"
+        android:layout_below="@+id/order_new_toolbar">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -156,12 +156,12 @@
                             android:text="@string/income_price"/>
 
                         <TextView
+                            android:id="@+id/order_new_income"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:text="小费"
-                            android:id="@+id/order_new_income"/>
+                            android:text="小费"/>
 
                     </LinearLayout>
 
@@ -178,11 +178,11 @@
                             android:text="@string/coupon_price"/>
 
                         <TextView
+                            android:id="@+id/order_new_coupon"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:id="@+id/order_new_coupon"
                             android:text="小费"/>
 
                     </LinearLayout>
@@ -201,11 +201,11 @@
                             />
 
                         <TextView
+                            android:id="@+id/order_new_acivity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:id="@+id/order_new_acivity"
                             android:text="小费"/>
 
                     </LinearLayout>
@@ -231,12 +231,12 @@
                             />
 
                         <TextView
+                            android:id="@+id/order_new_sum"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="5566"
-                            android:id="@+id/order_new_sum"
                             android:textColor="@color/text_basic_color"/>
 
                     </LinearLayout>
@@ -262,8 +262,8 @@
                             android:id="@+id/order_new_remark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/text_basic_color"
                             android:text="opop"
+                            android:textColor="@color/text_basic_color"
                             />
 
                     </LinearLayout>
@@ -313,7 +313,23 @@
                             android:textColor="@color/text_basic_color"
                             />
 
+                        <TextView
+                            android:id="@+id/order_new_estime"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center|end"
+                            android:paddingRight="5dp"
+                            android:text="20min"
+                            android:textColor="@color/text_basic_color"/>
+
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@android:color/darker_gray"/>
                 </LinearLayout>
 
 
@@ -326,7 +342,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatButton
@@ -350,13 +365,13 @@
             android:theme="@style/Success.Button.Theme"/>
 
         <!--<android.support.v7.widget.AppCompatButton-->
-            <!--android:id="@+id/order_new_print_btn"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="4dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="print"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:theme="@style/Success.Button.Theme"/>-->
+        <!--android:id="@+id/order_new_print_btn"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="print"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:theme="@style/Success.Button.Theme"/>-->
     </LinearLayout>
 </RelativeLayout>

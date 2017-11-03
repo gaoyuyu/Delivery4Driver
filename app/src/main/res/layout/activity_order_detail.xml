@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/prepare_time"
+                android:text="@string/finished_time"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"/>
 

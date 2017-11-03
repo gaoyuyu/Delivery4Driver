@@ -65,6 +65,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
     private TextView orderNewRemark;
     private TextView orderNewEaTime;
     private Spinner orderNewSpinner;
+    private TextView orderNewEsTime;
     private LinearLayout orderNewOperationLayout;
     private AppCompatButton orderNewRefuseBtn;
     private AppCompatButton orderNewAcceptBtn;
@@ -119,6 +120,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         orderNewRemark = (TextView) findViewById(R.id.order_new_remark);
         orderNewEaTime = (TextView) findViewById(R.id.order_new_ea_time);
         orderNewSpinner = (Spinner) findViewById(R.id.order_new_spinner);
+        orderNewEsTime = (TextView) findViewById(R.id.order_new_estime);
         orderNewOperationLayout = (LinearLayout) findViewById(R.id.order_new_operation_layout);
         orderNewRefuseBtn = (AppCompatButton) findViewById(R.id.order_new_refuse_btn);
         orderNewAcceptBtn = (AppCompatButton) findViewById(R.id.order_new_accept_btn);
@@ -220,9 +222,11 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         params.put("language", CommonUtils.getSysLanguage());
 
         CommonUtils.httpDebugLogger("最新订单参数-->" + params.toString());
+
         Call<OrderNewInfo> call = RetrofitService.sApiService.newOrderDetail(params);
 
         setLoadingVisible();
+
         call.enqueue(new Callback<OrderNewInfo>()
         {
             @Override
@@ -264,23 +268,23 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
                         TextView goodPrice = (TextView) root.findViewById(R.id.item_food_price);
                         goodName.setText("" + item.getGoods_name());
                         goodCount.setText("x" + item.getCount());
-                        goodPrice.setText("$" + item.getPrice());
+                        goodPrice.setText("$" + CommonUtils.deci2(Double.valueOf(item.getPrice())));
                         itemCommonGoodsLayout.addView(root);
                     }
                     //设置价格
                     setPrice(data);
                     //总计
-                    orderNewSum.setText("$" + data.getTotalPrice() + "");
+                    orderNewSum.setText("$" + CommonUtils.deci2(data.getTotalPrice()) + "");
                     //备注
                     orderNewRemark.setText(data.getMsg() + "");
                     //期望送达时间
-                    orderNewEaTime.setText("" + CommonUtils.deci2(data.getAppointment_time()));
+                    orderNewEaTime.setText("" + data.getAppointment_time());
 
-                    expectTimeList.add("");
                     expectTimeList.add("now");
+                    expectTimeList.add("5min");
+                    expectTimeList.add("10min");
+                    expectTimeList.add("15min");
                     expectTimeList.add("20min");
-                    expectTimeList.add("40min");
-                    expectTimeList.add("60min");
                     //适配器
                     ArrayAdapter adapter = new ArrayAdapter<String>(OrderNewActivity.this, android.R.layout.simple_spinner_item, expectTimeList);
                     //设置样式
@@ -297,8 +301,15 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
                     if (1 == Integer.valueOf(orderNewInfo.getBody().getFlag()) )
                     {
                         orderNewOperationLayout.setVisibility(View.GONE);
-                        ((LinearLayout) (orderNewSpinner.getParent())).setVisibility(View.GONE);
-
+                        if(data.getEstimatedTime() == null)
+                        {
+                            ((LinearLayout) (orderNewSpinner.getParent())).setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            orderNewSpinner.setVisibility(View.GONE);
+                            orderNewEsTime.setText(data.getEstimatedTime());
+                        }
                     }
                     else
                     {

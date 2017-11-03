@@ -90,6 +90,19 @@ public class CommonUtils
     }
 
     /**
+     * 获取用户的登录密码
+     *
+     * @param context
+     * @return
+     */
+    public static String getPwd(Context context)
+    {
+        SharedPreferences account = context.getSharedPreferences("account", Activity.MODE_PRIVATE);
+        String pwd = account.getString("pwd", "");
+        return pwd;
+    }
+
+    /**
      * 获取用户的随机码
      *
      * @param context
@@ -296,6 +309,21 @@ public class CommonUtils
     {
         Double b = (Double) d;
         return String.format("%.2f",b);
+    }
+
+    public static void setUpAutoLogin(Context context, boolean checked)
+    {
+        SharedPreferences account = context.getSharedPreferences("account", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = account.edit();
+        if (checked)
+        {
+            editor.putInt("isAutoLogin", Constant.AUTO_LOGIN);
+        }
+        else
+        {
+            editor.putInt("isAutoLogin", Constant.NOT_AUTO_LOGIN);
+        }
+        editor.apply();
     }
 
 }

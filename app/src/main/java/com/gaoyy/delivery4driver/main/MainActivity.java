@@ -300,6 +300,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         CommonUtils.showToast(MainActivity.this, msg);
                        //停止上传位置
                         PollingUtils.stopPollingService(MainActivity.this, PollingService.class,PollingService.ACTION);
+
+                        CommonUtils.setUpAutoLogin(MainActivity.this,false);
                     }
                     else if (errorCode.equals("-2"))
                     {

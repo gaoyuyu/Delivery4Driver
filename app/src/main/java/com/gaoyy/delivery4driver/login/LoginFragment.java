@@ -18,6 +18,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
@@ -39,7 +42,7 @@ import java.util.Set;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
-public class LoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener
+public class LoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {
     private static final String LOG_TAG = LoginFragment.class.getSimpleName();
     private LoginContract.Presenter mLoginPresenter;
@@ -49,6 +52,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     private TextInputLayout loginPasswordTextinputlayout;
     private TextInputEditText loginPassword;
     private AppCompatButton loginBtn;
+    private LinearLayout loginLayout;
+    private CheckBox loginAutoCb;
 
     private CustomDialogFragment loading;
 
@@ -79,12 +84,29 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         loginPasswordTextinputlayout = (TextInputLayout) rootView.findViewById(R.id.login_password_textinputlayout);
         loginPassword = (TextInputEditText) rootView.findViewById(R.id.login_password);
         loginBtn = (AppCompatButton) rootView.findViewById(R.id.login_btn);
+        loginAutoCb = (CheckBox) rootView.findViewById(R.id.login_auto_cb);
+        loginLayout = (LinearLayout) rootView.findViewById(R.id.login_layout);
     }
 
     @Override
     protected void configViews()
     {
         super.configViews();
+
+
+        SharedPreferences account = activity.getSharedPreferences("account", Activity.MODE_PRIVATE);
+        int isAutoLogin = account.getInt("isAutoLogin", -1);
+
+        if (isAutoLogin == Constant.AUTO_LOGIN)
+        {
+            loginLayout.setVisibility(View.GONE);
+            Map<String, String> params = new HashMap<>();
+            params.put("loginName", CommonUtils.getLoginName(activity));
+            params.put("pwd", CommonUtils.getPwd(activity));
+            params.put("appType", "0");
+            CommonUtils.httpDebugLogger("自动登录==" + params.toString());
+            mLoginPresenter.login(params);
+        }
     }
 
 
@@ -142,13 +164,14 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
             }
         });
         loginBtn.setOnClickListener(this);
+        loginAutoCb.setOnCheckedChangeListener(this);
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        if(mLoginPresenter == null) return;
+        if (mLoginPresenter == null) return;
         mLoginPresenter.start();
     }
 
@@ -192,6 +215,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         SharedPreferences.Editor editor = account.edit();
         editor.putString("id", user.getId());
         editor.putString("loginName", user.getLoginName());
+        editor.putString("pwd", loginPassword.getText().toString());
         editor.putString("name", user.getName());
         editor.putString("email", user.getEmail());
         editor.putString("phone", user.getPhone());
@@ -331,7 +355,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
                 }
 
 
-
                 break;
         }
     }
@@ -345,4 +368,9 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         CommonUtils.textInputLayoutSetting(loginPassword, loginPasswordTextinputlayout, "password mustn't be empty");
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean checked)
+    {
+        CommonUtils.setUpAutoLogin(activity, checked);
+    }
 }
