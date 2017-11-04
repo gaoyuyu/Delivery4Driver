@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
-import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 
@@ -36,38 +35,9 @@ public class OrderListPresenter implements OrderListContract.Presenter
     }
 
     @Override
-    public void orderList(Map<String, String> params, final int refreshTag)
+    public void orderList(Call<OrderListInfo> call, Map<String, String> params, final int refreshTag)
     {
         CommonUtils.httpDebugLogger("获取订单列表");
-//        Call<ResponseBody> call = RetrofitService.sApiService.orderList(params);
-//
-//        call.enqueue(new Callback<ResponseBody>()
-//        {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
-//            {
-//                if(response.isSuccessful()&&response.body()!=null)
-//                {
-//                    try
-//                    {
-//                        Log.d(Constant.TAG,"===list respnse==>"+response.body().string());
-//                    }
-//                    catch (IOException e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t)
-//            {
-//
-//            }
-//        });
-
-
-        Call<OrderListInfo> call = RetrofitService.sApiService.orderList(params);
 
         mOrderListView.refreshing();
 
@@ -89,23 +59,19 @@ public class OrderListPresenter implements OrderListContract.Presenter
                     OrderListInfo orderListInfo = response.body();
                     String msg = orderListInfo.getMsg();
                     String errorCode = orderListInfo.getErrorCode();
-                    CommonUtils.httpDebugLogger("[isSuccess="+orderListInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
+                    CommonUtils.httpDebugLogger("[isSuccess=" + orderListInfo.isSuccess() + "][errorCode=" + errorCode + "][msg=" + msg + "]");
                     if (orderListInfo.isSuccess())
                     {
                         LinkedList<OrderListInfo.BodyBean.PageBean.ListBean> orderList = orderListInfo.getBody().getPage().getList();
-                        if(refreshTag == OrderListFragment.PULL_TO_REFRESH)
+                        if (refreshTag == OrderListFragment.PULL_TO_REFRESH)
                         {
-                            mOrderListView.showOrderList(orderList,orderListInfo.getBody().getPage().getCount());
+                            mOrderListView.showOrderList(orderList, orderListInfo.getBody().getPage().getCount());
                         }
                         else
                         {
-                            mOrderListView.loadMoreOrderList(orderList,orderListInfo.getBody().getPage().getCount());
+                            mOrderListView.loadMoreOrderList(orderList, orderListInfo.getBody().getPage().getCount());
                         }
 
-                    }
-                    else
-                    {
-                        // TODO: 2017/5/13 0013 这里应该判断为false的时候，各种处理情况
                     }
                 }
             }

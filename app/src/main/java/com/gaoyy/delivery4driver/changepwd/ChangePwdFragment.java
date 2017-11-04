@@ -12,6 +12,8 @@ import android.view.View;
 
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
+import com.gaoyy.delivery4driver.api.RetrofitService;
+import com.gaoyy.delivery4driver.api.bean.CommonInfo;
 import com.gaoyy.delivery4driver.base.BaseFragment;
 import com.gaoyy.delivery4driver.base.CustomDialogFragment;
 import com.gaoyy.delivery4driver.login.LoginActivity;
@@ -20,6 +22,8 @@ import com.gaoyy.delivery4driver.util.DialogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import retrofit2.Call;
 
 public class ChangePwdFragment extends BaseFragment implements ChangePwdContract.View
 {
@@ -32,6 +36,8 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
 
     private ChangePwdContract.Presenter mChangePwdPresenter;
     private CustomDialogFragment loading;
+
+    private Call<CommonInfo> call;
 
     public ChangePwdFragment()
     {
@@ -91,7 +97,8 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
                 params.put("randomCode", CommonUtils.getRandomCode(activity));
                 params.put("password", changeOldpwd.getText().toString());
                 params.put("newPassword", changeNewpwd.getText().toString());
-                mChangePwdPresenter.changePwd(params);
+                call = RetrofitService.sApiService.changePwd(params);
+                mChangePwdPresenter.changePwd(call, params);
                 break;
         }
 
@@ -157,5 +164,12 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
         {
             mChangePwdPresenter = presenter;
         }
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        if (call != null) call.cancel();
     }
 }

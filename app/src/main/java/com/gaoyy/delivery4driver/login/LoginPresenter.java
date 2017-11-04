@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
-import com.gaoyy.delivery4driver.api.RetrofitService;
 import com.gaoyy.delivery4driver.api.bean.DriverInfo;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 
@@ -28,14 +27,13 @@ public class LoginPresenter implements LoginContract.Presenter
     @Override
     public void start()
     {
-        Log.i(Constant.TAG,"Login start");
+        Log.i(Constant.TAG, "Login start");
     }
 
     @Override
-    public void login(Map<String, String> params)
+    public void login(Call<DriverInfo> call, Map<String, String> params)
     {
         CommonUtils.httpDebugLogger("登录请求");
-        Call<DriverInfo> call = RetrofitService.sApiService.login(params);
         mLoginView.showLoading();
         call.enqueue(new Callback<DriverInfo>()
         {
@@ -53,9 +51,9 @@ public class LoginPresenter implements LoginContract.Presenter
                     String msg = driverInfo.getMsg();
                     String errorCode = driverInfo.getErrorCode();
                     mLoginView.showToast(msg);
-                    CommonUtils.httpDebugLogger("[isSuccess="+driverInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
+                    CommonUtils.httpDebugLogger("[isSuccess=" + driverInfo.isSuccess() + "][errorCode=" + errorCode + "][msg=" + msg + "]");
 
-                    if(errorCode.equals("-1"))
+                    if (errorCode.equals("-1"))
                     {
                         //保存用户信息
                         mLoginView.saveUserInfo(driverInfo.getBody().getUser());
@@ -70,13 +68,13 @@ public class LoginPresenter implements LoginContract.Presenter
                         List<DriverInfo.BodyBean.DictStatusBean> dictStatus = driverInfo.getBody().getDictStatus();
                         mLoginView.redirectToMain(dictStatus);
 
-                        Log.i(Constant.TAG,"driver lng-->"+driverInfo.getBody().getCourier().getLongitude());
-                        Log.i(Constant.TAG,"driver lat-->"+driverInfo.getBody().getCourier().getLatitude());
-                        Log.i(Constant.TAG,"isOnline-->"+driverInfo.getBody().getCourier().getIsOnline());
+                        Log.i(Constant.TAG, "driver lng-->" + driverInfo.getBody().getCourier().getLongitude());
+                        Log.i(Constant.TAG, "driver lat-->" + driverInfo.getBody().getCourier().getLatitude());
+                        Log.i(Constant.TAG, "isOnline-->" + driverInfo.getBody().getCourier().getIsOnline());
 
 
-                        Log.i(Constant.TAG,"loginName-->"+driverInfo.getBody().getUser().getLoginName());
-                        Log.i(Constant.TAG,"RandomCode-->"+driverInfo.getBody().getUser().getRandomCode());
+                        Log.i(Constant.TAG, "loginName-->" + driverInfo.getBody().getUser().getLoginName());
+                        Log.i(Constant.TAG, "RandomCode-->" + driverInfo.getBody().getUser().getRandomCode());
 
                         mLoginView.uploadLocation();
 

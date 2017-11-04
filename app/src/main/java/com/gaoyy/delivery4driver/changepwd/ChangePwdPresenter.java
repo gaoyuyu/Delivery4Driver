@@ -26,18 +26,18 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter
         this.mChangePwdView = mChangePwdView;
         mChangePwdView.setPresenter(this);
     }
+
     @Override
     public void start()
     {
 
     }
 
-
     @Override
-    public void changePwd(Map<String, String> params)
+    public void changePwd(Call<CommonInfo> call, Map<String, String> params)
     {
         CommonUtils.httpDebugLogger("修改密码请求");
-        Call<CommonInfo> call = RetrofitService.sApiService.changePwd(params);
+
         mChangePwdView.showLoading();
         call.enqueue(new Callback<CommonInfo>()
         {
@@ -54,10 +54,10 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter
                     CommonInfo commonInfo = response.body();
                     String msg = commonInfo.getMsg();
                     String errorCode = commonInfo.getErrorCode();
-                    CommonUtils.httpDebugLogger("[isSuccess="+commonInfo.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
+                    CommonUtils.httpDebugLogger("[isSuccess=" + commonInfo.isSuccess() + "][errorCode=" + errorCode + "][msg=" + msg + "]");
                     mChangePwdView.showToast(msg);
 
-                    if(errorCode.equals("-1"))
+                    if (errorCode.equals("-1"))
                     {
                         mChangePwdView.redirectToLogin();
                     }

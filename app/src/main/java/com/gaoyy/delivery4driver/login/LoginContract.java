@@ -8,6 +8,8 @@ import com.gaoyy.delivery4driver.base.BaseView;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.Call;
+
 public class LoginContract
 {
     interface View extends BaseView<Presenter>
@@ -15,18 +17,23 @@ public class LoginContract
         boolean isActive();
 
         void showLoading();
+
         void hideLoading();
+
         void showToast(String msg);
+
         void showToast(int msgId);
 
         /**
          * 保存用户信息
+         *
          * @param user
          */
         void saveUserInfo(DriverInfo.BodyBean.UserBean user);
 
         /**
-         *保存司机信息
+         * 保存司机信息
+         *
          * @param courier
          */
         void saveCourierInfo(DriverInfo.BodyBean.CourierBean courier);
@@ -38,6 +45,7 @@ public class LoginContract
 
         /**
          * 保存orderTime
+         *
          * @param orderTime
          */
         void saveOrderTime(int orderTime);
@@ -50,6 +58,6 @@ public class LoginContract
 
     interface Presenter extends BasePresenter
     {
-        void login(Map<String, String> params);
+        void login(Call<DriverInfo> call, Map<String, String> params);
     }
 }

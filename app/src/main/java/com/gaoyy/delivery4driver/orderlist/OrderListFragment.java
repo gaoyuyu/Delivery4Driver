@@ -21,6 +21,7 @@ import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
 import com.gaoyy.delivery4driver.api.bean.OrderOperationStatusInfo;
 import com.gaoyy.delivery4driver.base.BaseFragment;
 import com.gaoyy.delivery4driver.base.CustomDialogFragment;
+import com.gaoyy.delivery4driver.base.recycler.OnItemClickListener;
 import com.gaoyy.delivery4driver.main.OrderDetailActivity;
 import com.gaoyy.delivery4driver.main.OrderNewActivity;
 import com.gaoyy.delivery4driver.util.CommonUtils;
@@ -36,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class OrderListFragment extends BaseFragment implements OrderListContract.View, SwipeRefreshLayout.OnRefreshListener, OrderListAdapter.OnItemClickListener
+public class OrderListFragment extends BaseFragment implements OrderListContract.View, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener
 {
     //下拉刷新标识
     public static final int PULL_TO_REFRESH = 400;
@@ -62,19 +63,21 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     private LinkedList<OrderListInfo.BodyBean.PageBean.ListBean> orderList = new LinkedList<>();
 
     private UpdateListAfterCancleReceiver updateListAfterCancleReceiver;
+    private Call<OrderListInfo> orderListCall;
 
     public class UpdateListAfterCancleReceiver extends BroadcastReceiver
     {
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            Log.d(Constant.TAG,"=======updateListAfterCancleReceiver=====");
-            if(intent.getAction().equals("android.intent.action.UpdateListAfterCancleReceiver"))
+            Log.d(Constant.TAG, "=======updateListAfterCancleReceiver=====");
+            if (intent.getAction().equals("android.intent.action.UpdateListAfterCancleReceiver"))
             {
                 pageNo = 1;
                 Map<String, String> params = getOrderListParams(pageNo, pageSize);
-                Log.d(Constant.TAG, "updateListAfterCancleReceiver==>"+params.toString());
-                mOrderListPresenter.orderList(params, PULL_TO_REFRESH);
+                Log.d(Constant.TAG, "updateListAfterCancleReceiver==>" + params.toString());
+                orderListCall = RetrofitService.sApiService.orderList(params);
+                mOrderListPresenter.orderList(orderListCall, params, PULL_TO_REFRESH);
             }
         }
     }
@@ -122,8 +125,8 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
         CommonUtils.setSwipeLayoutProgressBackgroundColor(activity, commonSwipeRefreshLayout);
 
-        updateListAfterCancleReceiver=new UpdateListAfterCancleReceiver();
-        IntentFilter filter=new IntentFilter();
+        updateListAfterCancleReceiver = new UpdateListAfterCancleReceiver();
+        IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.UpdateListAfterCancleReceiver");
         activity.registerReceiver(updateListAfterCancleReceiver, filter);
     }
@@ -168,7 +171,8 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                     {
                         Map<String, String> params = getOrderListParams(pageNo, pageSize);
                         Log.d(Constant.TAG, "上拉加载更多，传递参数-->" + params.toString());
-                        mOrderListPresenter.orderList(params, UP_TO_LOAD_MORE);
+                        orderListCall = RetrofitService.sApiService.orderList(params);
+                        mOrderListPresenter.orderList(orderListCall, params, UP_TO_LOAD_MORE);
                     }
                 }
             }
@@ -199,13 +203,14 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     public void onResume()
     {
         super.onResume();
-        if(mOrderListPresenter == null) return;
+        if (mOrderListPresenter == null) return;
         mOrderListPresenter.start();
         //在onResume中加载数据
         pageNo = 1;
         Map<String, String> params = getOrderListParams(pageNo, pageSize);
         Log.d(Constant.TAG, params.toString());
-        mOrderListPresenter.orderList(params, PULL_TO_REFRESH);
+        orderListCall = RetrofitService.sApiService.orderList(params);
+        mOrderListPresenter.orderList(orderListCall, params, PULL_TO_REFRESH);
     }
 
     @Override
@@ -269,12 +274,14 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
         pageNo = 1;
         Map<String, String> params = getOrderListParams(pageNo, pageSize);
         Log.d(Constant.TAG, "下拉刷新，传递参数-->" + params.toString());
-        mOrderListPresenter.orderList(params, PULL_TO_REFRESH);
+        orderListCall = RetrofitService.sApiService.orderList(params);
+        mOrderListPresenter.orderList(orderListCall, params, PULL_TO_REFRESH);
     }
 
     @Override
-    public void onItemClick(View view, int position, final OrderListInfo.BodyBean.PageBean.ListBean order)
+    public void onItemClick(View view, int position, Object itemData)
     {
+        OrderListInfo.BodyBean.PageBean.ListBean order = (OrderListInfo.BodyBean.PageBean.ListBean) itemData;
         int id = view.getId();
         switch (id)
         {

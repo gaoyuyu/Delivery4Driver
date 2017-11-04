@@ -7,6 +7,8 @@ import com.gaoyy.delivery4driver.base.BaseView;
 import java.util.LinkedList;
 import java.util.Map;
 
+import retrofit2.Call;
+
 /**
  * Created by gaoyy on 2017/5/13 0013.
  */
@@ -41,6 +43,6 @@ public class OrderListContract
 
     interface Presenter extends BasePresenter
     {
-        void  orderList(Map<String, String> params, int refreshTag);
+        void  orderList(Call<OrderListInfo> call,Map<String, String> params, int refreshTag);
     }
 }

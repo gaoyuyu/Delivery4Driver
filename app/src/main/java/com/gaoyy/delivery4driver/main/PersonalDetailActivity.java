@@ -86,10 +86,6 @@ public class PersonalDetailActivity extends BaseActivity
         personalDetailDlExpiredDate.setText(courierInfo.getString("driverDate",""));
         personalDetailInsuranceDate.setText(courierInfo.getString("carInsurance",""));
         personalDetailAddress.setText(courierInfo.getString("addr",""));
-
-
-
-
     }
 
     @Override

@@ -67,8 +67,10 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
     private double hotelLatitude;
     private double hotelLongitude;
     private String hotelName = "";
-    private String customerAddr= "";
+    private String customerAddr = "";
     private String orderId;
+
+    private Call<OrderOperationStatusInfo> deliveryCall;
 
 
     @Override
@@ -99,7 +101,7 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
     @Override
     protected void initToolbar()
     {
-        super.initToolbar(noticeToolbar,R.string.toolbar_title_new_order,true,-1);
+        super.initToolbar(noticeToolbar, R.string.toolbar_title_new_order, true, -1);
     }
 
     @Override
@@ -111,17 +113,17 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.notice_map);
         mapFragment.getMapAsync(this);
 
-        Log.d(Constant.TAG, "orderTine-->"+CommonUtils.getOrderTime(this));
+        Log.d(Constant.TAG, "orderTine-->" + CommonUtils.getOrderTime(this));
 
         int orderTime = CommonUtils.getOrderTime(this);
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(orderTime,0);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(orderTime, 0);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
         {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator)
             {
                 int currentOrderTime = (int) valueAnimator.getAnimatedValue();
-                noticeCancleBtn.setText(getResources().getString(R.string.status_cancle)+"（"+currentOrderTime+"）");
+                noticeCancleBtn.setText(getResources().getString(R.string.status_cancle) + "（" + currentOrderTime + "）");
             }
         });
         valueAnimator.addListener(new AnimatorListenerAdapter()
@@ -147,20 +149,20 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
                 String key = it.next().toString();
                 String value = json.optString(key);
 
-                Log.d(Constant.TAG,"Notice---key-->"+key);
-                Log.d(Constant.TAG,"Notice---value-->"+json.optString(key));
+                Log.d(Constant.TAG, "Notice---key-->" + key);
+                Log.d(Constant.TAG, "Notice---value-->" + json.optString(key));
 
-                setTextData(key, value,"hotelAddr",noticeStartPoint);
-                setTextData(key, value,"customerAddr",noticeDistination);
-                setTextData(key,value,"customerTel",noticePhone);
-                setTextData(key,value,"remark",noticeNotes);
-                setTextData(key,value,"remarks",noticeOther);
-                setTextData(key,value,"createDate",noticeDate);
-                if(key.equals("id"))
+                setTextData(key, value, "hotelAddr", noticeStartPoint);
+                setTextData(key, value, "customerAddr", noticeDistination);
+                setTextData(key, value, "customerTel", noticePhone);
+                setTextData(key, value, "remark", noticeNotes);
+                setTextData(key, value, "remarks", noticeOther);
+                setTextData(key, value, "createDate", noticeDate);
+                if (key.equals("id"))
                 {
                     orderId = value;
                 }
-             }
+            }
         }
         catch (JSONException e)
         {
@@ -173,9 +175,9 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
     }
 
 
-    private void setTextData(String key, String value,String keyName,TextView tv)
+    private void setTextData(String key, String value, String keyName, TextView tv)
     {
-        if(key.equals(keyName))
+        if (key.equals(keyName))
         {
             tv.setText(value);
         }
@@ -219,37 +221,37 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
                 String value = json.optString(key);
 
 
-                if(key.equals("name"))
+                if (key.equals("name"))
                 {
                     hotelName = value;
                 }
-                if(key.equals("customerAddr"))
+                if (key.equals("customerAddr"))
                 {
                     customerAddr = value;
                 }
 
 
-                if(key.equals("customerLatitude"))
+                if (key.equals("customerLatitude"))
                 {
                     customerLatitude = Double.parseDouble(value);
                 }
-                if(key.equals("customerLongitude"))
+                if (key.equals("customerLongitude"))
                 {
                     customerLongitude = Double.parseDouble(value);
                 }
-                if(key.equals("latitude"))
+                if (key.equals("latitude"))
                 {
                     hotelLatitude = Double.parseDouble(value);
                 }
-                if(key.equals("longitude"))
+                if (key.equals("longitude"))
                 {
                     hotelLongitude = Double.parseDouble(value);
                 }
 
-                Log.d(Constant.TAG,"customerLatitude--->"+customerLatitude);
-                Log.d(Constant.TAG,"customerLongitude--->"+customerLongitude);
-                Log.d(Constant.TAG,"hotelLatitude--->"+hotelLatitude);
-                Log.d(Constant.TAG,"hotelLongitude--->"+hotelLongitude);
+                Log.d(Constant.TAG, "customerLatitude--->" + customerLatitude);
+                Log.d(Constant.TAG, "customerLongitude--->" + customerLongitude);
+                Log.d(Constant.TAG, "hotelLatitude--->" + hotelLatitude);
+                Log.d(Constant.TAG, "hotelLongitude--->" + hotelLongitude);
             }
             LatLng hotel = new LatLng(hotelLatitude, hotelLongitude);
             LatLng customer = new LatLng(customerLatitude, customerLongitude);
@@ -316,40 +318,47 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
         }
     }
 
-        private void orderAccept(String orderId)
+    private void orderAccept(String orderId)
+    {
+        CommonUtils.httpDebugLogger("司机接受订单");
+        final CustomDialogFragment deliveryLoading = DialogUtils.showLoadingDialog(this);
+        deliveryCall = RetrofitService.sApiService.driverOrderAccept(CommonUtils.getLoginName(this), CommonUtils.getRandomCode(this), orderId);
+        deliveryCall.enqueue(new Callback<OrderOperationStatusInfo>()
         {
-            CommonUtils.httpDebugLogger("司机接受订单");
-            final CustomDialogFragment deliveryLoading = DialogUtils.showLoadingDialog(this);
-            Call<OrderOperationStatusInfo> deliveryCall = RetrofitService.sApiService.driverOrderAccept(CommonUtils.getLoginName(this), CommonUtils.getRandomCode(this), orderId);
-            deliveryCall.enqueue(new Callback<OrderOperationStatusInfo>()
+            @Override
+            public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
             {
-                @Override
-                public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
+                deliveryLoading.dismiss();
+                if (response.isSuccessful() && response.body() != null)
                 {
-                    deliveryLoading.dismiss();
-                    if (response.isSuccessful() && response.body() != null)
-                    {
-                        OrderOperationStatusInfo oosi = response.body();
-                        String errorCode = oosi.getErrorCode();
-                        String msg = oosi.getMsg();
-                        CommonUtils.httpDebugLogger("[isSuccess="+oosi.isSuccess()+"][errorCode=" + errorCode + "][msg=" + msg + "]");
+                    OrderOperationStatusInfo oosi = response.body();
+                    String errorCode = oosi.getErrorCode();
+                    String msg = oosi.getMsg();
+                    CommonUtils.httpDebugLogger("[isSuccess=" + oosi.isSuccess() + "][errorCode=" + errorCode + "][msg=" + msg + "]");
 
-                        CommonUtils.showToast(NoticeActivity.this, oosi.getMsg());
-                        if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
-                        {
-                            finish();
-                        }
+                    CommonUtils.showToast(NoticeActivity.this, oosi.getMsg());
+                    if (oosi.isSuccess() && oosi.getErrorCode().equals("-1"))
+                    {
+                        finish();
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
-                {
-                    deliveryLoading.dismiss();
-                    CommonUtils.httpErrorLogger(t.toString());
-                    CommonUtils.showToast(NoticeActivity.this,getResources().getString(R.string.network_error));
+            @Override
+            public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
+            {
+                deliveryLoading.dismiss();
+                CommonUtils.httpErrorLogger(t.toString());
+                CommonUtils.showToast(NoticeActivity.this, getResources().getString(R.string.network_error));
 
-                }
-            });
+            }
+        });
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if (deliveryCall != null) deliveryCall.cancel();
     }
 }

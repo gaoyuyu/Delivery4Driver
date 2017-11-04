@@ -29,6 +29,8 @@ public class ScoreActivity extends BaseActivity
     private TextView scoreFour;
     private TextView scoreFive;
 
+    private Call<ScoreInfo> call;
+
 
     @Override
     protected void initContentView()
@@ -64,7 +66,7 @@ public class ScoreActivity extends BaseActivity
         params.put("loginName", CommonUtils.getLoginName(this));
         params.put("language", CommonUtils.getSysLanguage());
         params.put("random", CommonUtils.getRandomCode(this));
-        Call<ScoreInfo> call = RetrofitService.sApiService.score(params);
+        call = RetrofitService.sApiService.score(params);
         call.enqueue(new Callback<ScoreInfo>()
         {
             @Override
@@ -104,5 +106,12 @@ public class ScoreActivity extends BaseActivity
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if(call !=null) call.cancel();
     }
 }
