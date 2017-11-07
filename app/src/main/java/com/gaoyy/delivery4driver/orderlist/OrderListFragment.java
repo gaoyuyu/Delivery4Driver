@@ -324,7 +324,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             @Override
             public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
             {
-                deliveryLoading.dismiss();
+                deliveryLoading.dismissAllowingStateLoss();
                 if (response.isSuccessful() && response.body() != null)
                 {
                     OrderOperationStatusInfo oosi = response.body();
@@ -348,7 +348,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             @Override
             public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
             {
-                deliveryLoading.dismiss();
+                deliveryLoading.dismissAllowingStateLoss();
                 CommonUtils.httpErrorLogger(t.toString());
                 if (!call.isCanceled())
                 {
@@ -374,7 +374,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             @Override
             public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
             {
-                finishLoading.dismiss();
+                finishLoading.dismissAllowingStateLoss();
                 if (response.isSuccessful() && response.body() != null)
                 {
                     OrderOperationStatusInfo oosi = response.body();
@@ -398,7 +398,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             @Override
             public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
             {
-                finishLoading.dismiss();
+                finishLoading.dismissAllowingStateLoss();
                 CommonUtils.httpErrorLogger(t.toString());
                 if (!call.isCanceled())
                 {

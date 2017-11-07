@@ -328,7 +328,7 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
             @Override
             public void onResponse(Call<OrderOperationStatusInfo> call, Response<OrderOperationStatusInfo> response)
             {
-                deliveryLoading.dismiss();
+                deliveryLoading.dismissAllowingStateLoss();
                 if (response.isSuccessful() && response.body() != null)
                 {
                     OrderOperationStatusInfo oosi = response.body();
@@ -347,7 +347,7 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
             @Override
             public void onFailure(Call<OrderOperationStatusInfo> call, Throwable t)
             {
-                deliveryLoading.dismiss();
+                deliveryLoading.dismissAllowingStateLoss();
                 CommonUtils.httpErrorLogger(t.toString());
                 if (!call.isCanceled())
                 {

@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onResponse(Call<CommonInfo> call, Response<CommonInfo> response)
             {
-                offlineLoading.dismiss();
+                offlineLoading.dismissAllowingStateLoss();
                 if (response.isSuccessful() && response.body() != null)
                 {
                     CommonInfo commonInfo = response.body();
@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onFailure(Call<CommonInfo> call, Throwable t)
             {
-                offlineLoading.dismiss();
+                offlineLoading.dismissAllowingStateLoss();
                 CommonUtils.httpErrorLogger(t.toString());
                 if (!call.isCanceled())
                 {
@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onResponse(Call<CommonInfo> call, Response<CommonInfo> response)
             {
-                onlineLoading.dismiss();
+                onlineLoading.dismissAllowingStateLoss();
                 if (response.isSuccessful() && response.body() != null)
                 {
                     CommonInfo commonInfo = response.body();
@@ -215,7 +215,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onFailure(Call<CommonInfo> call, Throwable t)
             {
-                onlineLoading.dismiss();
+                onlineLoading.dismissAllowingStateLoss();
                 CommonUtils.httpErrorLogger(t.toString());
                 if (!call.isCanceled())
                 {
@@ -290,7 +290,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onResponse(Call<CommonInfo> call, Response<CommonInfo> response)
             {
-                loading.dismiss();
+                loading.dismissAllowingStateLoss();
                 if (response.isSuccessful() && response.body() != null)
                 {
                     CommonInfo logoutInfo = response.body();
@@ -319,7 +319,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onFailure(Call<CommonInfo> call, Throwable t)
             {
-                loading.dismiss();
+                loading.dismissAllowingStateLoss();
                 CommonUtils.httpErrorLogger(t.toString());
                 if (!call.isCanceled())
                 {
