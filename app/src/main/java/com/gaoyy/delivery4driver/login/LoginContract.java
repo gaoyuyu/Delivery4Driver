@@ -24,6 +24,8 @@ public class LoginContract
 
         void showToast(int msgId);
 
+        void setAutoLoginToFalse();
+
         /**
          * 保存用户信息
          *

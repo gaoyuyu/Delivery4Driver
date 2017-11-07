@@ -52,7 +52,10 @@
             android:theme="@style/AppTheme.WithDrawerTheme"
             android:windowSoftInputMode="stateHidden">
         </activity>
-        <activity android:name=".login.LoginActivity">
+        <activity
+            android:name=".login.LoginActivity"
+            android:launchMode="singleTop"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

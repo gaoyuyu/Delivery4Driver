@@ -79,6 +79,12 @@ public class LoginPresenter implements LoginContract.Presenter
                         mLoginView.uploadLocation();
 
                     }
+                    else
+                    {
+                        //登录失败，无论是否自动登陆，都将自动登陆标识置为false，重新登陆
+                        mLoginView.setAutoLoginToFalse();
+
+                    }
                 }
             }
 
@@ -91,7 +97,10 @@ public class LoginPresenter implements LoginContract.Presenter
                 }
                 mLoginView.hideLoading();
                 CommonUtils.httpErrorLogger(t.toString());
-                mLoginView.showToast(R.string.network_error);
+                if(!call.isCanceled())
+                {
+                    mLoginView.showToast(R.string.network_error);
+                }
             }
         });
     }

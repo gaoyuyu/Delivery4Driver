@@ -326,4 +326,19 @@ public class CommonUtils
         editor.apply();
     }
 
+    public static boolean getAutoLogin(Context context)
+    {
+        SharedPreferences account = context.getSharedPreferences("account", Activity.MODE_PRIVATE);
+        int autoLogin = account.getInt("isAutoLogin", -1);
+        if (autoLogin == Constant.AUTO_LOGIN)
+        {
+            return true;
+        }
+        else if (autoLogin == Constant.NOT_AUTO_LOGIN)
+        {
+            return false;
+        }
+        return false;
+    }
+
 }

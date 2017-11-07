@@ -116,5 +116,6 @@
     <string name="menu_score">Score</string>
     <string name="refuse_order_btn_text">Refuse Order</string>
     <string name="auto_login">Automatic login</string>
+    <string name="logining">Logining</string>
 
 </resources>

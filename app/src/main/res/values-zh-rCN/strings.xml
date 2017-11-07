@@ -113,5 +113,6 @@
     <string name="accept_order_btn_text">接单</string>
     <string name="menu_score">评分</string>
     <string name="auto_login">自动登录</string>
+    <string name="logining">登录中</string>
 
 </resources>
