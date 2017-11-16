@@ -95,7 +95,7 @@
     <string name="order_new_no">编号：</string>
     <string name="remark">备注：</string>
     <string name="es_arrival_time">预计送达时间</string>
-    <string name="expect_arrvial_time">期望送达：</string>
+    <string name="expect_arrival_time">期望送达：</string>
     <string name="tip_price">小费</string>
     <string name="ship_price">配送费</string>
     <string name="taxation">税1</string>
@@ -114,5 +114,25 @@
     <string name="menu_score">评分</string>
     <string name="auto_login">自动登录</string>
     <string name="logining">登录中</string>
+
+
+    <string name="check_user">用户名不能为空</string>
+    <string name="check_pwd">密码不能为空</string>
+    <string name="check_old_pwd">原密码不能为空</string>
+    <string name="check_new_pwd">新密码不能为空</string>
+    <string name="check_pwd_length">密码长度为6位</string>
+    <string name="check_customer_phone">客人电话不能为空</string>
+    <string name="check_phone_length">电话号码为10位数字</string>
+    <string name="check_address">地址不能为空</string>
+    <string name="print_device">打印设备</string>
+    <string name="ticket_order_no">订单号:</string>
+    <string name="ticket_item">商品</string>
+    <string name="ticket_amounts">数量</string>
+    <string name="ticket_price_ea">单价</string>
+    <string name="ticket_customer_info">买家信息：</string>
+    <string name="ticket_purchaser">下单人：</string>
+    <string name="ticket_tel">电话：</string>
+    <string name="ticket_will_be_paid">Order will be paid:</string>
+    <string name="ticket_bottom_text">Thanks for ordering from Menu Alliance</string>
 
 </resources>

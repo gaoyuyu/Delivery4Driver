@@ -219,11 +219,10 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     }
 
 
-
     @Override
     public void setAutoLoginToFalse()
     {
-        CommonUtils.setUpAutoLogin(activity,false);
+        CommonUtils.setUpAutoLogin(activity, false);
         //同时跳转登录界面
         Intent intent = new Intent();
         intent.setClass(activity, LoginActivity.class);
@@ -385,8 +384,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
      */
     private void validate()
     {
-        CommonUtils.textInputLayoutSetting(loginUsername, loginUsernameTextinputlayout, "username mustn't be empty");
-        CommonUtils.textInputLayoutSetting(loginPassword, loginPasswordTextinputlayout, "password mustn't be empty");
+        CommonUtils.textInputLayoutSetting(loginUsername, loginUsernameTextinputlayout, getResources().getString(R.string.check_user));
+        CommonUtils.textInputLayoutSetting(loginPassword, loginPasswordTextinputlayout, getResources().getString(R.string.check_pwd));
     }
 
     @Override

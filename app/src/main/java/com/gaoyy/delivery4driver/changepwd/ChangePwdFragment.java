@@ -72,8 +72,18 @@ public class ChangePwdFragment extends BaseFragment implements ChangePwdContract
      */
     public void validate()
     {
-        CommonUtils.textInputLayoutSetting(changeOldpwd, changeOldpwdTextinputlayout, "Can't be empty");
-        CommonUtils.textInputLayoutSetting(changeNewpwd, changeNewpwdTextinputlayout, "Can't be empty");
+        CommonUtils.textInputLayoutSetting(changeOldpwd, changeOldpwdTextinputlayout, getResources().getString(R.string.check_old_pwd));
+        CommonUtils.textInputLayoutSetting(changeNewpwd, changeNewpwdTextinputlayout, getResources().getString(R.string.check_new_pwd));
+        if (changeNewpwd.getText().toString().length() != 6)
+        {
+            changeNewpwdTextinputlayout.setErrorEnabled(true);
+            changeNewpwdTextinputlayout.setError(getResources().getString(R.string.check_pwd_length));
+        }
+        else
+        {
+            changeNewpwdTextinputlayout.setError(null);
+            changeNewpwdTextinputlayout.setErrorEnabled(false);
+        }
     }
 
     @Override
