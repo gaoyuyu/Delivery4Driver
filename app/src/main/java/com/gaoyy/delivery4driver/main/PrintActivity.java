@@ -251,7 +251,8 @@ public class PrintActivity extends BaseActivity implements AdapterView.OnItemCli
     {
         if (bluetoothAdapter.isDiscovering()) bluetoothAdapter.cancelDiscovery();
         String str = deviceList.get(position);
-        String[] values = str.split("\\|");
+        //注意分隔符
+        String[] values = str.split(" \\| ");
         String address = values[2];
         Log.e(Constant.TAG, values[2]);
         BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
@@ -361,21 +362,20 @@ public class PrintActivity extends BaseActivity implements AdapterView.OnItemCli
             PrintUtils.printText(PrintUtils.printTwoData(getResources().getString(R.string.activity_price), "-$" + data.getActivityPrice() + "\n"));
 
         PrintUtils.printText("--------------------------------\n");
-        PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
-        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
-        PrintUtils.printText(getResources().getString(R.string.sum) + "$" + orderNewInfo.getBody().getObj().getTotalPrice() + "\n");
         PrintUtils.selectCommand(PrintUtils.NORMAL);
         PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
+        PrintUtils.printText(PrintUtils.printTwoData(getResources().getString(R.string.sum) , "$" + orderNewInfo.getBody().getObj().getTotalPrice() + "\n"));
+//        PrintUtils.printText("--------------------------------\n");
+//        PrintUtils.printText( getResources().getString(R.string.ticket_customer_info)+ "\n");
+//        PrintUtils.printText(getResources().getString(R.string.ticket_purchaser) + orderNewInfo.getBody().getObj().getAddr().getTrueName() + "\n");
+//        PrintUtils.printText(getResources().getString(R.string.address) + orderNewInfo.getBody().getObj().getAddr().getArea_info() + "\n");
+//        PrintUtils.printText(getResources().getString(R.string.ticket_tel) + orderNewInfo.getBody().getObj().getAddr().getMobile() + "\n");
         PrintUtils.printText("--------------------------------\n");
-        PrintUtils.printText( getResources().getString(R.string.ticket_customer_info)+ "\n");
-        PrintUtils.printText(getResources().getString(R.string.ticket_purchaser) + orderNewInfo.getBody().getObj().getAddr().getTrueName() + "\n");
-        PrintUtils.printText(getResources().getString(R.string.address) + orderNewInfo.getBody().getObj().getAddr().getArea_info() + "\n");
-        PrintUtils.printText(getResources().getString(R.string.ticket_tel) + orderNewInfo.getBody().getObj().getAddr().getMobile() + "\n");
-        PrintUtils.printText("--------------------------------\n");
-        PrintUtils.printText(getResources().getString(R.string.ticket_will_be_paid)  + "\n");
+        PrintUtils.printText(getResources().getString(R.string.ticket_will_be_paid)  +orderNewInfo.getBody().getPaymentMethod()+ "\n");
         PrintUtils.printText("--------------------------------\n");
         PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
         PrintUtils.printText(getResources().getString(R.string.ticket_bottom_text)  + "\n");
+        PrintUtils.printText(getResources().getString(R.string.ticket_top_title)  + "\n");
         print1DCodeBy2(orderNewInfo.getBody().getObj().getOrder_id() + "", mOutputStream);
 
         PrintUtils.printText("\n\n\n\n\n");

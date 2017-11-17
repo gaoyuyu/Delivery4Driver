@@ -18,7 +18,7 @@
     <string name="customer_phone">Customers Phone Number</string>
     <string name="customer_address">Customers Address</string>
     <string name="customer_apt">Customers Apartment Number</string>
-    <string name="customer_finished_time">FinishedTime</string>
+    <string name="customer_ready_in">Ready in</string>
     <string name="door_bell">door bell not working</string>
     <string name="customer_remark">Input Note, please</string>
     <string name="action_send_order">Send Order</string>
@@ -28,7 +28,7 @@
     <string name="starting_point">Starting Point：</string>
     <string name="destination">Destination：</string>
     <string name="customer_phone_short">Cust.Phone：</string>
-    <string name="notes">Notes：</string>
+    <string name="notes">Comments：</string>
     <string name="others">Others：</string>
     <string name="action_submit_order">submit</string>
     <string name="order_submit_success">Operation Successfully Completed</string>

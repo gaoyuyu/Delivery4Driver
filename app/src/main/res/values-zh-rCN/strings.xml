@@ -18,7 +18,7 @@
     <string name="customer_phone">客人电话</string>
     <string name="customer_address">客人地址</string>
     <string name="customer_apt">客人公寓号</string>
-    <string name="customer_finished_time">完成时间</string>
+    <string name="customer_ready_in">完成时间</string>
     <string name="door_bell">门铃坏了</string>
     <string name="customer_remark">请输入其它备注信息</string>
     <string name="action_send_order">提交订单</string>

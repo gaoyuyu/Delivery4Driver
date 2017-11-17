@@ -78,22 +78,19 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
     private TextView itemCommonNo;
     private LinearLayout itemCommonGoodsLayout;
 
-
     private OrderListInfo.BodyBean.PageBean.ListBean order;
 
-
     private List<String> expectTimeList = new ArrayList<>();
-
 
     private OrderNewInfo orderNewInfo;
 
     private CustomDialogFragment loading;
 
-    private Call<CommonInfo> acceptCall;
-    private Call<CommonInfo> refuseCall;
+    private Call<OrderNewInfo> newOrderDetailCall;
+    private Call<CommonInfo> acceptCall, refuseCall;
 
     //是否从推送进入Ativity
-    private boolean isFormNotice = false;
+    private boolean isFormNotice;
 
     private String id = "";
     private String orderId = "";
@@ -225,12 +222,10 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         params.put("language", CommonUtils.getSysLanguage());
 
         CommonUtils.httpDebugLogger("最新订单参数-->" + params.toString());
-
-        Call<OrderNewInfo> call = RetrofitService.sApiService.newOrderDetail(params);
+        newOrderDetailCall = RetrofitService.sApiService.newOrderDetail(params);
 
         setLoadingVisible();
-
-        call.enqueue(new Callback<OrderNewInfo>()
+        newOrderDetailCall.enqueue(new Callback<OrderNewInfo>()
         {
             @Override
             public void onResponse(Call<OrderNewInfo> call, Response<OrderNewInfo> response)
@@ -271,18 +266,20 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
                         TextView goodPrice = (TextView) root.findViewById(R.id.item_food_price);
                         goodName.setText("" + item.getGoods_name());
                         goodCount.setText("x" + item.getCount());
-                        goodPrice.setText("$" + CommonUtils.deci2(Double.valueOf(item.getPrice())));
+                        //保留2位小数
+                        goodPrice.setText("$" + CommonUtils.deci2(item.getPrice()));
                         itemCommonGoodsLayout.addView(root);
                     }
                     //设置价格
                     setPrice(data);
                     //总计
-                    orderNewSum.setText("$" + CommonUtils.deci2(data.getTotalPrice()) + "");
+                    orderNewSum.setText("$" + CommonUtils.deci2(data.getTotalPrice()));
                     //备注
                     orderNewRemark.setText(data.getMsg() + "");
                     //期望送达时间
                     orderNewEaTime.setText("" + data.getAppointment_time());
 
+                    expectTimeList.add("");
                     expectTimeList.add("now");
                     expectTimeList.add("5min");
                     expectTimeList.add("10min");
@@ -318,6 +315,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
                     {
                         orderNewOperationLayout.setVisibility(View.VISIBLE);
                         ((LinearLayout) (orderNewSpinner.getParent())).setVisibility(View.VISIBLE);
+                        orderNewEsTime.setVisibility(View.GONE);
                     }
 
                 }
@@ -346,6 +344,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
+            ((TextView)((LinearLayout)(orderNewTip.getParent())).getChildAt(0)).setText(getResources().getString(R.string.tip_price)+"("+data.getTipRate()+"%)");
             orderNewTip.setText("$" + CommonUtils.deci2(data.getTipPrice()));
         }
 
@@ -366,6 +365,8 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
+            ((TextView)((LinearLayout)(orderNewTax.getParent())).getChildAt(0)).setText(getResources().getString(R.string.taxation)+"("+data.getTaxrate()+"%)");
+
             orderNewTax.setText("$" + CommonUtils.deci2(data.getTaxation()));
         }
 
@@ -376,6 +377,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
+            ((TextView)((LinearLayout)(orderNewTax.getParent())).getChildAt(0)).setText(getResources().getString(R.string.taxation_tvq)+"("+data.getTaxrate_tvq()+"%)");
             orderNewTaxTvq.setText("$" + CommonUtils.deci2(data.getTaxation_tvq()));
         }
 
@@ -635,6 +637,8 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
     protected void onPause()
     {
         super.onPause();
+        //取消网络请求
+        if (newOrderDetailCall != null) newOrderDetailCall.cancel();
         if (acceptCall != null) acceptCall.cancel();
         if (refuseCall != null) refuseCall.cancel();
     }

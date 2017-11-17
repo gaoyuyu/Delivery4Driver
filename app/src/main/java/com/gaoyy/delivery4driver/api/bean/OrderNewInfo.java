@@ -72,6 +72,18 @@ public class OrderNewInfo implements Serializable
          */
 
         private String flag;
+
+        public String getPaymentMethod()
+        {
+            return paymentMethod;
+        }
+
+        public void setPaymentMethod(String paymentMethod)
+        {
+            this.paymentMethod = paymentMethod;
+        }
+
+        private String paymentMethod;
         private String storeName;
         private ObjBean obj;
         private String language;
@@ -928,7 +940,7 @@ public class OrderNewInfo implements Serializable
                 private String goods_name;
                 private Object goods_photo;
                 private int id;
-                private int price;
+                private Object price;
                 private Object spec_info;
 
                 public String getAddTime()
@@ -1011,12 +1023,12 @@ public class OrderNewInfo implements Serializable
                     this.id = id;
                 }
 
-                public int getPrice()
+                public Object getPrice()
                 {
                     return price;
                 }
 
-                public void setPrice(int price)
+                public void setPrice(Object price)
                 {
                     this.price = price;
                 }
