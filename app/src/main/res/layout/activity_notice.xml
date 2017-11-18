@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/customer_finished_time"
+                android:text="@string/customer_ready_in"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"/>
 

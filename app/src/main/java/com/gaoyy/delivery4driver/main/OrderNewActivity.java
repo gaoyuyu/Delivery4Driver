@@ -377,7 +377,7 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
         }
         else
         {
-            ((TextView)((LinearLayout)(orderNewTax.getParent())).getChildAt(0)).setText(getResources().getString(R.string.taxation_tvq)+"("+data.getTaxrate_tvq()+"%)");
+            ((TextView)((LinearLayout)(orderNewTaxTvq.getParent())).getChildAt(0)).setText(getResources().getString(R.string.taxation_tvq)+"("+data.getTaxrate_tvq()+"%)");
             orderNewTaxTvq.setText("$" + CommonUtils.deci2(data.getTaxation_tvq()));
         }
 
