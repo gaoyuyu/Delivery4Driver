@@ -18,6 +18,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 
 /**
@@ -339,6 +343,33 @@ public class CommonUtils
             return false;
         }
         return false;
+    }
+
+    /**
+     * 设置Jpush别名
+     *
+     * @param context
+     * @return
+     */
+    public static void setJpushAlias(Context context,String alias)
+    {
+        JPushInterface.setAlias(context, alias, new TagAliasCallback()
+        {
+            @Override
+            public void gotResult(int i, String s, Set<String> set)
+            {
+                if(s.equals(""))
+                {
+                    Log.d(Constant.TAG, "[JPUSH TagAliasCallback]set Alias to empty");
+                }
+                else
+                {
+                    Log.d(Constant.TAG, "[JPUSH TagAliasCallback]--i->" + i);
+                    Log.d(Constant.TAG, "[JPUSH TagAliasCallback]--s->" + s);
+                }
+
+            }
+        });
     }
 
 }

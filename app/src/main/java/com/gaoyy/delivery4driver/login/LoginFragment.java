@@ -38,10 +38,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
 import retrofit2.Call;
 
 public class LoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener
@@ -295,19 +292,9 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     @Override
     public void uploadLocation()
     {
+        CommonUtils.setJpushAlias(activity, CommonUtils.getLoginName(activity));
         //5秒执行一次
         PollingUtils.startPollingService(activity, 5, PollingService.class, PollingService.ACTION);
-
-        //设置JPush别名
-        JPushInterface.setAlias(activity, CommonUtils.getLoginName(activity), new TagAliasCallback()
-        {
-            @Override
-            public void gotResult(int i, String s, Set<String> set)
-            {
-                Log.d(Constant.TAG, "[JPUSH TagAliasCallback]--i->" + i);
-                Log.d(Constant.TAG, "[JPUSH TagAliasCallback]--s->" + s);
-            }
-        });
     }
 
 

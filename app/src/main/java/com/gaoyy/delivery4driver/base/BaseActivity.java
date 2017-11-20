@@ -121,6 +121,7 @@ public abstract class BaseActivity extends AppCompatActivity
             {
                 //要在退出前，停止上传位置
                 PollingUtils.stopPollingService(this, PollingService.class,PollingService.ACTION);
+                CommonUtils.setJpushAlias(this, "");
                 ExitApplication.getInstanse().exit();
                 android.os.Process.killProcess(android.os.Process.myPid());
             }

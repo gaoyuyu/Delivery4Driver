@@ -206,10 +206,11 @@ public class PrintUtils
     {
         StringBuilder sb = new StringBuilder();
         // 左边最多显示 LEFT_TEXT_MAX_LENGTH 个汉字 + 两个点
-        if (leftText.length() > LEFT_TEXT_MAX_LENGTH)
-        {
-            leftText = leftText.substring(0, LEFT_TEXT_MAX_LENGTH) + "..";
-        }
+        //注释掉8位长度显示限制
+//        if (leftText.length() > LEFT_TEXT_MAX_LENGTH)
+//        {
+//            leftText = leftText.substring(0, LEFT_TEXT_MAX_LENGTH) + "..";
+//        }
         int leftTextLength = getBytesLength(leftText);
         int middleTextLength = getBytesLength(middleText);
         int rightTextLength = getBytesLength(rightText);

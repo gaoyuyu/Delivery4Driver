@@ -132,7 +132,9 @@
     <string name="ticket_customer_info">买家信息：</string>
     <string name="ticket_purchaser">下单人：</string>
     <string name="ticket_tel">电话：</string>
+    <string name="ticket_top_title">Menu Alliance</string>
     <string name="ticket_will_be_paid">Order will be paid:</string>
     <string name="ticket_bottom_text">Thanks for ordering from Menu Alliance</string>
+    <string name="subtotal">Subtotal</string>
 
 </resources>
