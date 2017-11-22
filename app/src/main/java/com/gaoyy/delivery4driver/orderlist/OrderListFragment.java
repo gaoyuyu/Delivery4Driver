@@ -1,10 +1,7 @@
 package com.gaoyy.delivery4driver.orderlist;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -62,25 +59,8 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     private OrderListAdapter orderListAdapter;
     private LinkedList<OrderListInfo.BodyBean.PageBean.ListBean> orderList = new LinkedList<>();
 
-    private UpdateListAfterCancleReceiver updateListAfterCancleReceiver;
     private Call<OrderListInfo> orderListCall;
 
-    public class UpdateListAfterCancleReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            Log.d(Constant.TAG, "=======updateListAfterCancleReceiver=====");
-            if (intent.getAction().equals("android.intent.action.UpdateListAfterCancleReceiver"))
-            {
-                pageNo = 1;
-                Map<String, String> params = getOrderListParams(pageNo, pageSize);
-                Log.d(Constant.TAG, "updateListAfterCancleReceiver==>" + params.toString());
-                orderListCall = RetrofitService.sApiService.orderList(params);
-                mOrderListPresenter.orderList(orderListCall, params, PULL_TO_REFRESH);
-            }
-        }
-    }
 
 
     public OrderListFragment()
@@ -125,10 +105,6 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
         CommonUtils.setSwipeLayoutProgressBackgroundColor(activity, commonSwipeRefreshLayout);
 
-        updateListAfterCancleReceiver = new UpdateListAfterCancleReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.intent.action.UpdateListAfterCancleReceiver");
-        activity.registerReceiver(updateListAfterCancleReceiver, filter);
     }
 
 
@@ -136,7 +112,6 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     public void onDestroy()
     {
         super.onDestroy();
-        activity.unregisterReceiver(updateListAfterCancleReceiver);
     }
 
     @Override
