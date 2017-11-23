@@ -236,94 +236,105 @@ public class OrderNewActivity extends BaseActivity implements View.OnClickListen
                 {
                     orderNewInfo = response.body();
 
-                    OrderNewInfo.BodyBean.ObjBean data = orderNewInfo.getBody().getObj();
-                    Log.e(Constant.TAG, "getDistribution_type->" + data.getDistribution_type());
-
-                    if (data.getDistribution_type().equals("Pick-Up"))
+                    if (orderNewInfo.isSuccess())
                     {
-                        ((LinearLayout) (orderNewTip.getParent())).setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        ((LinearLayout) (orderNewTip.getParent())).setVisibility(View.VISIBLE);
-                    }
-
-                    Log.e(Constant.TAG, "bean->" + data.toString());
-
-                    itemCommonAddtime.setText("" + data.getAddTime());
-                    itemCommonAddress.setText("" + data.getAddr().getArea_info());
-                    itemCommonCustomer.setText("" + data.getAddr().getTrueName());
-                    itemCommonPhone.setText("" + data.getAddr().getMobile());
-                    itemCommonNo.setText("" + data.getOrder_id());
-
-                    List<OrderNewInfo.BodyBean.ObjBean.GcsBean> goods = data.getGcs();
-                    itemCommonGoodsLayout.removeAllViews();
-
-                    double sub = 0;
-
-                    for (OrderNewInfo.BodyBean.ObjBean.GcsBean item : goods)
-                    {
-                        View root = LayoutInflater.from(OrderNewActivity.this).inflate(R.layout.item_food, itemCommonGoodsLayout, false);
-                        TextView goodName = (TextView) root.findViewById(R.id.item_food_name);
-                        TextView goodCount = (TextView) root.findViewById(R.id.item_food_count);
-                        TextView goodPrice = (TextView) root.findViewById(R.id.item_food_price);
-                        goodName.setText("" + item.getGoods_name());
-                        goodCount.setText("x" + item.getCount());
-                        double itemSub = (item.getCount()) * ((double)item.getPrice());
-                        sub+= itemSub;
-                        //保留2位小数
-                        goodPrice.setText("$" + CommonUtils.deci2(item.getPrice()));
-                        itemCommonGoodsLayout.addView(root);
-                    }
-                    orderNewSubtotal.setText("$"+CommonUtils.deci2(sub));
-                    //设置价格
-                    setPrice(data);
-                    //总计
-                    orderNewSum.setText("$" + CommonUtils.deci2(data.getTotalPrice()));
-                    //备注
-                    orderNewRemark.setText(data.getMsg() + "");
-                    //期望送达时间
-                    orderNewEaTime.setText("" + data.getAppointment_time());
-
-                    expectTimeList.add("");
-                    expectTimeList.add("now");
-                    expectTimeList.add("5min");
-                    expectTimeList.add("10min");
-                    expectTimeList.add("15min");
-                    expectTimeList.add("20min");
-                    //适配器
-                    ArrayAdapter adapter = new ArrayAdapter<String>(OrderNewActivity.this, android.R.layout.simple_spinner_item, expectTimeList);
-                    //设置样式
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    //加载适配器
-                    orderNewSpinner.setAdapter(adapter);
-
-                    setLoadingGone();
-
-                    /**
-                     * flage  0-没接单 1-已接单
-                     * 已接单-不显示拒绝按钮，接单按钮，预计送达时间
-                     */
-                    if (1 == Integer.valueOf(orderNewInfo.getBody().getFlag()))
-                    {
-                        orderNewOperationLayout.setVisibility(View.GONE);
-                        if (data.getEstimatedTime() == null)
+                        OrderNewInfo.BodyBean.ObjBean data = orderNewInfo.getBody().getObj();
+                        Log.d(Constant.TAG, "=order_id==>" + data.getOrder_id());
+                        if ((data.getDistribution_type() != null) && (data.getDistribution_type().equals("Pick-Up")))
                         {
-                            ((LinearLayout) (orderNewSpinner.getParent())).setVisibility(View.GONE);
+                            Log.d(Constant.TAG, "=Pick-Up==>" + data.getDistribution_type());
+                            ((LinearLayout) (orderNewTip.getParent())).setVisibility(View.GONE);
+                            itemCommonCustomer.setText("" + data.getBuyerName());
+                            itemCommonPhone.setText("" + data.getBuyerMobile());
+                        }
+                        else if ((data.getDistribution_type() != null) && (data.getDistribution_type().equals("Delivery")))
+                        {
+                            Log.d(Constant.TAG, "=Delivery==>" + data.getDistribution_type());
+                            ((LinearLayout) (orderNewTip.getParent())).setVisibility(View.VISIBLE);
+                            itemCommonCustomer.setText("" + data.getAddr().getTrueName());
+                            itemCommonPhone.setText("" + data.getAddr().getMobile());
+                        }
+
+                        Log.e(Constant.TAG, "bean->" + data.toString());
+
+                        itemCommonAddtime.setText("" + data.getAddTime());
+                        itemCommonNo.setText("" + data.getOrder_id());
+
+                        List<OrderNewInfo.BodyBean.ObjBean.GcsBean> goods = data.getGcs();
+                        itemCommonGoodsLayout.removeAllViews();
+
+                        double sub = 0;
+
+                        for (OrderNewInfo.BodyBean.ObjBean.GcsBean item : goods)
+                        {
+                            View root = LayoutInflater.from(OrderNewActivity.this).inflate(R.layout.item_food, itemCommonGoodsLayout, false);
+                            TextView goodName = (TextView) root.findViewById(R.id.item_food_name);
+                            TextView goodCount = (TextView) root.findViewById(R.id.item_food_count);
+                            TextView goodPrice = (TextView) root.findViewById(R.id.item_food_price);
+                            goodName.setText("" + item.getGoods_name());
+                            goodCount.setText("x" + item.getCount());
+                            double itemSub = (item.getCount()) * ((double) item.getPrice());
+                            sub += itemSub;
+                            //保留2位小数
+                            goodPrice.setText("$" + CommonUtils.deci2(item.getPrice()));
+                            itemCommonGoodsLayout.addView(root);
+                        }
+                        orderNewSubtotal.setText("$" + CommonUtils.deci2(sub));
+                        //设置价格
+                        setPrice(data);
+                        //总计
+                        orderNewSum.setText("$" + CommonUtils.deci2(data.getTotalPrice()));
+                        //备注
+                        orderNewRemark.setText(data.getMsg() + "");
+                        //期望送达时间
+                        orderNewEaTime.setText("" + data.getAppointment_time());
+
+                        expectTimeList.add("");
+                        expectTimeList.add("now");
+                        expectTimeList.add("5min");
+                        expectTimeList.add("10min");
+                        expectTimeList.add("15min");
+                        expectTimeList.add("20min");
+                        //适配器
+                        ArrayAdapter adapter = new ArrayAdapter<String>(OrderNewActivity.this, android.R.layout.simple_spinner_item, expectTimeList);
+                        //设置样式
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        //加载适配器
+                        orderNewSpinner.setAdapter(adapter);
+
+                        setLoadingGone();
+
+                        /**
+                         * flage  0-没接单 1-已接单
+                         * 已接单-不显示拒绝按钮，接单按钮，预计送达时间
+                         */
+                        if (1 == Integer.valueOf(orderNewInfo.getBody().getFlag()))
+                        {
+                            orderNewOperationLayout.setVisibility(View.GONE);
+                            if (data.getEstimatedTime() == null)
+                            {
+                                ((LinearLayout) (orderNewSpinner.getParent())).setVisibility(View.GONE);
+                            }
+                            else
+                            {
+                                orderNewSpinner.setVisibility(View.GONE);
+                                orderNewEsTime.setText(data.getEstimatedTime());
+                            }
                         }
                         else
                         {
-                            orderNewSpinner.setVisibility(View.GONE);
-                            orderNewEsTime.setText(data.getEstimatedTime());
+                            orderNewOperationLayout.setVisibility(View.VISIBLE);
+                            ((LinearLayout) (orderNewSpinner.getParent())).setVisibility(View.VISIBLE);
+                            orderNewEsTime.setVisibility(View.GONE);
                         }
+
                     }
                     else
                     {
-                        orderNewOperationLayout.setVisibility(View.VISIBLE);
-                        ((LinearLayout) (orderNewSpinner.getParent())).setVisibility(View.VISIBLE);
-                        orderNewEsTime.setVisibility(View.GONE);
+                        CommonUtils.showToast(OrderNewActivity.this,orderNewInfo.getMsg());
+                        orderNewProgressbar.setVisibility(View.GONE);
+                        finish();
                     }
-
                 }
             }
 

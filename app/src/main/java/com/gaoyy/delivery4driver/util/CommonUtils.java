@@ -30,6 +30,8 @@ import cn.jpush.android.api.TagAliasCallback;
 
 public class CommonUtils
 {
+    private static Toast mToast = null;
+
     public static boolean isEmpty(String str)
     {
         if (str == null || str.length() == 0 || str.equalsIgnoreCase("null") || str.isEmpty() || str.equals(""))
@@ -52,7 +54,16 @@ public class CommonUtils
     {
         if (null != msg && !CommonUtils.isEmpty(msg))
         {
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            if (mToast == null)
+            {
+                mToast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+            }
+            else
+            {
+                mToast.setText(msg);
+                mToast.setDuration(Toast.LENGTH_SHORT);
+            }
+            mToast.show();
         }
     }
 
@@ -64,7 +75,16 @@ public class CommonUtils
      */
     public static void showToast(Context context, int msgId)
     {
-        Toast.makeText(context, msgId, Toast.LENGTH_SHORT).show();
+        if (mToast == null)
+        {
+            mToast = Toast.makeText(context, msgId, Toast.LENGTH_SHORT);
+        }
+        else
+        {
+            mToast.setText(msgId);
+            mToast.setDuration(Toast.LENGTH_SHORT);
+        }
+        mToast.show();
     }
 
     /**
@@ -286,7 +306,7 @@ public class CommonUtils
     public static String getSysLanguage()
     {
         String language = Locale.getDefault().getLanguage();
-        Log.e(Constant.TAG,"系统语言："+language);
+        Log.e(Constant.TAG, "系统语言：" + language);
         if (language.equals("zh"))
         {
             return language;
@@ -307,12 +327,13 @@ public class CommonUtils
 
     /**
      * 保留2位小数
+     *
      * @return
      */
     public static String deci2(Object d)
     {
         Double b = (Double) d;
-        return String.format("%.2f",b);
+        return String.format("%.2f", b);
     }
 
     public static void setUpAutoLogin(Context context, boolean checked)
@@ -351,14 +372,14 @@ public class CommonUtils
      * @param context
      * @return
      */
-    public static void setJpushAlias(Context context,String alias)
+    public static void setJpushAlias(Context context, String alias)
     {
         JPushInterface.setAlias(context, alias, new TagAliasCallback()
         {
             @Override
             public void gotResult(int i, String s, Set<String> set)
             {
-                if(s.equals(""))
+                if (s.equals(""))
                 {
                     Log.d(Constant.TAG, "[JPUSH TagAliasCallback]set Alias to empty");
                 }
