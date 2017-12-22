@@ -7,8 +7,8 @@ android {
         applicationId "com.gaoyy.delivery4driver"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 4
-        versionName "1.1.0"
+        versionCode 5
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //选择要添加的对应cpu类型的.so库（不需要的删除即可）。
@@ -26,6 +26,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [ map_key:"AIzaSyAFhhAGX_9cW87jrdz06uDo96iweddwBl4" ]
+        }
+        debug {
+            manifestPlaceholders = [ map_key:"AIzaSyAFhhAGX_9cW87jrdz06uDo96iweddwBl4" ]
         }
     }
 }

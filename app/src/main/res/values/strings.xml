@@ -137,5 +137,7 @@
     <string name="ticket_will_be_paid">Order will be paid:</string>
     <string name="ticket_bottom_text">Thanks for ordering from Menu Alliance</string>
     <string name="subtotal">Subtotal</string>
+    <string name="can_not_get_cus_latlng">Can not get Customer LatLng</string>
+    <string name="can_not_get_hotel_latlng">Can not get Rest. LatLng</string>
 
 </resources>

@@ -14,6 +14,7 @@ import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.api.bean.OrderListInfo;
 import com.gaoyy.delivery4driver.base.BaseActivity;
+import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -74,15 +75,15 @@ public class OrderDetailActivity extends BaseActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.order_detail_map);
         mapFragment.getMapAsync(this);
 
-        order= (OrderListInfo.BodyBean.PageBean.ListBean) getIntent().getSerializableExtra("order");
+        order = (OrderListInfo.BodyBean.PageBean.ListBean) getIntent().getSerializableExtra("order");
 
         if (order.getOrderType() == 1)
         {
-            Log.d(Constant.TAG,"==>ordernew");
+            Log.d(Constant.TAG, "==>ordernew");
         }
         else
         {
-            Log.d(Constant.TAG,"==>NewOrderDetailActivity");
+            Log.d(Constant.TAG, "==>NewOrderDetailActivity");
         }
         orderDetailDate.setText(order.getCreateDate());
         orderDetailOrderNo.setText(order.getOrderNo());
@@ -120,27 +121,39 @@ public class OrderDetailActivity extends BaseActivity implements OnMapReadyCallb
         mMap = googleMap;
         configMapUiSettings();
 
-        double customerLatitude = Double.parseDouble(order.getCustomerLatitude());
-        double customerLongitude = Double.parseDouble(order.getCustomerLongitude());
-        double hotelLatitude = Double.parseDouble(order.getHotelLatitude());
-        double hotelLongitude = Double.parseDouble(order.getHotelLongitude());
+        if ((order.getCustomerLatitude() != null) && (order.getCustomerLongitude() != null))
+        {
+            double customerLatitude = Double.parseDouble(order.getCustomerLatitude());
+            double customerLongitude = Double.parseDouble(order.getCustomerLongitude());
+            LatLng customer = new LatLng(customerLatitude, customerLongitude);
+            MarkerOptions cusOptions = new MarkerOptions()
+                    .position(customer)
+                    .title(order.getCustomerAddr())
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_customer_location));
+            mMap.addMarker(cusOptions);
+        }
+        else
+        {
+            CommonUtils.showToast(this, R.string.can_not_get_cus_latlng);
+        }
 
-        LatLng hotel = new LatLng(hotelLatitude, hotelLongitude);
-        LatLng customer = new LatLng(customerLatitude, customerLongitude);
+        if ((order.getHotelLatitude() != null) && (order.getHotelLongitude() != null))
+        {
+            double hotelLatitude = Double.parseDouble(order.getHotelLatitude());
+            double hotelLongitude = Double.parseDouble(order.getHotelLongitude());
+            LatLng hotel = new LatLng(hotelLatitude, hotelLongitude);
+            MarkerOptions resOptions = new MarkerOptions()
+                    .position(hotel)
+                    .title(order.getHotelAddr())
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_restaurant_location));
+            mMap.addMarker(resOptions);
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(hotel));
+        }
+        else
+        {
+            CommonUtils.showToast(this, R.string.can_not_get_hotel_latlng);
+        }
 
-        MarkerOptions resOptions = new MarkerOptions()
-                .position(hotel)
-                .title(order.getHotelAddr())
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_restaurant_location));
-        MarkerOptions cusOptions = new MarkerOptions()
-                .position(customer)
-                .title(order.getCustomerAddr())
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_customer_location));
-
-        mMap.addMarker(resOptions);
-        mMap.addMarker(cusOptions);
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(hotel));
     }
 
     /**
