@@ -1,24 +1,22 @@
 package com.gaoyy.delivery4driver.login;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.base.BaseActivity;
-import com.gaoyy.delivery4driver.base.CustomDialogFragment;
 import com.gaoyy.delivery4driver.util.ActivityUtils;
 import com.gaoyy.delivery4driver.util.CommonUtils;
-import com.gaoyy.delivery4driver.util.DialogUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
+
+import java.util.List;
 
 
 public class LoginActivity extends BaseActivity
@@ -53,34 +51,20 @@ public class LoginActivity extends BaseActivity
     {
         super.configViews();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            {
-                Log.e(Constant.TAG, "==Login==申请权限=====");
 
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+        AndPermission.with(this)
+                .requestCode(Constant.REQUEST_CODE_PERMISSION_SINGLE)
+                .permission(Permission.LOCATION)
+                .callback(permissionListener)
+                .rationale(new RationaleListener()
                 {
-                    Log.e(Constant.TAG, "==Login==ACCESS_FINE_LOCATION again=====");
-                    showRequestPermissionDialog();
-                }
-                else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
-                {
-                    Log.e(Constant.TAG, "==Login==ACCESS_COARSE_LOCATION again=====");
-                    showRequestPermissionDialog();
-                }
-                else
-                {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
-                }
-            }
-            else
-            {
-                CommonUtils.showToast(this, getResources().getString(R.string.permission_grant));
-            }
-        }
+                    @Override
+                    public void showRequestPermissionRationale(int requestCode, Rationale rationale)
+                    {
+                        AndPermission.rationaleDialog(LoginActivity.this, rationale).show();
+                    }
+                })
+                .start();
 
         LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.login_content);
         if (loginFragment == null)
@@ -91,49 +75,40 @@ public class LoginActivity extends BaseActivity
         new LoginPresenter(loginFragment);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    /**
+     * 回调监听。
+     */
+    private PermissionListener permissionListener = new PermissionListener()
     {
-        if (requestCode == Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION)
+        @Override
+        public void onSucceed(int requestCode, @NonNull List<String> grantPermissions)
         {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            switch (requestCode)
             {
-                Log.e(Constant.TAG, "==Login==PERMISSION_GRANTED=====");
-            }
-            else
-            {
-                CommonUtils.showToast(this,getResources().getString(R.string.permission_already_deny));
+                case Constant.REQUEST_CODE_PERMISSION_SINGLE:
+                    CommonUtils.showToast(LoginActivity.this, R.string.permission_location_success);
+                    break;
             }
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
-
-    private void showRequestPermissionDialog()
-    {
-        CustomDialogFragment dialog = DialogUtils.showAlertDialog(this, getResources().getString(R.string.dialog_permission_title),
-                getResources().getString(R.string.dialog_permission_message),
-                getResources().getString(R.string.dialog_permission_deny), getResources().getString(R.string.dialog_permission_grant));
-        dialog.setOnAlertDialogClickListener(new CustomDialogFragment.OnAlertDialogClickListener()
+        @Override
+        public void onFailed(int requestCode, @NonNull List<String> deniedPermissions)
         {
-            @Override
-            public void onButtonClick(DialogInterface dialog, int which)
+            switch (requestCode)
             {
-                switch (which)
-                {
-                    case AlertDialog.BUTTON_NEGATIVE:
-                        dialog.dismiss();
-                        break;
-                    case AlertDialog.BUTTON_POSITIVE:
-                        dialog.dismiss();
-                        ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION}, Constant.REQUEST_ACCESS_FINE_COARSE_LOCATION);
-                        break;
-                    default:
-                        break;
-                }
-
+                case Constant.REQUEST_CODE_PERMISSION_SINGLE:
+                    CommonUtils.showToast(LoginActivity.this, R.string.permission_location_fail);
+                    break;
             }
-        });
-    }
+
+            if (AndPermission.hasAlwaysDeniedPermission(LoginActivity.this, deniedPermissions))
+            {
+                AndPermission.defaultSettingDialog(LoginActivity.this, Constant.REQUEST_CODE_SETTING)
+                        .setTitle(R.string.dialog_permission_title)
+                        .setMessage(R.string.permission_already_deny)
+                        .setPositiveButton(R.string.dialog_permission_grant)
+                        .show();
+            }
+        }
+    };
 }

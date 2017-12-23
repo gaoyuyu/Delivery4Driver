@@ -7,8 +7,8 @@ android {
         applicationId "com.gaoyy.delivery4driver"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 5
-        versionName "1.1.1"
+        versionCode 6
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //选择要添加的对应cpu类型的.so库（不需要的删除即可）。
@@ -58,6 +58,7 @@ dependencies {
 
 
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    compile 'com.yanzhenjie:permission:1.1.2'
 
     testCompile 'junit:junit:4.12'
 }

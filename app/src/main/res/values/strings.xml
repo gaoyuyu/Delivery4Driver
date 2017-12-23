@@ -70,7 +70,7 @@
     <string name="dialog_updateing">Updating</string>
     <string name="dialog_permission_title">Apply for permission</string>
     <string name="dialog_permission_message">Missing location permission</string>
-    <string name="dialog_permission_grant">Allow</string>
+    <string name="dialog_permission_grant">OK, set it up</string>
     <string name="dialog_permission_deny">Deny</string>
 
 
@@ -139,5 +139,7 @@
     <string name="subtotal">Subtotal</string>
     <string name="can_not_get_cus_latlng">Can not get Customer LatLng</string>
     <string name="can_not_get_hotel_latlng">Can not get Rest. LatLng</string>
+    <string name="permission_location_success">Location permission access success</string>
+    <string name="permission_location_fail">Location permission access failure</string>
 
 </resources>

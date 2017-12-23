@@ -31,4 +31,8 @@ public class Constant
     public static final int AUTO_LOGIN = 111;
     public static final int NOT_AUTO_LOGIN = 112;
 
+    public static final int REQUEST_CODE_PERMISSION_SINGLE = 114;
+    public static final int REQUEST_CODE_PERMISSION_MULTI = 115;
+    public static final int REQUEST_CODE_SETTING = 116;
+
 }
