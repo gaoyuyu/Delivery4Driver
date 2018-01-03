@@ -29,6 +29,7 @@ import com.gaoyy.delivery4driver.util.ActivityUtils;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.DialogUtils;
 import com.gaoyy.delivery4driver.util.PollingUtils;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         mainDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mainNavView = (NavigationView) findViewById(R.id.main_nav_view);
+        StatusBarUtil.setColorNoTranslucentForDrawerLayout(this,mainDrawerLayout,getResources().getColor(R.color.colorPrimary));
     }
 
     @Override

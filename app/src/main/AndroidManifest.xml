@@ -49,7 +49,6 @@
             android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.WithDrawerTheme"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
@@ -64,27 +63,27 @@
         </activity>
         <activity
             android:name=".changepwd.ChangePwdActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".main.SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".main.OrderDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".orderlist.OrderListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".main.OrderNewActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".main.PrintActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
 
         <!-- 极光推送Receiver -->
@@ -111,11 +110,11 @@
 
         <activity
             android:name=".main.PersonalDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".main.NoticeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
 
         <meta-data

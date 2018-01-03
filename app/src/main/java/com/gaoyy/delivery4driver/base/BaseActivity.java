@@ -9,10 +9,12 @@ import android.view.KeyEvent;
 import com.gaoyy.delivery4driver.R;
 import com.gaoyy.delivery4driver.api.Constant;
 import com.gaoyy.delivery4driver.application.ExitApplication;
+import com.gaoyy.delivery4driver.main.MainActivity;
 import com.gaoyy.delivery4driver.service.PollingService;
 import com.gaoyy.delivery4driver.util.CommonUtils;
 import com.gaoyy.delivery4driver.util.PollingUtils;
 import com.gaoyy.delivery4driver.util.UpdateManager;
+import com.jaeger.library.StatusBarUtil;
 
 
 public abstract class BaseActivity extends AppCompatActivity
@@ -29,6 +31,10 @@ public abstract class BaseActivity extends AppCompatActivity
 
         //加载布局
         initContentView();
+        if(!(this instanceof MainActivity))
+        {
+            StatusBarUtil.setColorNoTranslucent(this,getResources().getColor(R.color.colorPrimary));
+        }
         //初始化view
         assignViews();
         //初始化toolbar

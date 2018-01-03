@@ -56,9 +56,9 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.5'
     compile 'cn.jiguang.sdk:jcore:1.1.2'
 
-
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     compile 'com.yanzhenjie:permission:1.1.2'
+    compile 'com.jaeger.statusbarutil:library:1.4.0'
 
     testCompile 'junit:junit:4.12'
 }
