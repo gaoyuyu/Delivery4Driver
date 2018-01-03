@@ -177,6 +177,7 @@ public class NoticeActivity extends BaseActivity implements OnMapReadyCallback, 
 
     private void setTextData(String key, String value, String keyName, TextView tv)
     {
+        Log.e(Constant.TAG,""+key+"="+value);
         if (key.equals(keyName))
         {
             tv.setText(value);

@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -235,7 +236,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         editor.putString("id", user.getId());
         editor.putString("loginName", user.getLoginName());
         editor.putString("pwd", loginPassword.getText().toString());
-        editor.putString("name", user.getName());
+        editor.putString("name", Html.fromHtml(user.getName()).toString());
         editor.putString("email", user.getEmail());
         editor.putString("phone", user.getPhone());
         editor.putString("mobile", user.getMobile());
